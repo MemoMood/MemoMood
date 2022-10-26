@@ -4,4 +4,118 @@
 
 {% block content%}
 
+<div class="record-container">
+    <form action="{% url 'record' %}" method="post">
+        {% csrf_token %}
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2">
+                <div class="record-mood">
+                </div>
+            </div>
+            <div class="col-span-3">
+                <div class="record-datetime">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        for="record-time">Choose a
+                        time:</label>
+                    <input type="datetime-local" id="record-time" name="record-time" max="{{ time }}" required>
+                </div>
+                <div class="record-place">
+                    <label for="place" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where are
+                        you
+                        at this time?</label>
+                    <select id="place" name="place-input"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="home">Home</option>
+                        <option value="university">University</option>
+                        <option value="workplace">Work Place</option>
+                    </select>
+                </div>
+                <div class="record-people">
+                    Select who is with you? 
+                    {% include 'mood/record_components/people.html' %}
+                </div>
+                <div class="record-weather">
+                    <label for=""
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Weather</label>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-1">
+                            <!--Sunny-->
+                            <div class="flex items-center">
+                                <input checked id="default-radio-1" type="radio" value="sunny" name="default-radio"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-1"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-sun"></i> Sunny</label>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <!--Cloudy-->
+                            <div class="flex items-center">
+                                <input id="default-radio-2" type="radio" value="cloudy" name="default-radio"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-2"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-cloud"></i> Cloudy</label>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <!--Rainy-->
+                            <div class="flex items-center">
+                                <input id="default-radio-3" type="radio" value="rainy" name="default-radio"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-3"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-cloud-rain"></i> Rainy</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-1">
+                            <!--Thunderstorm-->
+                            <div class="flex items-center">
+                                <input id="default-radio-4" type="radio" value="thunderstorm" name="default-radio"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-4"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-cloud-bolt"></i> Thunderstorm</label>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <!--Foggy-->
+                            <div class="flex items-center">
+                                <input id="default-radio-5" type="radio" value="foggy" name="default-radio"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-5"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-smog"></i> Foggy</label>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <!--Snow-->
+                            <div class="flex items-center">
+                                <input id="default-radio-6" type="radio" value="snow" name="default-radio"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-6"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-snowflake"></i> Snow</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="record-diary">
+                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your
+                        diary</label>
+                    <textarea id="message" rows="4"
+                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Your message..."></textarea>
+                </div>
+                <button type="submit"
+                    class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Save
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
 {% endblock %}
