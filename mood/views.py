@@ -3,8 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 
 
-def welcome(request):
-    return render(request, 'mood/welcome.html')
+# def welcome(request):
+#     return render(request, 'mood/welcome.html')
 
 def mood(request):
     return render(request, 'mood/index.html')
