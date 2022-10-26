@@ -52,6 +52,12 @@ INSTALLED_APPS = [
 ]
 SITE_ID = 1
 
+# Google Client ID : 996431643560-a3cc8tnfovc8l3n6alcvh9vck3p3lifv.apps.googleusercontent.com
+# Google Client Secrect : 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
+
+# Github Client ID : 6596f77a2313721d3c61
+# Github Client Secrect : b3f152b6c6b48a30e25e7555a4f740095f2e0c97
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
