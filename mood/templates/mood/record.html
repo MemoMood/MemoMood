@@ -1,13 +1,47 @@
 {% extends 'mood/base.html' %}
 {% load static %}
 
-
-{% block content%}
-
+{% block content %}
 <div class="record-container">
     <form action="{% url 'record' %}" method="post">
         {% csrf_token %}
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2">
+                <div class="record-mood">
+                </div>
+            </div>
+            <div class="col-span-3">
+                <div class="record-datetime">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        for="record-time">Choose a
+                        time:</label>
+                    <input type="datetime-local" id="record-time" name="record-time" max="{{ time }}" required>
+                </div>
+                <div class="record-place">
+                    <label for="place" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where are
+                        you
+                        at this time?</label>
+                    {% if not places%}
+                    <select id="place" disabled name="place-input"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option>Please add your first place</option>
+                    {% else %}
+                    <select id="place" name="place-input"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {% for place in places %}
+                        <option value="{{place}}">{{place}}</option>
+                        {% endfor %}
+                        {% endif %}
+                    </select>
+                    {% comment %} <p>If you want to add place, <a href="{% url 'add_place' %}" class="text-blue-500">click here</a> {% endcomment %}
+                    </p>
+                </div>
+                <button type="submit"
+                    class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Save
+                </button>
+            </div>
+        </div>
     </form>
 </div>
-
 {% endblock %}
