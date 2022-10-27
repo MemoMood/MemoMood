@@ -7,7 +7,6 @@ Web application for everyone who wants to keep track of their mental health by r
 All project documents are in the [Project Wiki](../../wiki/Home)
 
 - [User stories](https://github.com/MemoMood/MemoMood/wiki/User-stories)
-- [Iteration 1 Plan](../../wiki/Iteration%201%20Plan) | [Iteration 1 Task Board](https://github.com/users/natekrth/projects/1/views/1) 
-- [Iteration 2 Plan](../../wiki/Iteration-2-Plan) | [Iteration 2 Task Board](https://github.com/users/natekrth/projects/1/views/3)
-- [Iteration 3 Plan](../../wiki/Iteration-3-Plan) | [Iteration 3 Task Board](https://github.com/users/natekrth/projects/1/views/4)
-- [Iteration 4 Plan](../../wiki/Iteration-4-Plan) | [Iteration 4 Task Board](https://github.com/users/natekrth/projects/1/views/5)
+- [Iteration 2 Plan](https://github.com/MemoMood/MemoMood/wiki/Iteration-2-Plan) | [Iteration 2 Task Board](https://github.com/orgs/MemoMood/projects/2/views/2)
+- [Iteration 3 Plan](https://github.com/MemoMood/MemoMood/wiki/Iteration-3-Plan) | [Iteration 3 Task Board](https://github.com/orgs/MemoMood/projects/2/views/3)
+- [Iteration 4 Plan](https://github.com/MemoMood/MemoMood/wiki/Iteration-4-Plan) | [Iteration 4 Task Board](https://github.com/orgs/MemoMood/projects/2/views/5)
