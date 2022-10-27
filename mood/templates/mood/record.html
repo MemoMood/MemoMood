@@ -36,6 +36,123 @@
                     {% comment %} <p>If you want to add place, <a href="{% url 'add_place' %}" class="text-blue-500">click here</a> {% endcomment %}
                     </p>
                 </div>
+                <div class="record-people">
+                    Select who is with you?
+                    <button id="dropdownBgHoverButton" data-dropdown-toggle="dropdownBgHover"
+                        class="text-white bg-yellow-400 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                        type="button">Friends <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg></button>
+                    <!-- Dropdown menu -->
+                    <div id="dropdownBgHover" class="hidden z-10 w-48 bg-white rounded shadow dark:bg-gray-700"
+                        data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom"
+                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 32px);">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="dropdownBgHoverButton">
+                            <li>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <input id="checkbox-item-4" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-4"
+                                        class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">Nate</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <input checked="" id="checkbox-item-5" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-5"
+                                        class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">Bell</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <input id="checkbox-item-6" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-6"
+                                        class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">Teen</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="record-weather">
+                    <label for=""
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Weather</label>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-1">
+                            <!--Sunny-->
+                            <div class="flex items-center">
+                                <input checked id="default-radio-1" type="radio" value="sunny" name="weather-input"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-1"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-sun"></i> Sunny</label>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <!--Cloudy-->
+                            <div class="flex items-center">
+                                <input id="default-radio-2" type="radio" value="cloudy" name="weather-input"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-2"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-cloud"></i> Cloudy</label>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <!--Rainy-->
+                            <div class="flex items-center">
+                                <input id="default-radio-3" type="radio" value="rainy" name="weather-input"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-3"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-cloud-rain"></i> Rainy</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-1">
+                            <!--Thunderstorm-->
+                            <div class="flex items-center">
+                                <input id="default-radio-4" type="radio" value="thunderstorm" name="weather-input"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-4"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-cloud-bolt"></i> Thunderstorm</label>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <!--Foggy-->
+                            <div class="flex items-center">
+                                <input id="default-radio-5" type="radio" value="foggy" name="weather-input"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-5"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-smog"></i> Foggy</label>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <!--Snow-->
+                            <div class="flex items-center">
+                                <input id="default-radio-6" type="radio" value="snow" name="weather-input"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="default-radio-6"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i
+                                        class="fa-solid fa-snowflake"></i> Snow</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="record-diary">
+                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your
+                        diary</label>
+                    <textarea id="message" rows="4" name="text-input"
+                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Your message..."></textarea>
+                </div>
                 <button type="submit"
                     class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Save
