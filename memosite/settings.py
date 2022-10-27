@@ -52,6 +52,9 @@ INSTALLED_APPS = [
 ]
 SITE_ID = 1
 
+LOGIN_REDIRECT_URL = 'mood'
+LOGOUT_REDIRECT_URL = 'mood'
+
 # Google Client ID : 996431643560-a3cc8tnfovc8l3n6alcvh9vck3p3lifv.apps.googleusercontent.com
 # Google Client Secrect : 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
 
