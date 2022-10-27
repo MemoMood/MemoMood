@@ -1,0 +1,35 @@
+body{
+    color: #636366;
+    background-color: #FFFFFF;
+    position: relative;
+    text-align: center;
+}
+h2{
+    font-size: 54px;
+}
+
+/* mood-index file */
+.index-container{
+    padding: 5% 0%;
+}
+.index-quote1-container{
+    width: 90%;
+    background-color: #F2F2F7;
+    margin: auto;
+    padding: 5% 0%;
+    border-radius: 25px;
+}
+
+/* mood-record file */
+.record-container{
+    padding: 5% 5%;
+    width: 95%;
+    text-align: left;
+}
+
+.record-place{
+    padding: 2% 0%;
+}
+.record-sleep-time{
+    padding: 2% 0;
+}
