@@ -30,6 +30,14 @@ def record(request):
     return render(request, 'mood/record.html', dict_return)
 
 
+def add_place(request):
+    return render(request, 'mood/add_choice/add_place.html')
+
+
+def add_people(request):
+    return render(request, 'mood/add_choice/add_people.html')
+
+
 def accept_record(request):
     return render(request, 'mood/accept_components/back_from_record.html')
 
