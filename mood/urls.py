@@ -9,4 +9,6 @@ urlpatterns = [
     path('mood/dailymood', views.daily_mood, name='dailymood'),
     path('mood/discover', views.discover, name='discover'),
     path('mood/profile', views.profile, name='profile'),
+    path('mood/add_place', views.add_place, name='add_place'),
+    path('mood/add_people', views.add_people, name='add_people'),
 ]
