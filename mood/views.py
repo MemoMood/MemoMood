@@ -42,6 +42,14 @@ def accept_record(request):
     return render(request, 'mood/accept_components/back_from_record.html')
 
 
+def accept_place(request):
+    return render(request, 'mood/accept_components/back_from_place.html')
+
+
+def accept_people(request):
+    return render(request, 'mood/accept_components/back_from_people.html')
+
+
 def daily_mood(request):
     return render(request, 'mood/daily_mood.html')
 
