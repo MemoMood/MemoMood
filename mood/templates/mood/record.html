@@ -21,17 +21,12 @@
                     <label for="place" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where are
                         you
                         at this time?</label>
-                    {% if not places%}
-                    <select id="place" disabled name="place-input"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option>Please add your first place</option>
-                    {% else %}
                     <select id="place" name="place-input"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="Home">Home</option>
                         {% for place in places %}
                         <option value="{{place}}">{{place}}</option>
                         {% endfor %}
-                        {% endif %}
                     </select>
                     {% comment %} <p>
                         If you want to add place, <a href="{% url 'add_place' %}" class="text-blue-500">click here</a>
@@ -54,7 +49,7 @@
                             aria-labelledby="dropdownBgHoverButton">
                             <li>
                                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                    <input id="checkbox-item-4" type="checkbox" value=""
+                                    <input id="checkbox-item-4" type="checkbox" value="Nate" name="friends-name[]"
                                         class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                     <label for="checkbox-item-4"
                                         class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">Nate</label>
@@ -62,7 +57,7 @@
                             </li>
                             <li>
                                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                    <input checked="" id="checkbox-item-5" type="checkbox" value=""
+                                    <input checked="" id="checkbox-item-5" type="checkbox" value="Bell" name="friends-name[]"
                                         class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                     <label for="checkbox-item-5"
                                         class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">Bell</label>
@@ -70,7 +65,7 @@
                             </li>
                             <li>
                                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                    <input id="checkbox-item-6" type="checkbox" value=""
+                                    <input id="checkbox-item-6" type="checkbox" value="Teen" name="friends-name[]"
                                         class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                     <label for="checkbox-item-6"
                                         class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">Teen</label>
