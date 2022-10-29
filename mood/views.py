@@ -31,6 +31,13 @@ def record(request):
 
 
 def add_place(request):
+    if request.POST:
+        place = request.POST.get('new-place')
+        places = MoodFactors.objects.get(factor='place')
+        places_list = [str(p) for p in places.factordetail_set.all()]
+        if place not in places_list:
+            places.factordetail_set.create(name=place)
+        return HttpResponseRedirect(reverse('accept_place'))
     return render(request, 'mood/add_choice/add_place.html')
 
 
