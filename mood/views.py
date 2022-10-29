@@ -42,6 +42,14 @@ def add_place(request):
 
 
 def add_people(request):
+    if request.POST:
+        people = request.POST.getlist('new-friend')
+        peoples = MoodFactors.objects.get(factor='people')
+        peoples_list = [str(p) for p in peoples.factordetail_set.all()]
+        for i in people:
+            if i not in peoples_list:
+                peoples.factordetail_set.create(name=i)
+        return HttpResponseRedirect(reverse('accept_people'))
     return render(request, 'mood/add_choice/add_people.html')
 
 
