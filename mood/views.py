@@ -7,6 +7,8 @@ from mood.models import Diary, FactorDetail, MoodFactors
 
 # Create your views here.
 
+def welcome(request):
+    return render(request, 'mood/welcome.html')
 
 def mood(request):
     return render(request, 'mood/index.html')
