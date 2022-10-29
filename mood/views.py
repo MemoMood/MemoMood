@@ -26,6 +26,13 @@ def record(request):
     peoples = MoodFactors.objects.get(factor='people')
     places_list = [str(p) for p in places.factordetail_set.all()]
     peoples_list = [str(p) for p in peoples.factordetail_set.all()]
+    if request.POST:
+        time = request.POST.get('record-time')
+        datetime_object = datetime.strptime(time, '%Y-%m-%dT%H:%M')
+        place = request.POST.get('place-input')
+        weather = request.POST.get('weather-input')
+        people = request.POST.getlist('friends-name[]')
+        text = request.POST.get('text-input')
     time_format = timezone.now().strftime(f"%Y-%m-%dT%H:%M")
     dict_return = {'time': time_format,
                    'places': places_list, 'peoples': peoples_list}
