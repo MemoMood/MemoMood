@@ -33,6 +33,18 @@ def record(request):
         weather = request.POST.get('weather-input')
         people = request.POST.getlist('friends-name[]')
         text = request.POST.get('text-input')
+        # add to diary
+        diary = Diary()
+        diary.time = datetime_object
+        diary.place = place
+        diary.weather = weather
+        diary.text = text
+        diary.save()
+        for p in people:
+            find_name = FactorDetail.objects.get(name=p)
+            diary.people.add(find_name)
+        diary.save()
+        return HttpResponseRedirect(reverse('accept_record'))
     time_format = timezone.now().strftime(f"%Y-%m-%dT%H:%M")
     dict_return = {'time': time_format,
                    'places': places_list, 'peoples': peoples_list}
