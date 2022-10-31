@@ -1,0 +1,45 @@
+{% extends 'mood/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="sleep-time-container">
+    <h1 style="text-align:center;">Set your sleep time.</h1>
+    <form action="{% url 'set_sleep_time' %}" method="post">
+        {% csrf_token %}
+        <div class="record-datetime">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="record-time">Choose a
+                day:</label>
+            <input type="date" id="record-time" name="record-time" max="{{ time }}" required>
+        </div>
+        <div class="record-sleep-time">
+            <label for="steps-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sleeping
+                time</label>
+            <input id="steps-range" type="range" min="0" max="15" value="8" step="0.5" name="sleep-time-input"
+                x-model="sleep-time-input"
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+            <ul class="flex justify-between w-full px-[10px]">
+                <li class="flex justify-center relative"><span class="absolute">0</span></li>
+                <li class="flex justify-center relative"><span class="absolute">1</span></li>
+                <li class="flex justify-center relative"><span class="absolute">2</span></li>
+                <li class="flex justify-center relative"><span class="absolute">3</span></li>
+                <li class="flex justify-center relative"><span class="absolute">4</span></li>
+                <li class="flex justify-center relative"><span class="absolute">5</span></li>
+                <li class="flex justify-center relative"><span class="absolute">6</span></li>
+                <li class="flex justify-center relative"><span class="absolute">7</span></li>
+                <li class="flex justify-center relative"><span class="absolute">8</span></li>
+                <li class="flex justify-center relative"><span class="absolute">9</span></li>
+                <li class="flex justify-center relative"><span class="absolute">10</span></li>
+                <li class="flex justify-center relative"><span class="absolute">11</span></li>
+                <li class="flex justify-center relative"><span class="absolute">12</span></li>
+                <li class="flex justify-center relative"><span class="absolute">13</span></li>
+                <li class="flex justify-center relative"><span class="absolute">14</span></li>
+                <li class="flex justify-center relative"><span class="absolute">15</span></li>
+            </ul>
+        </div>
+        <button type="submit"
+            class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Save
+        </button>
+    </form>
+</div>
+{% endblock %}
