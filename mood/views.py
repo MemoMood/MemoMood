@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -7,11 +7,21 @@ from mood.models import Diary, FactorDetail, MoodFactors
 
 # Create your views here.
 
+
 def welcome(request):
     return render(request, 'mood/welcome.html')
 
+
 def mood(request):
-    return render(request, 'mood/index.html')
+    time_now = timezone.now()
+    before_24 = time_now - timedelta(hours=23, minutes=59, seconds=59)
+    try:
+        diary_get = Diary.objects.filter(
+            time__range=[before_24, time_now]).order_by("-time")
+    except Diary.DoesNotExist:
+        diary_get = []
+    dict_return = {'diary': diary_get}
+    return render(request, 'mood/index.html', dict_return)
 
 
 def record(request):
