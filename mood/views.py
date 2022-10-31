@@ -108,6 +108,10 @@ def daily_mood(request):
     return render(request, 'mood/daily_mood.html')
 
 
+def daily_mood_show(request):
+    return render(request, 'mood/daily_mood_show.html')
+
+
 def discover(request):
     return render(request, 'mood/discover.html')
 
