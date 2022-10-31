@@ -9,9 +9,11 @@ urlpatterns = [
     path('mood/accept/record', views.accept_record, name='accept_record'),
     path('mood/accept/place', views.accept_place, name='accept_place'),
     path('mood/accept/people', views.accept_people, name='accept_people'),
+    path('mood/accept/sleep_time', views.accept_sleep_time, name='accept_sleep_time'),
     path('mood/add_place', views.add_place, name='add_place'),
     path('mood/add_people', views.add_people, name='add_people'),
-    path('mood/dailymood', views.daily_mood, name='dailymood'),
+    path('mood/dailymood', views.daily_mood, name='daily_mood'),
+    path('mood/dailymood/show', views.daily_mood_show, name='daily_mood_show'),
     path('mood/discover', views.discover, name='discover'),
     path('mood/profile', views.profile, name='profile'),
 ]
