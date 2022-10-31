@@ -8,7 +8,7 @@
         <div class="grid grid-cols-5 gap-4">
             <div class="col-span-2">
                 <div class="record-mood">
-                    <div class="grid grid-rows-2 grid-flow-col gap-4">
+                    <div class="grid grid-rows-2 grid-flow-col gap-5">
                         <!-- Positive Mood -->
                         <div>
                             <h3 class="mb-4 font-semibold text-gray-500 dark:text-white">Positive Mood</h3>
@@ -43,7 +43,6 @@
                                 <svg class="h-5 w-5 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                
                             </button>
                         </div>
                         <!-- Negative Mood -->
@@ -88,13 +87,11 @@
             <div class="col-span-3">
                 <div class="record-datetime">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        for="record-time">Choose a
-                        time:</label>
+                        for="record-time">Choose a time:</label>
                     <input type="datetime-local" id="record-time" name="record-time" max="{{ time }}" required>
                 </div>
                 <div class="record-place">
-                    <label for="place" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where are
-                        you
+                    <label for="place" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where are you
                         at this time?</label>
                     {% if not places%}
                     <select id="place" disabled name="place-input"
