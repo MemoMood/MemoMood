@@ -88,6 +88,10 @@ def add_people(request):
     return render(request, 'mood/add_choice/add_people.html')
 
 
+def accept_sleep_time(request):
+    return render(request, 'mood/accept_components/back_from_sleep_time.html')
+
+
 def accept_record(request):
     return render(request, 'mood/accept_components/back_from_record.html')
 
