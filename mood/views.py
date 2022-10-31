@@ -24,6 +24,10 @@ def mood(request):
     return render(request, 'mood/index.html', dict_return)
 
 
+def set_sleep_time(request):
+    return render(request, 'mood/sleep_time.html',)
+
+
 def record(request):
     if not MoodFactors.objects.all():
         place_factors = MoodFactors(factor='place')
