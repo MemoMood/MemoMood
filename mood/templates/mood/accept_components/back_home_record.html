@@ -1,0 +1,9 @@
+{% extends 'mood/accept_components/accept_base.html' %}
+{% load static %}
+
+<div>
+    {% block add_back %}
+    <p><a href="{% url 'mood' %}" class="text-blue-500">Back to home</a></p>
+    <p><a href="{% url 'record' %}" class="text-blue-500">Back to record</a></p>
+    {% endblock %}
+</div>
