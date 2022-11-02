@@ -72,7 +72,7 @@ def add_place(request):
         places_list = [str(p) for p in places.factordetail_set.all()]
         if place not in places_list:
             places.factordetail_set.create(name=place)
-        return HttpResponseRedirect(reverse('accept_place'))
+        return HttpResponseRedirect(reverse('accept_adding'))
     return render(request, 'mood/add_choice/add_place.html')
 
 
@@ -84,7 +84,7 @@ def add_people(request):
         for i in people:
             if i not in peoples_list:
                 peoples.factordetail_set.create(name=i)
-        return HttpResponseRedirect(reverse('accept_people'))
+        return HttpResponseRedirect(reverse('accept_adding'))
     return render(request, 'mood/add_choice/add_people.html')
 
 
