@@ -109,6 +109,18 @@ def add_people(request):
     return render(request, 'mood/add_choice/add_people.html')
 
 
+def add_mood_positive(request):
+    if request.POST:
+        mood = request.POST.get('new-mood')
+        mood_lower = mood.lower()
+        moods = MoodFactors.objects.get(factor='mood-positive')
+        positive_list = [str(m) for m in moods.factordetail_set.all()]
+        if mood_lower not in positive_list:
+            moods.factordetail_set.create(name=mood_lower)
+        return HttpResponseRedirect(reverse('accept_adding'))
+    return render(request, 'mood/add_choice/add_mood_positive.html',)
+
+
 def accept_sleep_time(request):
     return render(request, 'mood/accept_components/back_from_sleep_time.html')
 
