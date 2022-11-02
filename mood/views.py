@@ -58,7 +58,7 @@ def record(request):
             find_name = FactorDetail.objects.get(name=p)
             diary.people.add(find_name)
         diary.save()
-        return HttpResponseRedirect(reverse('accept_record'))
+        return HttpResponseRedirect(reverse('accept_adding'))
     time_format = timezone.now().strftime(f"%Y-%m-%dT%H:%M")
     dict_return = {'time': time_format,
                    'places': places_list, 'peoples': peoples_list}
@@ -92,16 +92,8 @@ def accept_sleep_time(request):
     return render(request, 'mood/accept_components/back_from_sleep_time.html')
 
 
-def accept_record(request):
-    return render(request, 'mood/accept_components/back_from_record.html')
-
-
-def accept_place(request):
-    return render(request, 'mood/accept_components/back_from_place.html')
-
-
-def accept_people(request):
-    return render(request, 'mood/accept_components/back_from_people.html')
+def accept_adding(request):
+    return render(request, 'mood/accept_components/back_home_record.html')
 
 
 def daily_mood(request):
