@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from mood.models import Diary, FactorDetail, MoodFactors
+from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField
 
 # Create your views here.
 
@@ -25,7 +25,28 @@ def mood(request):
 
 
 def set_sleep_time(request):
-    return render(request, 'mood/sleep_time.html',)
+    sleep_time_obj = SleepTimeField()
+    if request.POST:
+        date = request.POST.get('record-time')
+        datetime_object = datetime.strptime(date, '%Y-%m-%d').date()
+        sleep_time = request.POST.get('sleep-time-input')
+        try:
+            sleep_time_get_obj = SleepTimeField.objects.get(
+                day=datetime_object)
+        except SleepTimeField.DoesNotExist:
+            sleep_time_get_obj = None
+        if not sleep_time_get_obj:
+            sleep_time_obj.day = datetime_object
+            sleep_time_obj.hour = float(sleep_time)
+            sleep_time_obj.save()
+        else:
+            keep_hour = sleep_time_get_obj.hour
+            sleep_time_get_obj.hour = float(sleep_time)
+            sleep_time_get_obj.save()
+        return HttpResponseRedirect(reverse('accept_sleep_time'))
+    time_format = timezone.now().strftime(f"%Y-%m-%d")
+    dict_return = {'time': time_format}
+    return render(request, 'mood/sleep_time.html', dict_return)
 
 
 def record(request):
