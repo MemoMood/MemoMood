@@ -138,6 +138,15 @@ def add_mood_positive(request):
 
 
 def add_mood_negative(request):
+    check_null()
+    if request.POST:
+        mood = request.POST.get('new-mood')
+        mood_lower = mood.lower()
+        moods = MoodFactors.objects.get(factor='mood-negative')
+        negative_list = [str(m) for m in moods.factordetail_set.all()]
+        if mood_lower not in negative_list:
+            moods.factordetail_set.create(name=mood_lower)
+        return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_mood_negative.html',)
 
 
