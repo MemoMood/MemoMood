@@ -121,6 +121,10 @@ def add_mood_positive(request):
     return render(request, 'mood/add_choice/add_mood_positive.html',)
 
 
+def add_mood_negative(request):
+    return render(request, 'mood/add_choice/add_mood_negative.html',)
+
+
 def accept_sleep_time(request):
     return render(request, 'mood/accept_components/back_from_sleep_time.html')
 
