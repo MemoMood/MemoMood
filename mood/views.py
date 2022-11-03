@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField
 
@@ -34,6 +34,12 @@ def mood(request):
         diary_get = []
     dict_return = {'diary': diary_get}
     return render(request, 'mood/index.html', dict_return)
+
+
+def view_mood(request, id):
+    diary = get_object_or_404(Diary, pk=id)
+    dict_return = {'diary': diary}
+    return render(request, 'mood/view_mood.html', dict_return)
 
 
 def set_sleep_time(request):
