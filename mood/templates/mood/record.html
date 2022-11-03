@@ -8,78 +8,48 @@
         <div class="grid grid-cols-5 gap-4">
             <div class="col-span-2">
                 <div class="record-mood">
-                    <div class="grid grid-rows-2 grid-flow-col gap-5">
+                    <div class="grid grid-rows-2 grid-flow-col gap-4">
                         <!-- Positive Mood -->
                         <div>
                             <h3 class="mb-4 font-semibold text-gray-500 dark:text-white">Positive Mood</h3>
-                            <ul class="w-48 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <ul
+                                class="w-48 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                {% for mood in positive_moods %}
                                 <li class="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
                                     <div class="flex items-center pl-3">
-                                        <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                        <label for="vue-checkbox" class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Happy</label>
+                                        <input id="{{mood}}" type="checkbox" value="{{mood}}" name="mood-input[]"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                        <label for="{{mood}}"
+                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">{{mood}}</label>
                                     </div>
                                 </li>
-                                <li class="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-                                    <div class="flex items-center pl-3">
-                                        <input id="react-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                        <label for="react-checkbox" class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Joy</label>
-                                    </div>
-                                </li>
-                                <li class="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-                                    <div class="flex items-center pl-3">
-                                        <input id="angular-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                        <label for="angular-checkbox" class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Loved</label>
-                                    </div>
-                                </li>
-                                <li class="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-                                    <div class="flex items-center pl-3">
-                                        <input id="laravel-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                        <label for="laravel-checkbox" class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Okay</label>
-                                    </div>
-                                </li>
+                                {% endfor %}
                             </ul>
-                            <button type="button" class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Add Positive Mood
-                                <svg class="h-5 w-5 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                            </button>
+                            <a href="{% url 'add_mood_positive' %}"><button type="button"
+                                    class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Add Positive Mood</a>
+                            </button></a>
                         </div>
                         <!-- Negative Mood -->
                         <div>
                             <h3 class="mb-4 font-semibold text-gray-500 dark:text-white">Negative Mood</h3>
-                            <ul class="w-48 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <ul
+                                class="w-48 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                {% for mood in negative_moods %}
                                 <li class="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
                                     <div class="flex items-center pl-3">
-                                        <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                        <label for="vue-checkbox" class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Angry</label>
+                                        <input id="{{mood}}" type="checkbox" value="{{mood}}" name="mood-input[]"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                        <label for="{{mood}}"
+                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">{{mood}}</label>
                                     </div>
                                 </li>
-                                <li class="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-                                    <div class="flex items-center pl-3">
-                                        <input id="react-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                        <label for="react-checkbox" class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Loneliness</label>
-                                    </div>
-                                </li>
-                                <li class="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-                                    <div class="flex items-center pl-3">
-                                        <input id="angular-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                        <label for="angular-checkbox" class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Sad</label>
-                                    </div>
-                                </li>
-                                <li class="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-                                    <div class="flex items-center pl-3">
-                                        <input id="laravel-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                        <label for="laravel-checkbox" class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Anxious</label>
-                                    </div>
-                                </li>
+                                {% endfor %}
                             </ul>
-                            <button type="button" class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Add Negative Mood
-                                <svg class="h-5 w-5 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                            </button>
+                            <a href="{% url 'add_mood_negative' %}"><button type="button"
+                                    class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Add Negative Mood </a>
+                            </button></a>
                         </div>
                     </div>
                 </div>
@@ -87,12 +57,12 @@
             <div class="col-span-3">
                 <div class="record-datetime">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        for="record-time">Choose a time:</label>
+                        for="record-time">Choose a
+                        time:</label>
                     <input type="datetime-local" id="record-time" name="record-time" max="{{ time }}" required>
                 </div>
                 <div class="record-place">
-                    <label for="place" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where are you
-                        at this time?</label>
+                    <label for="place" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where are you at this time?</label>
                     {% if not places%}
                     <select id="place" disabled name="place-input"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -128,7 +98,8 @@
                             <li>
                                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                                     <label for="checkbox-item-4"
-                                        class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">Please add your friends</label>
+                                        class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">Please
+                                        add your friends</label>
                                 </div>
                             </li>
                         </ul>
