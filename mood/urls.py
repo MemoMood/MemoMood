@@ -6,6 +6,7 @@ urlpatterns = [
     path('mood', views.mood, name='mood'),
     path('mood/sleep_time', views.set_sleep_time, name='set_sleep_time'),
     path('mood/record', views.record, name='record'),
+    path('mood/views/<int:id>', views.view_mood, name='view_mood'),
     path('mood/accept/sleep_time', views.accept_sleep_time, name='accept_sleep_time'),
     path('mood/accept/adding', views.accept_adding, name='accept_adding'),
     path('mood/add_place', views.add_place, name='add_place'),
