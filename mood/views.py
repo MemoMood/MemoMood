@@ -8,6 +8,18 @@ from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField
 # Create your views here.
 
 
+def check_null():
+    if not MoodFactors.objects.all():
+        place_factors = MoodFactors(factor='place')
+        place_factors.save()
+        people_factors = MoodFactors(factor='people')
+        people_factors.save()
+        positive_mood = MoodFactors(factor='mood-positive')
+        positive_mood.save()
+        negative_mood = MoodFactors(factor='mood-negative')
+        negative_mood.save()
+
+
 def welcome(request):
     return render(request, 'mood/welcome.html')
 
@@ -50,17 +62,17 @@ def set_sleep_time(request):
 
 
 def record(request):
-    if not MoodFactors.objects.all():
-        place_factors = MoodFactors(factor='place')
-        place_factors.save()
-        people_factors = MoodFactors(factor='people')
-        people_factors.save()
-        mood_factors = MoodFactors(factor='mood')
-        mood_factors.save()
+    check_null()
     places = MoodFactors.objects.get(factor='place')
     peoples = MoodFactors.objects.get(factor='people')
+    positive_moods = MoodFactors.objects.get(factor='mood-positive')
+    negative_moods = MoodFactors.objects.get(factor='mood-negative')
     places_list = [str(p) for p in places.factordetail_set.all()]
     peoples_list = [str(p) for p in peoples.factordetail_set.all()]
+    positive_moods_list = [str(m)
+                           for m in positive_moods.factordetail_set.all()]
+    negative_moods_list = [str(m)
+                           for m in negative_moods.factordetail_set.all()]
     if request.POST:
         time = request.POST.get('record-time')
         datetime_object = datetime.strptime(time, '%Y-%m-%dT%H:%M')
@@ -68,6 +80,7 @@ def record(request):
         weather = request.POST.get('weather-input')
         people = request.POST.getlist('friends-name[]')
         text = request.POST.get('text-input')
+        mood = request.POST.getlist('mood-input[]')
         # add to diary
         diary = Diary()
         diary.time = datetime_object
@@ -78,11 +91,14 @@ def record(request):
         for p in people:
             find_name = FactorDetail.objects.get(name=p)
             diary.people.add(find_name)
+        for m in mood:
+            find_mood = FactorDetail.objects.get(name=m)
+            diary.mood.add(find_mood)
         diary.save()
         return HttpResponseRedirect(reverse('accept_adding'))
     time_format = timezone.now().strftime(f"%Y-%m-%dT%H:%M")
-    dict_return = {'time': time_format,
-                   'places': places_list, 'peoples': peoples_list}
+    dict_return = {'time': time_format, 'places': places_list, 'peoples': peoples_list,
+                   'positive_moods': positive_moods_list, 'negative_moods': negative_moods_list}
     return render(request, 'mood/record.html', dict_return)
 
 
