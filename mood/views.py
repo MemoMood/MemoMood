@@ -109,29 +109,34 @@ def record(request):
 
 
 def add_place(request):
+    check_null()
     if request.POST:
         place = request.POST.get('new-place')
+        place = place.lower()
         places = MoodFactors.objects.get(factor='place')
         places_list = [str(p) for p in places.factordetail_set.all()]
         if place not in places_list:
             places.factordetail_set.create(name=place)
-        return HttpResponseRedirect(reverse('accept_adding'))
+        return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_place.html')
 
 
 def add_people(request):
+    check_null()
     if request.POST:
         people = request.POST.getlist('new-friend')
         peoples = MoodFactors.objects.get(factor='people')
         peoples_list = [str(p) for p in peoples.factordetail_set.all()]
         for i in people:
             if i not in peoples_list:
+                i = i.lower()
                 peoples.factordetail_set.create(name=i)
-        return HttpResponseRedirect(reverse('accept_adding'))
+        return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_people.html')
 
 
 def add_mood_positive(request):
+    check_null()
     if request.POST:
         mood = request.POST.get('new-mood')
         mood_lower = mood.lower()
@@ -139,7 +144,7 @@ def add_mood_positive(request):
         positive_list = [str(m) for m in moods.factordetail_set.all()]
         if mood_lower not in positive_list:
             moods.factordetail_set.create(name=mood_lower)
-        return HttpResponseRedirect(reverse('accept_adding'))
+        return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_mood_positive.html',)
 
 
