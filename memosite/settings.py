@@ -1,3 +1,5 @@
+import os
+
 """
 Django settings for memosite project.
 
@@ -37,8 +39,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mood'
+    'django.contrib.sites',
+    
+    'mood',
+    
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    
+    'crispy_forms',
 ]
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = 'mood'
+LOGOUT_REDIRECT_URL = 'mood'
+
+# Google Client ID : 996431643560-a3cc8tnfovc8l3n6alcvh9vck3p3lifv.apps.googleusercontent.com
+# Google Client Secrect : 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
+
+# Github Client ID : 6596f77a2313721d3c61
+# Github Client Secrect : b3f152b6c6b48a30e25e7555a4f740095f2e0c97
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +77,7 @@ ROOT_URLCONF = 'memosite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,6 +89,7 @@ TEMPLATES = [
         },
     },
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'memosite.wsgi.application'
 

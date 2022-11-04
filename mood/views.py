@@ -20,4 +20,4 @@ def discover(request):
 
 
 def profile(request):
-    return render(request, 'mood/profile.html')
+    return render(request, 'dashboard/home.html')
