@@ -1,0 +1,15 @@
+{% extends 'mood/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="view-mood-container">
+    <p>{{diary.time}}</p>
+    <p>You at {{diary.place}}</p>
+    <p>with
+        {% for p in diary.people.all %}
+        {{ p.name }}
+        {% endfor %}
+    </p>
+    <p>{{diary.text}}</p>
+</div>
+{% endblock %}
