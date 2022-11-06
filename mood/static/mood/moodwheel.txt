@@ -41,7 +41,7 @@ Positive,Peaceful,Responsive
 Positive,Peaceful,Serene
 Positive,Peaceful,Sentimental
 Positive,Peaceful,Thankful
-Negative, Sad,Guilty
+Negative,Sad,Guilty
 Negative,Sad,Ashamed
 Negative,Sad,Depressed
 Negative,Sad,Lonely
