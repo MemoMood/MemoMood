@@ -15,6 +15,9 @@ class FactorDetail(models.Model):
     factor = models.ForeignKey(MoodFactors, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True,
                             null=False, blank=False)
+    category = models.CharField(max_length=255, null=True, blank=True)
+    detail = models.CharField(max_length=255, null=True, blank=True)
+    favorite = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return self.name
