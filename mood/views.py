@@ -145,7 +145,7 @@ def add_mood_positive(request):
         if mood_lower not in positive_list:
             moods.factordetail_set.create(name=mood_lower)
         return HttpResponseRedirect(reverse('record'))
-    return render(request, 'mood/add_choice/positive_mood_list.html',)
+    return render(request, 'mood/add_choice/add_mood_positive.html',)
 
 
 def add_mood_negative(request):
@@ -163,9 +163,10 @@ def add_mood_negative(request):
 def add_mood_list(request):
     positive = MoodFactors.objects.get(factor='mood-positive')
     negative = MoodFactors.objects.get(factor='mood-negative')
-    with open('/mood/static/mood/moodwheel.txt') as f:
+    with open('mood/static/mood/moodwheel.txt') as f:
         lines = [line.rstrip() for line in f]
     factor = FactorDetail()
+    return render(request, 'mood/add_choice/mood_list.html')
         
 def accept_sleep_time(request):
     return render(request, 'mood/accept_components/back_from_sleep_time.html')
