@@ -14,10 +14,8 @@ def check_null():
         place_factors.save()
         people_factors = MoodFactors(factor='people')
         people_factors.save()
-        positive_mood = MoodFactors(factor='mood-positive')
-        positive_mood.save()
-        negative_mood = MoodFactors(factor='mood-negative')
-        negative_mood.save()
+        mood = MoodFactors(factor='mood')
+        mood.save()
 
 
 def welcome(request):
@@ -71,14 +69,13 @@ def record(request):
     check_null()
     places = MoodFactors.objects.get(factor='place')
     peoples = MoodFactors.objects.get(factor='people')
-    positive_moods = MoodFactors.objects.get(factor='mood-positive')
-    negative_moods = MoodFactors.objects.get(factor='mood-negative')
+    moods = MoodFactors.objects.get(factor='mood')
     places_list = [str(p) for p in places.factordetail_set.all()]
     peoples_list = [str(p) for p in peoples.factordetail_set.all()]
     positive_moods_list = [str(m)
-                           for m in positive_moods.factordetail_set.all()]
+                           for m in moods.factordetail_set.all() if m.category == 'Positive' and m.favorite]
     negative_moods_list = [str(m)
-                           for m in negative_moods.factordetail_set.all()]
+                           for m in moods.factordetail_set.all() if m.category == 'Negative' and m.favorite]
     if request.POST:
         time = request.POST.get('record-time')
         datetime_object = datetime.strptime(time, '%Y-%m-%dT%H:%M')
@@ -135,39 +132,36 @@ def add_people(request):
     return render(request, 'mood/add_choice/add_people.html')
 
 
-def add_mood_positive(request):
-    check_null()
-    if request.POST:
-        mood = request.POST.get('new-mood')
-        mood_lower = mood.lower()
-        moods = MoodFactors.objects.get(factor='mood-positive')
-        positive_list = [str(m) for m in moods.factordetail_set.all()]
-        if mood_lower not in positive_list:
-            moods.factordetail_set.create(name=mood_lower)
-        return HttpResponseRedirect(reverse('record'))
-    return render(request, 'mood/add_choice/add_mood_positive.html',)
-
-
-def add_mood_negative(request):
-    check_null()
-    if request.POST:
-        mood = request.POST.get('new-mood')
-        mood_lower = mood.lower()
-        moods = MoodFactors.objects.get(factor='mood-negative')
-        negative_list = [str(m) for m in moods.factordetail_set.all()]
-        if mood_lower not in negative_list:
-            moods.factordetail_set.create(name=mood_lower)
-        return HttpResponseRedirect(reverse('record'))
-    return render(request, 'mood/add_choice/add_mood_negative.html',)
-
 def add_mood_list(request):
-    positive = MoodFactors.objects.get(factor='mood-positive')
-    negative = MoodFactors.objects.get(factor='mood-negative')
+    mood_obj = MoodFactors.objects.get(factor='mood')
     with open('mood/static/mood/moodwheel.txt') as f:
         lines = [line.rstrip() for line in f]
-    factor = FactorDetail()
-    return render(request, 'mood/add_choice/mood_list.html')
-        
+    if not mood_obj.factordetail_set.all():
+        for line in lines:
+            mood = line.split(',')
+            if len(mood) == 3:
+                mood_obj.factordetail_set.create(name=mood[2])
+                mood_fac = FactorDetail.objects.get(name=mood[2])
+                mood_fac.category = mood[0]
+                mood_fac.detail = mood[1]
+                mood_fac.save()
+    if request.POST:
+        fav_list = request.POST.getlist('fav-mood[]')
+        print(fav_list)
+        for fav in fav_list:
+            fav_obj = FactorDetail.objects.get(name=fav)
+            fav_obj.favorite = True
+            fav_obj.save()
+        return HttpResponseRedirect(reverse('record'))
+    dict_return = {}
+    detail_list = ['Main', 'Joyful', 'Powerful', 'Peaceful', 'Sad', 'Mad', 'Scared']
+    for detail in detail_list:
+        detail_obj_list = [str(m) for m in MoodFactors.objects.get(
+            factor='mood').factordetail_set.all() if m.detail == detail]
+        dict_return[detail] = detail_obj_list
+    return render(request, 'mood/add_choice/mood_list.html', dict_return)
+
+
 def accept_sleep_time(request):
     return render(request, 'mood/accept_components/back_from_sleep_time.html')
 
