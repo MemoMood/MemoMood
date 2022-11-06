@@ -13,6 +13,7 @@ urlpatterns = [
     path('mood/add_people', views.add_people, name='add_people'),
     path('mood/add_mood/positive', views.add_mood_positive, name='add_mood_positive'),
     path('mood/add_mood/negative', views.add_mood_negative, name='add_mood_negative'),
+    path('mood/add_choice/list', views.add_mood_list, name='add_mood_list'),
     path('mood/dailymood', views.daily_mood, name='daily_mood'),
     path('mood/dailymood/show', views.daily_mood_show, name='daily_mood_show'),
     path('mood/discover', views.discover, name='discover'),

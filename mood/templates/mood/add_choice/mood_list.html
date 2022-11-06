@@ -1,0 +1,19 @@
+{% extends 'mood/base.html' %}
+{% load static %}
+
+
+{% block content%}
+
+<h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">Choose your mood you often have</h3>
+<ul class="h-56 grid grid-cols-5 gap-6 content-start">
+    <li>
+        <input type="checkbox" id="react-option" value="" class="hidden peer" required="">
+        <label for="react-option" class="inline-flex justify-between items-center p-3 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">                           
+            <div class="block">
+                <div class="w-full text-lg font-semibold">Happy</div>
+            </div>
+        </label>
+    </li>
+</ul>
+
+{% endblock %}
