@@ -147,7 +147,6 @@ def add_mood_list(request):
                 mood_fac.save()
     if request.POST:
         fav_list = request.POST.getlist('fav-mood[]')
-        print(fav_list)
         for fav in fav_list:
             fav_obj = FactorDetail.objects.get(name=fav)
             fav_obj.favorite = True
