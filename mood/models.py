@@ -1,6 +1,5 @@
 from django.db import models
-
-# Create your models here.
+from django_cryptography.fields import encrypt
 
 
 class MoodFactors(models.Model):
@@ -26,9 +25,9 @@ class FactorDetail(models.Model):
 class Diary(models.Model):
     time = models.DateTimeField(blank=False, null=False)
     mood = models.ManyToManyField(FactorDetail, related_name='mood')
-    place = models.CharField(max_length=255, blank=False, null=False)
-    weather = models.CharField(max_length=255, blank=False)
-    text = models.TextField(blank=True, null=True)
+    place = encrypt(models.CharField(max_length=255, blank=False, null=False))
+    weather = encrypt(models.CharField(max_length=255, blank=False))
+    text = encrypt(models.TextField(blank=True, null=True))
     people = models.ManyToManyField(FactorDetail, related_name='people')
 
     def __str__(self) -> str:
