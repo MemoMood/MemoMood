@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from mood.models import MoodFactors, FactorDetail, SleepTimeField
+from mood.models import MoodFactors, FactorDetail, SleepTimeField, Diary
 
 # Create your views here.
 def index_discover(request):
