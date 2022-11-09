@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -25,10 +24,10 @@ class FactorDetail(models.Model):
 
 
 class Diary(models.Model):
-    time = models.DateTimeField(blank=False, null=False)
+    time = models.DateTimeField()
     mood = models.ManyToManyField(FactorDetail, related_name='mood')
-    place = models.CharField(max_length=255, blank=False, null=False)
-    weather = models.CharField(max_length=255, blank=False)
+    place = models.CharField(max_length=255)
+    weather = models.CharField(max_length=255)
     text = models.TextField(blank=True, null=True)
     people = models.ManyToManyField(FactorDetail, related_name='people')
 
@@ -43,10 +42,3 @@ class SleepTimeField(models.Model):
 
     def __str__(self) -> str:
         return f'{self.day} sleep {self.hour} hour'
-
-class UserDiary(models.Model):
-    user = models.ForeignKey(User, blank=False, null=False, on_delete=models.CASCADE)
-    diary = models.ForeignKey(Diary, on_delete=models.CASCADE)
-    factor_place = models.ForeignKey(MoodFactors, on_delete=models.CASCADE, related_name="factor_place")
-    factor_people = models.ForeignKey(MoodFactors, on_delete=models.CASCADE, related_name="factor_people")
-    factor_mood = models.ForeignKey(MoodFactors, on_delete=models.CASCADE, related_name="factor_mood")
