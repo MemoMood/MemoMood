@@ -1,0 +1,118 @@
+{% extends 'mood/base.html' %}
+{% load static %}
+
+
+{% block content%}
+<form action="{% url 'add_mood_list' %}" method="post">
+    {% csrf_token %}
+    <h5>Main Mood</h5>
+    <ul class="h-56 grid grid-cols-5 gap-6 content-start">
+        {% for m in Main %}
+        <li>
+            <input type="checkbox" id="{{m}}-option" value="{{m}}" name="fav-mood[]" class="hidden peer">
+            <label for="{{m}}-option"
+                class="inline-flex justify-between items-center p-3 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <div class="block">
+                    <div class="w-full text-lg font-semibold">{{m}}</div>
+                </div>
+            </label>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h5>Joyful Mood</h5>
+    <ul class="h-56 grid grid-cols-5 gap-6 content-start">
+        {% for m in Joyful %}
+        <li>
+            <input type="checkbox" id="{{m}}-option" value="{{m}}" name="fav-mood[]" class="hidden peer">
+            <label for="{{m}}-option"
+                class="inline-flex justify-between items-center p-3 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <div class="block">
+                    <div class="w-full text-lg font-semibold">{{m}}</div>
+                </div>
+            </label>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h5>Powerful Mood</h5>
+    <ul class="h-56 grid grid-cols-5 gap-6 content-start">
+        {% for m in Powerful %}
+        <li>
+            <input type="checkbox" id="{{m}}-option" value="{{m}}" name="fav-mood[]" class="hidden peer">
+            <label for="{{m}}-option"
+                class="inline-flex justify-between items-center p-3 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <div class="block">
+                    <div class="w-full text-lg font-semibold">{{m}}</div>
+                </div>
+            </label>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h5>Peaceful Mood</h5>
+    <ul class="h-56 grid grid-cols-5 gap-6 content-start">
+        {% for m in Peaceful %}
+        <li>
+            <input type="checkbox" id="{{m}}-option" value="{{m}}" name="fav-mood[]" class="hidden peer">
+            <label for="{{m}}-option"
+                class="inline-flex justify-between items-center p-3 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <div class="block">
+                    <div class="w-full text-lg font-semibold">{{m}}</div>
+                </div>
+            </label>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h5>Sad Mood</h5>
+    <ul class="h-56 grid grid-cols-5 gap-6 content-start">
+        {% for m in Sad %}
+        <li>
+            <input type="checkbox" id="{{m}}-option" value="{{m}}" name="fav-mood[]" class="hidden peer">
+            <label for="{{m}}-option"
+                class="inline-flex justify-between items-center p-3 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <div class="block">
+                    <div class="w-full text-lg font-semibold">{{m}}</div>
+                </div>
+            </label>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h5>Mad Mood</h5>
+    <ul class="h-56 grid grid-cols-5 gap-6 content-start">
+        {% for m in Mad %}
+        <li>
+            <input type="checkbox" id="{{m}}-option" value="{{m}}" name="fav-mood[]" class="hidden peer">
+            <label for="{{m}}-option"
+                class="inline-flex justify-between items-center p-3 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <div class="block">
+                    <div class="w-full text-lg font-semibold">{{m}}</div>
+                </div>
+            </label>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h5>Scared Mood</h5>
+    <ul class="h-56 grid grid-cols-5 gap-6 content-start">
+        {% for m in Scared %}
+        <li>
+            <input type="checkbox" id="{{m}}-option" value="{{m}}" name="fav-mood[]" class="hidden peer">
+            <label for="{{m}}-option"
+                class="inline-flex justify-between items-center p-3 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <div class="block">
+                    <div class="w-full text-lg font-semibold">{{m}}</div>
+                </div>
+            </label>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <button type="submit"
+        class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Add
+    </button>
+</form>
+{% endblock %}
