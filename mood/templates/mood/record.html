@@ -8,11 +8,13 @@
         <div class="grid grid-cols-5 gap-4">
             <div class="col-span-2">
                 <div class="record-mood">
-                    <a href="{% url 'add_mood_list' %}"><button type="button"
-                        class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Add Your Favorite Mood</a>
-                    </button></a>
-                    <div class="grid grid-rows-2 grid-flow-col gap-4">
+                    <a href="{% url 'add_mood_list' %}">
+                        <button type="button"
+                            class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Add Your Favorite Mood
+                        </button>
+                    </a>
+                    <div class="grid grid-rows-2 grid-flow-col gap-4 pt-4">
                         <!-- Positive Mood -->
                         <div>
                             <h3 class="mb-4 font-semibold text-gray-500 dark:text-white">Positive Mood</h3>
@@ -51,13 +53,13 @@
                 </div>
             </div>
             <div class="col-span-3">
-                <div class="record-datetime">
+                <div class="record-datetime py-4">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         for="record-time">Choose a
                         time:</label>
                     <input type="datetime-local" id="record-time" name="record-time" max="{{ time }}" required>
                 </div>
-                <div class="record-place">
+                <div class="record-place py-4">
                     <label for="place" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where are you at this time?</label>
                     {% if not places%}
                     <select id="place" disabled name="place-input"
@@ -117,7 +119,7 @@
                     </div>
                     add friends, <a href="{% url 'add_people' %}" class="text-blue-600">click!</a>
                 </div>
-                <div class="record-weather">
+                <div class="record-weather py-4">
                     <label for=""
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Weather</label>
                     <div class="grid grid-cols-3 gap-4">
@@ -192,10 +194,12 @@
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Your message..."></textarea>
                 </div>
-                <button type="submit"
-                    class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Save
-                </button>
+                <div class="py-8">
+                    <button type="submit"
+                        class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Save
+                    </button>
+                </div>
             </div>
         </div>
     </form>
