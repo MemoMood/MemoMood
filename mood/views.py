@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -65,8 +66,12 @@ def set_sleep_time(request):
     return render(request, 'mood/sleep_time.html', dict_return)
 
 
+@login_required
 def record(request):
     check_null()
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('profile')
     places = MoodFactors.objects.get(factor='place')
     peoples = MoodFactors.objects.get(factor='people')
     moods = MoodFactors.objects.get(factor='mood')
