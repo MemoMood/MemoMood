@@ -179,7 +179,15 @@ def daily_mood_show(request):
 
 
 def discover(request):
-    return render(request, 'mood/discover.html')
+    moods = MoodFactors.objects.get(factor='mood')
+    mood_list = [str(m) for m in moods.factordetail_set.all()]
+    if request.POST:
+        selected_mood = request.POST.get('select-mood')
+        print(selected_mood)
+        return render(request, 'mood/discover.html')
+    # discover_sleep = []
+    dict_return = {"mood": mood_list}
+    return render(request, 'mood/discover.html', dict_return)
 
 
 def profile(request):
