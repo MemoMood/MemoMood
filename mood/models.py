@@ -38,7 +38,7 @@ class Diary(models.Model):
 class SleepTimeField(models.Model):
     user = models.ForeignKey(User, blank=False, null=False, on_delete=models.CASCADE)
     day = models.DateField(null=False, blank=False)
-    hour = models.DecimalField(null=False, blank=False, max_digits=2, decimal_places=1)
+    hour = models.DecimalField(null=False, blank=False, max_digits=3, decimal_places=1)
 
     def __str__(self) -> str:
         return f'{self.day} sleep {self.hour} hour'
