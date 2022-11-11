@@ -20,6 +20,7 @@ def check_null():
 
 
 def welcome(request):
+    check_null()
     return render(request, 'mood/welcome.html')
 
 
@@ -50,7 +51,8 @@ def view_mood(request, id):
 
 
 def set_sleep_time(request):
-    sleep_time_obj = SleepTimeField()
+    if not request.user.is_authenticated:
+        return redirect('profile')
     if request.POST:
         date = request.POST.get('record-time')
         datetime_object = datetime.strptime(date, '%Y-%m-%d').date()
@@ -61,6 +63,7 @@ def set_sleep_time(request):
         except SleepTimeField.DoesNotExist:
             sleep_time_get_obj = None
         if not sleep_time_get_obj:
+            sleep_time_obj = SleepTimeField(user=request.user)
             sleep_time_obj.day = datetime_object
             sleep_time_obj.hour = float(sleep_time)
             sleep_time_obj.save()
@@ -83,14 +86,18 @@ def record(request):
     places = MoodFactors.objects.get(factor='place')
     peoples = MoodFactors.objects.get(factor='people')
     moods = MoodFactors.objects.get(factor='mood')
-    user_diary_get = UserDiary.objects.get(user=request.user)
+    try:
+        user_diary_get = UserDiary.objects.get(user=request.user)
+    except UserDiary.DoesNotExist:
+        return redirect('profile')
     user_factor = user_diary_get.factor.all()
     places_list = user_factor.filter(factor=places)
     peoples_list = user_factor.filter(factor=peoples)
+    moods_list = user_factor.filter(factor=moods)
     positive_moods_list = [str(m)
-                           for m in moods.factordetail_set.all() if m.category == 'Positive' and m.favorite]
+                           for m in moods_list if m.category == 'Positive']
     negative_moods_list = [str(m)
-                           for m in moods.factordetail_set.all() if m.category == 'Negative' and m.favorite]
+                           for m in moods_list if m.category == 'Negative']
     if request.POST:
         time = request.POST.get('record-time')
         datetime_object = datetime.strptime(time, '%Y-%m-%dT%H:%M')
@@ -135,9 +142,10 @@ def add_place(request):
         user_diary_get = UserDiary.objects.get(user=request.user)
         place_user = user_diary_get.factor.all()
         places_object = MoodFactors.objects.get(factor='place')
-        places = place_user.filter(factor=places_object)
+        places_list = place_user.filter(factor=places_object)
+        places_list_str = [str(p) for p in places_list]
         places_list_all = [str(p) for p in places_object.factordetail_set.all()]
-        if place not in places:
+        if place.lower() not in places_list_str:
             place = place.lower()
             if place not in places_list_all:
                 places_object.factordetail_set.create(name=place)
@@ -156,9 +164,10 @@ def add_people(request):
         peoples_user = user_diary_get.factor.all()
         peoples_object = MoodFactors.objects.get(factor='people')
         peoples_list = peoples_user.filter(factor=peoples_object)
+        peoples_list_str = [str(p) for p in peoples_list]
         peoples_list_all = [str(p) for p in peoples_object.factordetail_set.all()]
         for i in people:
-            if i not in peoples_list:
+            if i.lower() not in peoples_list_str:
                 i = i.lower()
                 if i not in peoples_list_all:
                     peoples_object.factordetail_set.create(name=i)
@@ -183,14 +192,21 @@ def add_mood_list(request):
                 mood_fac.detail = mood[1]
                 mood_fac.save()
     if request.POST:
+        user_diary_get = UserDiary.objects.get(user=request.user)
+        user_factor = user_diary_get.factor.all()
+        mood_object = MoodFactors.objects.get(factor='mood')
+        moods_list = user_factor.filter(factor=mood_object)
+        moods_list_str = [str(m) for m in moods_list]
         fav_list = request.POST.getlist('fav-mood[]')
         for fav in fav_list:
-            fav_obj = FactorDetail.objects.get(name=fav)
-            fav_obj.favorite = True
-            fav_obj.save()
+            if fav not in moods_list_str:
+                fav_obj = FactorDetail.objects.get(name=fav)
+                user_diary_get.factor.add(fav_obj)
+                user_diary_get.save()
         return HttpResponseRedirect(reverse('record'))
     dict_return = {}
-    detail_list = ['Main', 'Joyful', 'Powerful', 'Peaceful', 'Sad', 'Mad', 'Scared']
+    detail_list = ['Main', 'Joyful', 'Powerful',
+                   'Peaceful', 'Sad', 'Mad', 'Scared']
     for detail in detail_list:
         detail_obj_list = [str(m) for m in MoodFactors.objects.get(
             factor='mood').factordetail_set.all() if m.detail == detail]
