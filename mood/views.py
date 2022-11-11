@@ -89,7 +89,8 @@ def record(request):
     try:
         user_diary_get = UserDiary.objects.get(user=request.user)
     except UserDiary.DoesNotExist:
-        return redirect('profile')
+        user_diary_get = UserDiary(user=request.user)
+        user_diary_get.save()
     user_factor = user_diary_get.factor.all()
     places_list = user_factor.filter(factor=places)
     peoples_list = user_factor.filter(factor=peoples)
@@ -167,8 +168,8 @@ def add_people(request):
         peoples_list_str = [str(p) for p in peoples_list]
         peoples_list_all = [str(p) for p in peoples_object.factordetail_set.all()]
         for i in people:
-            if i.lower() not in peoples_list_str:
-                i = i.lower()
+            i = i.lower()
+            if i not in peoples_list_str:
                 if i not in peoples_list_all:
                     peoples_object.factordetail_set.create(name=i)
                 find_people = FactorDetail.objects.get(name=i)
