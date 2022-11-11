@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -42,3 +43,12 @@ class SleepTimeField(models.Model):
 
     def __str__(self) -> str:
         return f'{self.day} sleep {self.hour} hour'
+
+class UserDiary(models.Model):
+    user = models.ForeignKey(User,blank=False, null=False, on_delete=models.CASCADE)
+    diary = models.ManyToManyField(Diary)
+    factor = models.ManyToManyField(FactorDetail)
+    sleep_time = models.ManyToManyField(SleepTimeField)
+    
+    def __str__(self) -> str:
+        return f'User diary name: {self.user}'
