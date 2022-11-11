@@ -138,6 +138,7 @@ def add_place(request):
         places = place_user.filter(factor=places_object)
         places_list_all = [str(p) for p in places_object.factordetail_set.all()]
         if place not in places:
+            place = place.lower()
             if place not in places_list_all:
                 places_object.factordetail_set.create(name=place)
             find_place = FactorDetail.objects.get(name=place)
