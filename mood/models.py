@@ -26,8 +26,8 @@ class FactorDetail(models.Model):
 class Diary(models.Model):
     time = models.DateTimeField()
     mood = models.ManyToManyField(FactorDetail, related_name='mood')
-    place = models.CharField(max_length=255)
-    weather = models.CharField(max_length=255)
+    place = models.CharField(max_length=255, null=True, blank=True)
+    weather = models.CharField(max_length=255, null=True, blank=True)
     text = models.TextField(blank=True, null=True)
     people = models.ManyToManyField(FactorDetail, related_name='people')
 
@@ -38,17 +38,17 @@ class Diary(models.Model):
 class SleepTimeField(models.Model):
     user = models.ForeignKey(User, blank=False, null=False, on_delete=models.CASCADE)
     day = models.DateField(null=False, blank=False)
-    hour = models.DecimalField(
-        null=False, blank=False, max_digits=2, decimal_places=1)
+    hour = models.DecimalField(null=False, blank=False, max_digits=2, decimal_places=1)
 
     def __str__(self) -> str:
         return f'{self.day} sleep {self.hour} hour'
+
 
 class UserDiary(models.Model):
     user = models.ForeignKey(User, blank=False, null=False, on_delete=models.CASCADE)
     diary = models.ManyToManyField(Diary)
     factor = models.ManyToManyField(FactorDetail)
     sleep_time = models.ManyToManyField(SleepTimeField)
-    
+
     def __str__(self) -> str:
         return f'User diary name: {self.user}'
