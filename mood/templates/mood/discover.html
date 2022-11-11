@@ -7,7 +7,8 @@
 <form action="{% url 'discover' %}" method="post">
     {% csrf_token %}
     <label for="moods" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an option</label>
-    <select id="moods" name"select-mood" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+    <select id="moods" name="select-mood" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         <option>Choose a mood you want to discover</option>
         {% for m in mood %}
             <option value="{{m}}">{{m}}</option>
