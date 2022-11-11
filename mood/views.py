@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField
+from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField, UserDiary
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -26,12 +26,20 @@ def welcome(request):
 def mood(request):
     time_now = timezone.now()
     before_24 = time_now - timedelta(hours=23, minutes=59, seconds=59)
+    if not request.user.is_authenticated:
+        return redirect('profile')
     try:
-        diary_get = Diary.objects.filter(
+        user_diary_get = UserDiary.objects.get(user=request.user)
+    except UserDiary.DoesNotExist:
+        user_diary = UserDiary(user=request.user)
+        user_diary.save()
+    try:
+        all_user_diary = user_diary_get.diary.all()
+        sorted_user_diary = all_user_diary.filter(
             time__range=[before_24, time_now]).order_by("-time")
-    except Diary.DoesNotExist:
-        diary_get = []
-    dict_return = {'diary': diary_get}
+    except UnboundLocalError:
+        sorted_user_diary = []
+    dict_return = {'username': str(request.user), 'diary': sorted_user_diary}
     return render(request, 'mood/index.html', dict_return)
 
 
@@ -75,8 +83,10 @@ def record(request):
     places = MoodFactors.objects.get(factor='place')
     peoples = MoodFactors.objects.get(factor='people')
     moods = MoodFactors.objects.get(factor='mood')
-    places_list = [str(p) for p in places.factordetail_set.all()]
-    peoples_list = [str(p) for p in peoples.factordetail_set.all()]
+    user_diary_get = UserDiary.objects.get(user=request.user)
+    user_factor = user_diary_get.factor.all()
+    places_list = user_factor.filter(factor=places)
+    peoples_list = user_factor.filter(factor=peoples)
     positive_moods_list = [str(m)
                            for m in moods.factordetail_set.all() if m.category == 'Positive' and m.favorite]
     negative_moods_list = [str(m)
@@ -103,6 +113,13 @@ def record(request):
             find_mood = FactorDetail.objects.get(name=m)
             diary.mood.add(find_mood)
         diary.save()
+        try:
+            user_diary = UserDiary.objects.get(user=request.user)
+        except UserDiary.DoesNotExist:
+            user_diary = UserDiary(user=user)
+            user_diary.save()
+        user_diary.diary.add(diary)
+        user_diary.save()
         return HttpResponseRedirect(reverse('accept_adding'))
     time_format = timezone.now().strftime(f"%Y-%m-%dT%H:%M")
     dict_return = {'time': time_format, 'places': places_list, 'peoples': peoples_list,
@@ -115,10 +132,17 @@ def add_place(request):
     if request.POST:
         place = request.POST.get('new-place')
         place = place.lower()
-        places = MoodFactors.objects.get(factor='place')
-        places_list = [str(p) for p in places.factordetail_set.all()]
-        if place not in places_list:
-            places.factordetail_set.create(name=place)
+        user_diary_get = UserDiary.objects.get(user=request.user)
+        place_user = user_diary_get.factor.all()
+        places_object = MoodFactors.objects.get(factor='place')
+        places = place_user.filter(factor=places_object)
+        places_list_all = [str(p) for p in places_object.factordetail_set.all()]
+        if place not in places:
+            if place not in places_list_all:
+                places_object.factordetail_set.create(name=place)
+            find_place = FactorDetail.objects.get(name=place)
+            user_diary_get.factor.add(find_place)
+            user_diary_get.save()
         return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_place.html')
 
@@ -127,21 +151,28 @@ def add_people(request):
     check_null()
     if request.POST:
         people = request.POST.getlist('new-friend')
-        peoples = MoodFactors.objects.get(factor='people')
-        peoples_list = [str(p) for p in peoples.factordetail_set.all()]
+        user_diary_get = UserDiary.objects.get(user=request.user)
+        peoples_user = user_diary_get.factor.all()
+        peoples_object = MoodFactors.objects.get(factor='people')
+        peoples_list = peoples_user.filter(factor=peoples_object)
+        peoples_list_all = [str(p) for p in peoples_object.factordetail_set.all()]
         for i in people:
             if i not in peoples_list:
                 i = i.lower()
-                peoples.factordetail_set.create(name=i)
+                if i not in peoples_list_all:
+                    peoples_object.factordetail_set.create(name=i)
+                find_people = FactorDetail.objects.get(name=i)
+                user_diary_get.factor.add(find_people)
+                user_diary_get.save()
         return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_people.html')
 
 
 def add_mood_list(request):
     mood_obj = MoodFactors.objects.get(factor='mood')
-    with open('mood/static/mood/moodwheel.txt') as f:
-        lines = [line.rstrip() for line in f]
     if not mood_obj.factordetail_set.all():
+        with open('mood/static/mood/moodwheel.txt') as f:
+            lines = [line.rstrip() for line in f]
         for line in lines:
             mood = line.split(',')
             if len(mood) == 3:
