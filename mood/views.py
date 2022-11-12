@@ -232,7 +232,23 @@ def daily_mood_show(request):
 
 
 def discover(request):
-    return render(request, 'mood/discover.html')
+    user = request.user
+    moods = MoodFactors.objects.get(factor='mood')
+    places = MoodFactors.objects.get(factor='place')
+    try:
+        user_diary_get = UserDiary.objects.get(user=request.user)
+    except UserDiary.DoesNotExist:
+        return redirect('profile')
+    user_factor = user_diary_get.factor.all()
+    places_list = user_factor.filter(factor=places)
+    # place_list = [str(p) for p in places.factordetail_set.all()]
+    mood_list = [str(m) for m in moods.factordetail_set.all()]
+    print(places_list)
+    dict_return = {"mood": mood_list, "place": places_list}
+    if request.POST:
+        selected_mood = request.POST.get('select-mood')
+        return render(request, 'mood/discover.html', dict_return)
+    return render(request, 'mood/discover.html', dict_return)
 
 
 def profile(request):
