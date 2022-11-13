@@ -30,66 +30,116 @@
             </button>
         </form>
     </div>
-    <div class="shadow-lg rounded-lg overflow-hidden">
-  <div class="py-3 px-5 bg-gray-50">Bar chart</div>
-  <canvas class="p-10" id="chartBar"></canvas>
-</div>
+    <div>
+        <div class="shadow-lg rounded-lg overflow-hidden relative">
+            <div class="py-3 px-5 bg-gray-50">Bar chart</div>
+            <canvas class="p-10" id="chartBar"></canvas>
+        </div>
 
-<!-- Required chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- Required chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Chart bar -->
-<script>
-  const labelsBarChart = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-  ];
-  const dataBarChart = {
-    labels: labelsBarChart,
-    datasets: [
-      {
-        label: "My First dataset",
-        backgroundColor: "hsl(252, 82.9%, 67.8%)",
-        borderColor: "hsl(252, 82.9%, 67.8%)",
-        data: [0, 10, 5, 2, 20, 30, 45],
-      },
-    ],
-  };
+        <!-- Chart bar -->
+        <script>
+            const labelsBarChart = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+            ];
+            const dataBarChart = {
+            labels: labelsBarChart,
+            datasets: [
+            {
+                label: "My First dataset",
+                backgroundColor: "hsl(0, 82.9%, 67.8%)",
+                borderColor: "hsl(252, 82.9%, 67.8%)",
+                data: [0, 10, 5, 2, 20, 30, 45],
+            },
+            ],
+        };
 
-  const configBarChart = {
-    type: "bar",
-    data: dataBarChart,
-    options: {},
-  };
+        const configBarChart = {
+            type: "bar",
+            data: dataBarChart,
+            options: {},
+        };
 
-  var chartBar = new Chart(
-    document.getElementById("chartBar"),
-    configBarChart
-  );
-</script>
+        var chartBar = new Chart(
+            document.getElementById("chartBar"),
+            configBarChart
+        );
+
+        </script>
+    </div>
+
+    <div>
+        <div class="shadow-lg rounded-lg overflow-hidden relative">
+            <div class="py-3 px-5 bg-gray-50">Bar chart</div>
+            <canvas class="p-10" id="chartBars"></canvas>
+        </div>
+
+        <!-- Required chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!-- Chart bar -->
+        <script>
+            const labelsBarCharts = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+            ];
+            const dataBarCharts = {
+            labels: labelsBarCharts,
+            datasets: [
+            {
+                label: "My First dataset",
+                backgroundColor: "hsl(200, 82.9%, 67.8%)",
+                borderColor: "hsl(252, 82.9%, 67.8%)",
+                data: [100, 10, 53, 2, 20, 30, 45],
+            },
+            ],
+        };
+
+        const configBarCharts = {
+            type: "bar",
+            data: dataBarCharts,
+            options: {},
+        };
+
+        var chartBars = new Chart(
+            document.getElementById("chartBars"),
+            configBarCharts
+        );
+
+        </script>
+    </div>
+    
+    
     {% comment %} <div class="h-64 rounded-lg bg-gray-200">
         <b class="flex justify-items-left px-6 pt-3">
             Weather
             <i class="fa-solid fa-cloud px-1 py-1"></i>
         </b>
     </div> {% endcomment %}
-    <div class="h-64 rounded-lg bg-gray-200">
+    {% comment %} <div class="h-64 rounded-lg bg-gray-200">
         <b class="flex justify-items-left px-6 pt-3">
             Sleep Time
             <i class="fa-solid fa-bed px-1 py-1"></i>
         </b>
-    </div>
+    </div> {% endcomment %}
     <div class="h-64 rounded-lg bg-gray-200 shadow-lg">
         <b class="flex justify-items-left px-6 pt-3">
             People
             <i class="fa-solid fa-user-group px-1 py-1"></i>
         </b>
         <h2 class="flex justify-items-left px-6 pt-5">Top 3 people when you are happy</h2>
-        <p class="flex justify-items-left px-6 pt-5"> 1. Bell</p>
+        <p class="flex justify-items-left px-6 pt-5">1. Bell</p>
         <p class="flex justify-items-left px-6 pt-5">2. Nate</p>
         <p class="flex justify-items-left px-6 pt-5">3. No data</p>
     </div>
