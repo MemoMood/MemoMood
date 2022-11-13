@@ -224,7 +224,16 @@ def accept_adding(request):
 
 
 def daily_mood(request):
-    return render(request, 'mood/daily_mood.html')
+    week_date = []
+    count_mood = []
+    for i in range(6, -1, -1):
+        some_day = timezone.now().date() - timedelta(days=i)
+        week_date.append(some_day)
+    for j in week_date:
+        count_pos = Diary.objects.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Positive").count()
+        count_neg = Diary.objects.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Negative").count()
+        count_mood.append([count_pos, count_neg])
+    return render(request, 'mood/daily_mood.html', count_mood)
 
 
 def daily_mood_show(request):
