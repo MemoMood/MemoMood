@@ -3,7 +3,7 @@
 
 
 {% block content%}
-<form action="{% url 'add_mood_list' %}" method="post" class='px-6'>
+<form action="{% url 'add_mood_list' %}" method="post" class="px-6">
     {% csrf_token %}
     <h5>Main Mood</h5>
     <ul class="h-56 grid grid-cols-5 gap-6 content-start">

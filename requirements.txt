@@ -1,0 +1,4 @@
+Django
+django-allauth
+django-crispy_forms
+django-cryptography

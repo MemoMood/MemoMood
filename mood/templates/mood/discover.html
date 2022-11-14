@@ -4,19 +4,155 @@
 
 {% block content %}
 
-<form action="{% url 'discover' %}" method="post">
-    {% csrf_token %}
-    <label for="moods" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an option</label>
+<div class="grid grid-cols-2 gap-4 place-content-around h-48 px-6 pt-3">
+    <div>
+        <h1 class="text-2xl">Select Discover Mood</h1>
+        <i class="fa-solid fa-face-smile fa-5x"></i>
+    </div>
+    <div>
+        <h1 class="text-2xl">Average Sleeping Time</h1>
+        <i class="fa-solid fa-bed fa-5x"></i>
+        <div>hours/night</div> 
+    </div>
+    <div class="col-span-2">
+        <form action="{% url 'discover' %}" method="post">
+            {% csrf_token %}
+            <label for="moods" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an option</label>
 
-    <select id="moods" name="select-mood" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option>Choose a mood you want to discover</option>
-        {% for m in mood %}
-            <option value="{{m}}">{{m}}</option>
-        {% endfor %}
-    </select>
-    <button type="submit" class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Save
-    </button>
-</form>
+            <select id="moods" name="select-mood" class="block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option>Choose a mood you want to discover</option>
+                {% for m in mood %}
+                    <option value="{{m}}">{{m}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-6 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Save
+            </button>
+        </form>
+    </div>
+    <div>
+        <div class="shadow-lg rounded-lg overflow-hidden relative">
+            <div class="py-3 px-5 bg-gray-50">Bar chart</div>
+            <canvas class="p-10" id="chartBar"></canvas>
+        </div>
+
+        <!-- Required chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!-- Chart bar -->
+        <script>
+            const labelsBarChart = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+            ];
+            const dataBarChart = {
+            labels: labelsBarChart,
+            datasets: [
+            {
+                label: "My First dataset",
+                backgroundColor: "hsl(0, 82.9%, 67.8%)",
+                borderColor: "hsl(252, 82.9%, 67.8%)",
+                data: [0, 10, 5, 2, 20, 30, 45],
+            },
+            ],
+        };
+
+        const configBarChart = {
+            type: "bar",
+            data: dataBarChart,
+            options: {},
+        };
+
+        var chartBar = new Chart(
+            document.getElementById("chartBar"),
+            configBarChart
+        );
+
+        </script>
+    </div>
+
+    <div>
+        <div class="shadow-lg rounded-lg overflow-hidden relative">
+            <div class="py-3 px-5 bg-gray-50">Bar chart</div>
+            <canvas class="p-10" id="chartBars"></canvas>
+        </div>
+
+        <!-- Required chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!-- Chart bar -->
+        <script>
+            const labelsBarCharts = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+            ];
+            const dataBarCharts = {
+            labels: labelsBarCharts,
+            datasets: [
+            {
+                label: "My First dataset",
+                backgroundColor: "hsl(200, 82.9%, 67.8%)",
+                borderColor: "hsl(252, 82.9%, 67.8%)",
+                data: [100, 10, 53, 2, 20, 30, 45],
+            },
+            ],
+        };
+
+        const configBarCharts = {
+            type: "bar",
+            data: dataBarCharts,
+            options: {},
+        };
+
+        var chartBars = new Chart(
+            document.getElementById("chartBars"),
+            configBarCharts
+        );
+
+        </script>
+    </div>
+    
+    
+    {% comment %} <div class="h-64 rounded-lg bg-gray-200">
+        <b class="flex justify-items-left px-6 pt-3">
+            Weather
+            <i class="fa-solid fa-cloud px-1 py-1"></i>
+        </b>
+    </div> {% endcomment %}
+    {% comment %} <div class="h-64 rounded-lg bg-gray-200">
+        <b class="flex justify-items-left px-6 pt-3">
+            Sleep Time
+            <i class="fa-solid fa-bed px-1 py-1"></i>
+        </b>
+    </div> {% endcomment %}
+    <div class="h-64 rounded-lg bg-gray-200 shadow-lg">
+        <b class="flex justify-items-left px-6 pt-3">
+            People
+            <i class="fa-solid fa-user-group px-1 py-1"></i>
+        </b>
+        <h2 class="flex justify-items-left px-6 pt-5">Top 3 people when you are happy</h2>
+        <p class="flex justify-items-left px-6 pt-5">1. Bell</p>
+        <p class="flex justify-items-left px-6 pt-5">2. Nate</p>
+        <p class="flex justify-items-left px-6 pt-5">3. No data</p>
+    </div>
+    <div class="h-64 rounded-lg bg-gray-200 shadow-lg">
+        <b class="flex justify-items-left px-6 pt-3">
+            Place
+            <i class="fa-solid fa-location-dot px-1 py-1"></i>
+        </b>
+        <h2 class="flex justify-items-left px-6 pt-5">Top 3 place when you are happy</h2>
+        <p class="flex justify-items-left px-6 pt-5"> 1. Home</p>
+        <p class="flex justify-items-left px-6 pt-5">2. Work</p>
+        <p class="flex justify-items-left px-6 pt-5">3. School</p>
+    </div>
+</div>
 
 {% endblock %}

@@ -4,10 +4,12 @@
 
 {% block content%}
 
-<div class="h-56 grid grid-cols-3 gap-4 place-content-stretch">
+<div style="padding:2%;">Now, you login with {{username}}.</div>
+<div>
     {% if not diary %}
-    No diary in last 24 hours.
+    <p>No diary in last 24 hours.</p>
     {% else %}
+    <div class="h-56 grid grid-cols-3 gap-4 place-content-stretch">
     {% for d in diary %}
     <a href="{% url 'view_mood' d.id%}"
         class="self-center block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -22,7 +24,7 @@
     </a>
     {% endfor %}
     {% endif %}
-
+    </div>
 </div>
 
 {% endblock %}
