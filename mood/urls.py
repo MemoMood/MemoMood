@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -16,4 +16,5 @@ urlpatterns = [
     path('mood/dailymood/show', views.daily_mood_show, name='daily_mood_show'),
     path('mood/discover', views.discover, name='discover'),
     path('mood/profile', views.profile, name='profile'),
+    path('mood/export', include('export_mood.urls')),
 ]
