@@ -19,6 +19,21 @@ def check_null():
         mood.save()
 
 
+def check_mood_null():
+    mood_obj = MoodFactors.objects.get(factor='mood')
+    if not mood_obj.factordetail_set.all():
+        with open('mood/static/mood/moodwheel.txt') as f:
+            lines = [line.rstrip() for line in f]
+        for line in lines:
+            mood = line.split(',')
+            if len(mood) == 3:
+                mood_obj.factordetail_set.create(name=mood[2])
+                mood_fac = FactorDetail.objects.get(name=mood[2])
+                mood_fac.category = mood[0]
+                mood_fac.detail = mood[1]
+                mood_fac.save()
+
+
 def welcome(request):
     check_null()
     return render(request, 'mood/welcome.html')
@@ -80,6 +95,7 @@ def set_sleep_time(request):
 @login_required
 def record(request):
     check_null()
+    check_mood_null()
     user = request.user
     if not user.is_authenticated:
         return redirect('profile')
@@ -137,6 +153,7 @@ def record(request):
 
 def add_place(request):
     check_null()
+    check_mood_null()
     if request.POST:
         place = request.POST.get('new-place')
         place = place.lower()
@@ -145,7 +162,8 @@ def add_place(request):
         places_object = MoodFactors.objects.get(factor='place')
         places_list = place_user.filter(factor=places_object)
         places_list_str = [str(p) for p in places_list]
-        places_list_all = [str(p) for p in places_object.factordetail_set.all()]
+        places_list_all = [str(p)
+                           for p in places_object.factordetail_set.all()]
         if place.lower() not in places_list_str:
             place = place.lower()
             if place not in places_list_all:
@@ -159,6 +177,7 @@ def add_place(request):
 
 def add_people(request):
     check_null()
+    check_mood_null()
     if request.POST:
         people = request.POST.getlist('new-friend')
         user_diary_get = UserDiary.objects.get(user=request.user)
@@ -166,7 +185,8 @@ def add_people(request):
         peoples_object = MoodFactors.objects.get(factor='people')
         peoples_list = peoples_user.filter(factor=peoples_object)
         peoples_list_str = [str(p) for p in peoples_list]
-        peoples_list_all = [str(p) for p in peoples_object.factordetail_set.all()]
+        peoples_list_all = [str(p)
+                            for p in peoples_object.factordetail_set.all()]
         for i in people:
             i = i.lower()
             if i not in peoples_list_str:
@@ -180,18 +200,7 @@ def add_people(request):
 
 
 def add_mood_list(request):
-    mood_obj = MoodFactors.objects.get(factor='mood')
-    if not mood_obj.factordetail_set.all():
-        with open('mood/static/mood/moodwheel.txt') as f:
-            lines = [line.rstrip() for line in f]
-        for line in lines:
-            mood = line.split(',')
-            if len(mood) == 3:
-                mood_obj.factordetail_set.create(name=mood[2])
-                mood_fac = FactorDetail.objects.get(name=mood[2])
-                mood_fac.category = mood[0]
-                mood_fac.detail = mood[1]
-                mood_fac.save()
+    check_mood_null()
     if request.POST:
         user_diary_get = UserDiary.objects.get(user=request.user)
         user_factor = user_diary_get.factor.all()
@@ -232,23 +241,74 @@ def daily_mood_show(request):
 
 
 def discover(request):
+    check_null()
+    check_mood_null()
     user = request.user
     moods = MoodFactors.objects.get(factor='mood')
     places = MoodFactors.objects.get(factor='place')
+    places_list_all = [str(p) for p in places.factordetail_set.all()]
+    mood_list_all = [str(m) for m in moods.factordetail_set.all()]
+    dict_return = {"mood": mood_list_all, "place": places_list_all}
     try:
         user_diary_get = UserDiary.objects.get(user=request.user)
     except UserDiary.DoesNotExist:
         return redirect('profile')
-    user_factor = user_diary_get.factor.all()
-    places_list = user_factor.filter(factor=places)
-    # place_list = [str(p) for p in places.factordetail_set.all()]
-    mood_list = [str(m) for m in moods.factordetail_set.all()]
-    print(places_list)
-    dict_return = {"mood": mood_list, "place": places_list}
     if request.POST:
         selected_mood = request.POST.get('select-mood')
+        user_factor = user_diary_get.diary.all()
+        print(user_factor)
+        sort_diary_mood = user_factor.filter(mood__name=selected_mood)
+        # print(sort_diary_mood)
+        # place
+        top_place = count_place(sort_diary_mood)
+        dict_return['top_place'] = top_place
+        # people
+        top_people = count_people(sort_diary_mood)
+        print("top_people")
+        dict_return['top_people'] = top_people
+        # weather
+
         return render(request, 'mood/discover.html', dict_return)
     return render(request, 'mood/discover.html', dict_return)
+
+
+def count_place(sort_diary_mood):
+    count_place = {}
+    for i in sort_diary_mood:
+        if i.place not in count_place:
+            count_place[i.place] = 1
+        else:
+            count_place[i.place] += 1
+    count_place = dict(
+        sorted(count_place.items(), key=lambda item: item[1], reverse=True))
+    key_place = list(count_place.keys())
+    len_key_place = len(key_place)
+    if len_key_place < 3:
+        for i in range(3-len_key_place):
+            key_place.append('')
+    else:
+        key_place = key_place[:3]
+    return key_place
+
+
+def count_people(sort_diary_mood):
+    count_people = {}
+    for i in sort_diary_mood:
+        for j in i.people.all():
+            if j.name not in count_people:
+                count_people[j.name] = 1
+            else:
+                count_people[j.name] += 1
+    count_people = dict(sorted(count_people.items(),
+                        key=lambda item: item[1], reverse=True))
+    key_people = list(count_people.keys())
+    len_key_people = len(key_people)
+    if len_key_people < 3:
+        for i in range(3-len_key_people):
+            key_people.append('')
+    else:
+        key_people = key_people[:3]
+    return key_people
 
 
 def profile(request):
