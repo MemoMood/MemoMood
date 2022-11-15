@@ -140,9 +140,13 @@
             <i class="fa-solid fa-location-dot px-1 py-1"></i>
         </b>
         <h2 class="flex justify-items-left px-6 pt-5">Top 3 place when you are happy</h2>
-        <p class="flex justify-items-left px-6 pt-5"> 1. Home</p>
-        <p class="flex justify-items-left px-6 pt-5">2. Work</p>
-        <p class="flex justify-items-left px-6 pt-5">3. School</p>
+        {% for place in top_place %}
+            {% if place is None or place == "" %}
+                <p class="flex justify-items-left px-6 pt-5">No data</p>
+            {% else %}
+                <p class="flex justify-items-left px-6 pt-5">{{place|title}}</p>
+            {% endif %}
+        {% endfor %}
     </div>
 
 
