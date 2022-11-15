@@ -267,6 +267,14 @@ def discover(request):
         print("top_people")
         dict_return['top_people'] = top_people
         # weather
+        count_weather = {}
+        for i in sort_diary_mood:
+            if i.weather not in count_weather:
+                count_weather[i.weather] = 1
+            else:
+                count_weather[i.weather] += 1
+        dict_return['weather'] = count_weather
+        print(count_weather)
 
         return render(request, 'mood/discover.html', dict_return)
     return render(request, 'mood/discover.html', dict_return)
