@@ -128,20 +128,7 @@
 
         </script>
     </div>
-    
-    
-    {% comment %} <div class="h-64 rounded-lg bg-gray-200">
-        <b class="flex justify-items-left px-6 pt-3">
-            Weather
-            <i class="fa-solid fa-cloud px-1 py-1"></i>
-        </b>
-    </div> {% endcomment %}
-    {% comment %} <div class="h-64 rounded-lg bg-gray-200">
-        <b class="flex justify-items-left px-6 pt-3">
-            Sleep Time
-            <i class="fa-solid fa-bed px-1 py-1"></i>
-        </b>
-    </div> {% endcomment %}
+
     <div class="h-64 rounded-lg bg-gray-200 shadow-lg">
         <b class="flex justify-items-left px-6 pt-3">
             People
@@ -162,10 +149,14 @@
             <i class="fa-solid fa-location-dot px-1 py-1"></i>
         </b>
         <h2 class="flex justify-items-left px-6 pt-5">Top 3 place when you are happy</h2>
-        <p class="flex justify-items-left px-6 pt-5"> 1. {% if top_place.0 is None %} No data show {%else%} {{top_place.0}} {% endif %}</p>
-        <p class="flex justify-items-left px-6 pt-5">2. {% if top_place.1 is None %} No data show {%else%} {{top_place.1}} {% endif %}</p>
-        <p class="flex justify-items-left px-6 pt-5">3. {% if top_place.2 is None %} No data show {%else%} {{top_place.2}} {% endif %}</p>
+        {% for place in top_place %}
+            {% if place is None or place == "" %}
+                <p class="flex justify-items-left px-6 pt-5">Unknown place</p>
+            {% else %}
+                <p class="flex justify-items-left px-6 pt-5">{{place|title}}</p>
+            {% endif %}
+        {% endfor %}
     </div>
-</div>
+
 
 {% endblock %}
