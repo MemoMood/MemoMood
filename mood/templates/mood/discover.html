@@ -137,9 +137,9 @@
         <h2 class="flex justify-items-left px-6 pt-5">Top 3 people when you are {{select}}</h2>
         {% for people in top_people %}
             {% if people is None or people == "" %}
-                <p class="flex justify-items-left px-6 pt-5">No data</p>
+                <p class="flex justify-items-left px-6 pt-5">{{ forloop.counter }}. No data</p>
             {% else %}
-                <p class="flex justify-items-left px-6 pt-5">{{people|title}}</p>
+                <p class="flex justify-items-left px-6 pt-5">{{ forloop.counter }}. {{people|title}}</p>
             {% endif %}
         {% endfor %}
     </div>
@@ -151,9 +151,9 @@
         <h2 class="flex justify-items-left px-6 pt-5">Top 3 place when you are {{select}}</h2>
         {% for place in top_place %}
             {% if place is None or place == "" %}
-                <p class="flex justify-items-left px-6 pt-5">Unknown place</p>
+                <p class="flex justify-items-left px-6 pt-5">{{ forloop.counter }}. Unknown place</p>
             {% else %}
-                <p class="flex justify-items-left px-6 pt-5">{{place|title}}</p>
+                <p class="flex justify-items-left px-6 pt-5">{{ forloop.counter }}. {{place|title}}</p>
             {% endif %}
         {% endfor %}
     </div>
