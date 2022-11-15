@@ -119,28 +119,20 @@
 
         </script>
     </div>
-    
-    {% comment %} <div class="h-64 rounded-lg bg-gray-200">
-        <b class="flex justify-items-left px-6 pt-3">
-            Weather
-            <i class="fa-solid fa-cloud px-1 py-1"></i>
-        </b>
-    </div> {% endcomment %}
-    {% comment %} <div class="h-64 rounded-lg bg-gray-200">
-        <b class="flex justify-items-left px-6 pt-3">
-            Sleep Time
-            <i class="fa-solid fa-bed px-1 py-1"></i>
-        </b>
-    </div> {% endcomment %}
+
     <div class="h-64 rounded-lg bg-gray-200 shadow-lg">
         <b class="flex justify-items-left px-6 pt-3">
             People
             <i class="fa-solid fa-user-group px-1 py-1"></i>
         </b>
         <h2 class="flex justify-items-left px-6 pt-5">Top 3 people when you are happy</h2>
-        <p class="flex justify-items-left px-6 pt-5">1. Bell</p>
-        <p class="flex justify-items-left px-6 pt-5">2. Nate</p>
-        <p class="flex justify-items-left px-6 pt-5">3. No data</p>
+        {% for people in top_people %}
+            {% if people is None or people == "" %}
+                <p class="flex justify-items-left px-6 pt-5">No data</p>
+            {% else %}
+                <p class="flex justify-items-left px-6 pt-5">{{people|title}}</p>
+            {% endif %}
+        {% endfor %}
     </div>
     <div class="h-64 rounded-lg bg-gray-200 shadow-lg">
         <b class="flex justify-items-left px-6 pt-3">
