@@ -142,7 +142,7 @@
         <h2 class="flex justify-items-left px-6 pt-5">Top 3 place when you are happy</h2>
         {% for place in top_place %}
             {% if place is None or place == "" %}
-                <p class="flex justify-items-left px-6 pt-5">No data</p>
+                <p class="flex justify-items-left px-6 pt-5">Unknown place</p>
             {% else %}
                 <p class="flex justify-items-left px-6 pt-5">{{place|title}}</p>
             {% endif %}
