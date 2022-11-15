@@ -134,7 +134,7 @@
             People
             <i class="fa-solid fa-user-group px-1 py-1"></i>
         </b>
-        <h2 class="flex justify-items-left px-6 pt-5">Top 3 people when you are happy</h2>
+        <h2 class="flex justify-items-left px-6 pt-5">Top 3 people when you are {{select}}</h2>
         {% for people in top_people %}
             {% if people is None or people == "" %}
                 <p class="flex justify-items-left px-6 pt-5">No data</p>
@@ -148,7 +148,7 @@
             Place
             <i class="fa-solid fa-location-dot px-1 py-1"></i>
         </b>
-        <h2 class="flex justify-items-left px-6 pt-5">Top 3 place when you are happy</h2>
+        <h2 class="flex justify-items-left px-6 pt-5">Top 3 place when you are {{select}}</h2>
         {% for place in top_place %}
             {% if place is None or place == "" %}
                 <p class="flex justify-items-left px-6 pt-5">Unknown place</p>
