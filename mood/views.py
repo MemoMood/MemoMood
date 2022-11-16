@@ -225,15 +225,21 @@ def accept_adding(request):
 
 def daily_mood(request):
     week_date = []
-    count_mood = []
+    count_mood_pos = []
+    count_mood_neg = []
+    c = 6
     for i in range(6, -1, -1):
         some_day = timezone.now().date() - timedelta(days=i)
         week_date.append(some_day)
     for j in week_date:
         count_pos = Diary.objects.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Positive").count()
         count_neg = Diary.objects.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Negative").count()
-        count_mood.append([count_pos, count_neg])
-    return render(request, 'mood/daily_mood.html', count_mood)
+        count_mood_pos.append([c, count_pos])
+        count_mood_pos.append([c, count_neg])
+        c -= 1
+    count_mood_pos = dict(count_mood_pos)
+    count_mood_neg = dict(count_mood_neg)
+    return render(request, 'mood/daily_mood.html', count_mood_pos, count_mood_neg)
 
 
 def daily_mood_show(request):
