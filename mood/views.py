@@ -267,14 +267,25 @@ def discover(request):
         dict_return['top_place'] = top_place
         # people
         top_people = count_people(sort_diary_mood)
-        # print("top_people")
         dict_return['top_people'] = top_people
+        
         # weather
         count_weather = {"sunny":0, "cloudy":0, "rainny":0, "thunderstorm":0, "foggy":0, "snow":0}
         for i in sort_diary_mood:
             count_weather[i.weather] += 1
         dict_return['weather'] = list(count_weather.values())
-        print(count_weather)
+        
+        # sleep_time
+        mood_date_list = [mood.time.date() for mood in sort_diary_mood]
+        result_sleep_time = {"0":0, "1":0, "2":0, "3":0, "4":0, "5":0,"6":0, "7":0, "8":0, "9":0, "10":0, "11":0,"12":0, "13":0, "14":0, "15":0}
+        sleep_time_get = user_diary_get.sleep_time.all()
+        for date in mood_date_list:
+            try:
+                date_with_hour = sleep_time_get.get(day=date)
+                result_sleep_time[str(int(date_with_hour.hour))] += 1
+            except:
+                pass
+        dict_return['sleep_hour'] = list(result_sleep_time.values())
 
         return render(request, 'mood/discover.html', dict_return)
     return render(request, 'mood/discover.html', dict_return)
