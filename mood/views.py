@@ -69,11 +69,13 @@ def set_sleep_time(request):
     if not request.user.is_authenticated:
         return redirect('profile')
     if request.POST:
+        user_diary = UserDiary.objects.get(user=request.user)
+        sleep_time_user = user_diary.sleep_time.all()
         date = request.POST.get('record-time')
         datetime_object = datetime.strptime(date, '%Y-%m-%d').date()
         sleep_time = request.POST.get('sleep-time-input')
         try:
-            sleep_time_get_obj = SleepTimeField.objects.get(
+            sleep_time_get_obj = sleep_time_user.get(
                 day=datetime_object)
         except SleepTimeField.DoesNotExist:
             sleep_time_get_obj = None
@@ -82,8 +84,8 @@ def set_sleep_time(request):
             sleep_time_obj.day = datetime_object
             sleep_time_obj.hour = float(sleep_time)
             sleep_time_obj.save()
+            user_diary.sleep_time.add(sleep_time_obj)
         else:
-            keep_hour = sleep_time_get_obj.hour
             sleep_time_get_obj.hour = float(sleep_time)
             sleep_time_get_obj.save()
         return HttpResponseRedirect(reverse('accept_sleep_time'))
