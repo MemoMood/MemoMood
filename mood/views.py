@@ -272,7 +272,7 @@ def discover(request):
         for i in sort_diary_mood:
             count_weather[i.weather] += 1
         dict_return['weather'] = list(count_weather.values())
-        # print(count_weather)
+        print(count_weather)
 
         return render(request, 'mood/discover.html', dict_return)
     return render(request, 'mood/discover.html', dict_return)
