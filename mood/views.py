@@ -270,9 +270,7 @@ def discover(request):
         dict_return['top_people'] = top_people
         
         # weather
-        count_weather = {"sunny":0, "cloudy":0, "rainny":0, "thunderstorm":0, "foggy":0, "snow":0}
-        for i in sort_diary_mood:
-            count_weather[i.weather] += 1
+        count_weather = weather_prep(sort_diary_mood)
         dict_return['weather'] = list(count_weather.values())
         
         # sleep_time
@@ -329,6 +327,11 @@ def count_people(sort_diary_mood):
         key_people = key_people[:3]
     return key_people
 
-
+def weather_prep(sort_diary_mood):
+    count_weather = {"sunny":0, "cloudy":0, "rainny":0, "thunderstorm":0, "foggy":0, "snow":0}
+    for i in sort_diary_mood:
+        count_weather[i.weather] += 1
+    return count_weather
+    
 def profile(request):
     return render(request, 'dashboard/home.html')
