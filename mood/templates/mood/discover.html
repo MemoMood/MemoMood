@@ -12,14 +12,14 @@
     <div>
         <h1 class="text-2xl">Average Sleeping Time</h1>
         <i class="fa-solid fa-bed fa-5x"></i>
-        <div>hours/night</div> 
+        <div>{{avg_sleep}} hours/night</div> 
     </div>
     <div class="col-span-2">
         <form action="{% url 'discover' %}" method="post">
             {% csrf_token %}
             <label for="moods" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an option</label>
 
-            <select id="moods" name="select-mood" class="block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select id="moods" name="select-mood" class="block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option>Choose a mood you want to discover</option>
                 {% for m in mood %}
                     <option value="{{m}}">{{m}}</option>
@@ -111,7 +111,7 @@
                 label: "Sleep time",
                 backgroundColor: "hsl(200, 82.9%, 67.8%)",
                 borderColor: "hsl(252, 82.9%, 67.8%)",
-                data: [100, 10, 53, 2, 20, 30, 45,10, 53, 2, 20, 30, 45],
+                data: [{% for show in sleep_hour %}{{ show }},{% endfor %}],
             },
             ],
         };
