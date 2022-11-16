@@ -42,21 +42,21 @@
         <!-- Chart bar -->
         <script>
             const labelsBarChart = [
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
+                "Sunny",
+                "Cloudy",
+                "Rainny",
+                "Thunderstorm",
+                "Foggy",
+                "Snow",
             ];
             const dataBarChart = {
             labels: labelsBarChart,
             datasets: [
             {
-                label: "My First dataset",
+                label: "Weather",
                 backgroundColor: "hsl(0, 82.9%, 67.8%)",
                 borderColor: "hsl(252, 82.9%, 67.8%)",
-                data: [0, 10, 5, 2, 20, 30],
+                data: {{weather}},
             },
             ],
         };

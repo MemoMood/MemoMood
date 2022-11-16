@@ -255,8 +255,9 @@ def discover(request):
         return redirect('profile')
     if request.POST:
         selected_mood = request.POST.get('select-mood')
+        dict_return['select'] = selected_mood
         user_factor = user_diary_get.diary.all()
-        print(user_factor)
+        # print(user_factor)
         sort_diary_mood = user_factor.filter(mood__name=selected_mood)
         # print(sort_diary_mood)
         # place
@@ -264,17 +265,14 @@ def discover(request):
         dict_return['top_place'] = top_place
         # people
         top_people = count_people(sort_diary_mood)
-        print("top_people")
+        # print("top_people")
         dict_return['top_people'] = top_people
         # weather
-        count_weather = {}
+        count_weather = {"sunny":0, "cloudy":0, "rainny":0, "thunderstorm":0, "foggy":0, "snow":0}
         for i in sort_diary_mood:
-            if i.weather not in count_weather:
-                count_weather[i.weather] = 1
-            else:
-                count_weather[i.weather] += 1
-        dict_return['weather'] = count_weather
-        print(count_weather)
+            count_weather[i.weather] += 1
+        dict_return['weather'] = list(count_weather.values())
+        # print(count_weather)
 
         return render(request, 'mood/discover.html', dict_return)
     return render(request, 'mood/discover.html', dict_return)
