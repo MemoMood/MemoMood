@@ -259,12 +259,12 @@ def discover(request):
         selected_mood = request.POST.get('select-mood')
         dict_return['select'] = selected_mood
         user_factor = user_diary_get.diary.all()
-        # print(user_factor)
         sort_diary_mood = user_factor.filter(mood__name=selected_mood)
-        # print(sort_diary_mood)
+
         # place
         top_place = count_place(sort_diary_mood)
         dict_return['top_place'] = top_place
+        
         # people
         top_people = count_people(sort_diary_mood)
         dict_return['top_people'] = top_people
