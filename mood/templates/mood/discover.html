@@ -6,7 +6,7 @@
 
 <div class="grid grid-cols-2 gap-4 place-content-around h-48 px-6 pt-3">
     <div>
-        <h1 class="text-2xl">Select Discover Mood</h1>
+        <h1 class="text-2xl">Select Discover {{select}} Mood</h1>
         <i class="fa-solid fa-face-smile fa-5x"></i>
     </div>
     <div>
@@ -56,7 +56,7 @@
                 label: "Weather",
                 backgroundColor: "hsl(0, 82.9%, 67.8%)",
                 borderColor: "hsl(252, 82.9%, 67.8%)",
-                data: {{weather}},
+                data: [{% for show in weather %}{{ show }},{% endfor %}],
             },
             ],
         };
