@@ -394,7 +394,7 @@ def remove_place(request):
         remove_factor(request, remove_list)
         return redirect('record')
     factor = get_choice_list(request, 'place')
-    return render(request, 'mood/remove_choice/remove_place.html', {'category': 'mood', 'factor': factor})
+    return render(request, 'mood/remove_choice/remove_place.html', {'category': 'place', 'factor': factor})
 
 
 def remove_people(request):
@@ -405,4 +405,4 @@ def remove_people(request):
         remove_factor(request, remove_list)
         return redirect('record')
     factor = get_choice_list(request, 'people')
-    return render(request, 'mood/remove_choice/remove_people.html', {'category': 'mood', 'factor': factor})
+    return render(request, 'mood/remove_choice/remove_people.html', {'category': 'people', 'factor': factor})
