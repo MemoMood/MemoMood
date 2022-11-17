@@ -64,9 +64,25 @@
         const configBarChart = {
             type: "bar",
             data: dataBarChart,
-            options: {},
-        };
-
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                        color: 'red',
+                        display: true,
+                        text: 'Weather type'
+                    }
+                },
+                    y: {
+                        title: {
+                        color: 'red',
+                        display: true,
+                        text: 'Frequency'
+                    }
+                }
+            }
+        }
+    };
         var chartBar = new Chart(
             document.getElementById("chartBar"),
             configBarChart
@@ -119,8 +135,25 @@
         const configBarCharts = {
             type: "bar",
             data: dataBarCharts,
-            options: {},
-        };
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                        color: 'red',
+                        display: true,
+                        text: 'Sleep hour'
+                    }
+                },
+                    y: {
+                        title: {
+                        color: 'red',
+                        display: true,
+                        text: 'Frequency'
+                    }
+                }
+            }
+        }
+    };
 
         var chartBars = new Chart(
             document.getElementById("chartBars"),
