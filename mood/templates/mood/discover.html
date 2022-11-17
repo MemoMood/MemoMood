@@ -12,7 +12,7 @@
     <div>
         <h1 class="text-2xl">Average Sleeping Time</h1>
         <i class="fa-solid fa-bed fa-5x"></i>
-        <div>{{avg_sleep}} hours/night</div> 
+        <div>{{avg_sleep |floatformat:1}} hours/night</div> 
     </div>
     <div class="col-span-2">
         <form action="{% url 'discover' %}" method="post">
@@ -32,7 +32,7 @@
     </div>
     <div>
         <div class="shadow-lg rounded-lg overflow-hidden relative">
-            <div class="py-3 px-5 bg-gray-50">Bar chart</div>
+            <div class="py-3 px-5 bg-gray-50">Weather bar chart</div>
             <canvas class="p-10" id="chartBar"></canvas>
         </div>
 
@@ -57,6 +57,7 @@
                 backgroundColor: "hsl(0, 82.9%, 67.8%)",
                 borderColor: "hsl(252, 82.9%, 67.8%)",
                 data: [{% for show in weather %}{{ show }},{% endfor %}],
+                borderRadius: 100,
             },
             ],
         };
@@ -64,9 +65,25 @@
         const configBarChart = {
             type: "bar",
             data: dataBarChart,
-            options: {},
-        };
-
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                        color: 'red',
+                        display: true,
+                        text: 'Weather type'
+                    }
+                },
+                    y: {
+                        title: {
+                        color: 'red',
+                        display: true,
+                        text: 'Frequency'
+                    }
+                }
+            }
+        }
+    };
         var chartBar = new Chart(
             document.getElementById("chartBar"),
             configBarChart
@@ -77,7 +94,7 @@
 
     <div>
         <div class="shadow-lg rounded-lg overflow-hidden relative">
-            <div class="py-3 px-5 bg-gray-50">Bar chart</div>
+            <div class="py-3 px-5 bg-gray-50">Sleep time bar chart</div>
             <canvas class="p-10" id="chartBars"></canvas>
         </div>
 
@@ -112,6 +129,7 @@
                 backgroundColor: "hsl(200, 82.9%, 67.8%)",
                 borderColor: "hsl(252, 82.9%, 67.8%)",
                 data: [{% for show in sleep_hour %}{{ show }},{% endfor %}],
+                borderRadius: 100,
             },
             ],
         };
@@ -119,8 +137,25 @@
         const configBarCharts = {
             type: "bar",
             data: dataBarCharts,
-            options: {},
-        };
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                        color: 'red',
+                        display: true,
+                        text: 'Sleep hour'
+                    }
+                },
+                    y: {
+                        title: {
+                        color: 'red',
+                        display: true,
+                        text: 'Frequency'
+                    }
+                }
+            }
+        }
+    };
 
         var chartBars = new Chart(
             document.getElementById("chartBars"),
