@@ -192,20 +192,22 @@
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Your message..."></textarea>
                 </div>
-                <button type="submit"
-                    class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Save
-                </button>
+                <div class="py-3 text-center">
+                    <button type="submit"
+                        class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Save
+                    </button>
+                </div>
+                <div>
+                    <p class="text-center">
+                        Delete choice <i class="fa-solid fa-trash"></i> <br>
+                        <a href="{% url 'remove_mood' %}" class="text-red-500 bg-white hover:bg-red-200 focus:outline-none focus:ring-4 focus:ring-red-00 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2" style="padding: 1%;">Mood</a>
+                        <a href="{% url 'remove_place' %}" class="text-red-500 text-red-500 bg-white hover:bg-red-200 focus:outline-none focus:ring-4 focus:ring-red-00 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2" style="padding: 1%;">Place</a>
+                        <a href="{% url 'remove_people' %}" class="text-red-500 text-red-500 bg-white hover:bg-red-200 focus:outline-none focus:ring-4 focus:ring-red-00 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2" style="padding: 1%;">People</a>
+                    </p>
+                </div>
             </div>
         </div>
     </form>
-    <div>
-        <p class="text-center">
-            Delete choice click<br>
-            <a href="{% url 'remove_mood' %}" class="text-red-500" style="padding: 1%;">Mood</a>
-            <a href="{% url 'remove_place' %}" class="text-red-500" style="padding: 1%;">Place</a>
-            <a href="{% url 'remove_people' %}" class="text-red-500" style="padding: 1%;">People</a>
-        </p>
-    </div>
 </div>
 {% endblock %}
