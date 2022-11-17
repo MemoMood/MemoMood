@@ -199,5 +199,13 @@
             </div>
         </div>
     </form>
+    <div>
+        <p class="text-center">
+            Delete choice click<br>
+            <a href="{% url 'remove_mood' %}" class="text-red-500" style="padding: 1%;">Mood</a>
+            <a href="{% url 'remove_place' %}" class="text-red-500" style="padding: 1%;">Place</a>
+            <a href="{% url 'remove_people' %}" class="text-red-500" style="padding: 1%;">People</a>
+        </p>
+    </div>
 </div>
 {% endblock %}
