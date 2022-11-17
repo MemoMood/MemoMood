@@ -6,22 +6,6 @@
 <form action="{% url 'add_mood_list' %}" method="post" class="px-6">
     {% csrf_token %}
     <div class="pb-20">
-        <h5 class="text-lg font-bold">Main Mood</h5>
-        <ul class="h-56 grid grid-cols-5 gap-6 content-start">
-            {% for m in Main %}
-            <li>
-                <input type="checkbox" id="{{m}}-option" value="{{m}}" name="fav-mood[]" class="hidden peer">
-                <label for="{{m}}-option"
-                    class="inline-flex justify-between items-center p-3 w-full text-gray-500 bg-white rounded-lg border-4 border-yellow-300 cursor-pointer peer-checked:border-yellow-400 peer-checked:bg-yellow-400 hover:text-gray-600 peer-checked:text-white hover:bg-gray-50">
-                    <div class="block">
-                        <div class="w-full text-base font-semibold">{{m}}</div>
-                    </div>
-                </label>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="pb-20">
         <h5 class="text-lg font-bold">Joyful Mood</h5>
         <ul class="h-56 grid grid-cols-5 gap-6 content-start">
             {% for m in Joyful %}
