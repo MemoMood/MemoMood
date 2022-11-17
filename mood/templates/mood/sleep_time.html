@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+<link href="mood/static/mood/output.css" rel="stylesheet">
+
 <div class="sleep-time-container">
     <h1 style="text-align:center;">Set your sleep time.</h1>
     <form action="{% url 'set_sleep_time' %}" method="post">
@@ -11,7 +13,7 @@
                 day:</label>
             <input type="date" id="record-time" name="record-time" max="{{ time }}" required>
         </div>
-        <div class="record-sleep-time">
+        <div class="record-sleep-time scale-75">
             <label for="steps-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sleeping
                 time</label>
             <input id="steps-range" type="range" min="0" max="15" value="8" step="0.5" name="sleep-time-input"
