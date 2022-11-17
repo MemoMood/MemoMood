@@ -344,7 +344,10 @@ def sleep_time_prep(user_diary, sort_diary_mood):
             result_sleep_time[str(int(date_with_hour.hour))] += 1
         except:
             pass
-    avg_sleep_time = sum(sleep_time) / len(sleep_time)
+    if len(sleep_time) == 0:
+        avg_sleep_time = 0
+    else:
+        avg_sleep_time = sum(sleep_time) / len(sleep_time)
     return result_sleep_time, avg_sleep_time
             
 
