@@ -145,7 +145,8 @@ def add_place(request):
         places_object = MoodFactors.objects.get(factor='place')
         places_list = place_user.filter(factor=places_object)
         places_list_str = [str(p) for p in places_list]
-        places_list_all = [str(p) for p in places_object.factordetail_set.all()]
+        places_list_all = [str(p)
+                           for p in places_object.factordetail_set.all()]
         if place.lower() not in places_list_str:
             place = place.lower()
             if place not in places_list_all:
@@ -166,7 +167,8 @@ def add_people(request):
         peoples_object = MoodFactors.objects.get(factor='people')
         peoples_list = peoples_user.filter(factor=peoples_object)
         peoples_list_str = [str(p) for p in peoples_list]
-        peoples_list_all = [str(p) for p in peoples_object.factordetail_set.all()]
+        peoples_list_all = [str(p)
+                            for p in peoples_object.factordetail_set.all()]
         for i in people:
             i = i.lower()
             if i not in peoples_list_str:
@@ -222,24 +224,37 @@ def accept_sleep_time(request):
 def accept_adding(request):
     return render(request, 'mood/accept_components/back_home_record.html')
 
-
-def daily_mood(request):
-    week_date = []
-    count_mood_pos = []
-    count_mood_neg = []
-    c = 6
+def get_percent_in_week():
+    week_date = {}
+    count_mood_pos = {}
+    count_mood_neg = {}
     for i in range(6, -1, -1):
         some_day = timezone.now().date() - timedelta(days=i)
-        week_date.append(some_day)
-    for j in week_date:
+        if some_day.weekday() == 6:
+            week_date[0] = some_day
+        else:
+            week_date[some_day.weekday()+1] = some_day
+    for key,j in week_date.items():
         count_pos = Diary.objects.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Positive").count()
         count_neg = Diary.objects.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Negative").count()
-        count_mood_pos.append([c, count_pos])
-        count_mood_pos.append([c, count_neg])
-        c -= 1
-    count_mood_pos = dict(count_mood_pos)
-    count_mood_neg = dict(count_mood_neg)
-    return render(request, 'mood/daily_mood.html', count_mood_pos, count_mood_neg)
+        count_mood_pos[key], count_mood_neg[key] = count_pos, count_neg
+    count_mood_pos, count_mood_neg = dict(sorted(count_mood_pos.items())), dict(sorted(count_mood_neg.items()))
+    value_for_graph = []
+    for k in range(0, 7, 1):
+        positive_count = count_mood_pos[k]
+        all_count = count_mood_pos[k] + count_mood_neg[k]
+        if all_count == 0:
+            percent_positive = 0
+        else:
+            percent_positive = positive_count/all_count*100
+        value_for_graph.append(percent_positive)
+    week_date = dict(sorted(week_date.items()))
+    week_date_list = week_date.values()
+    return value_for_graph, week_date_list
+
+def daily_mood(request):
+    percent, week_date = get_percent_in_week()
+    return render(request, 'mood/daily_mood.html', {'percent': percent})
 
 
 def daily_mood_show(request):
