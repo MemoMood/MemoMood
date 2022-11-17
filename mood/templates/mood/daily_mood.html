@@ -1,7 +1,7 @@
 {% extends 'mood/base.html' %} {% load static %} {% block content%}
 
 <div class="shadow-lg rounded-lg overflow-hidden">
-    <div class="py-3 px-5 bg-gray-50">Bar chart</div>
+    <div class="py-3 px-5 bg-gray-50">Percentage of positive mood in cureent week</div>
     <canvas class="p-10" id="chartBar"></canvas>
 </div>
 
@@ -23,7 +23,7 @@
         labels: labelsBarChart,
         datasets: [
         {
-            label: "Average mood in week",
+            label: "Percentage of positive mood ",
             backgroundColor: [
                 "#fbb1a6",
                 "#feea9e",
