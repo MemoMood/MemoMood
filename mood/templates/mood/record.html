@@ -51,13 +51,13 @@
                 </div>
             </div>
             <div class="col-span-3">
-                <div class="record-datetime">
+                <div class="record-datetime py-2">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        for="record-time">Choose a
-                        time:</label>
+                        for="record-time">Choose a time
+                    </label>
                     <input type="datetime-local" id="record-time" name="record-time" max="{{ time }}" required>
                 </div>
-                <div class="record-place">
+                <div class="record-place py-2">
                     <label for="place" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where are you at this time? <a href="{% url 'add_place' %}" class="text-white bg-gray-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center inline-flex items-center">Add place</a> </label>
                     {% if not places%}
                     <select id="place" disabled name="place-input"
@@ -72,8 +72,8 @@
                             {% endif %}
                         </select>
                 </div>
-                <div class="record-people">
-                    Select who is with you?
+                <div class="record-people py-2">
+                    <label for="friends" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Who is you with?</label>
                     <button id="dropdownBgHoverButton" data-dropdown-toggle="dropdownBgHover"
                         class="text-white bg-yellow-400 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center inline-flex items-center"
                         type="button">Friends <svg class="ml-2 w-3 h-4" aria-hidden="true" fill="none"
@@ -114,7 +114,7 @@
                     </div>
                     <a href="{% url 'add_people' %}" class="text-white bg-gray-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center inline-flex items-center">Add friends</a>
                 </div>
-                <div class="record-weather">
+                <div class="record-weather py-2">
                     <label for=""
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Weather</label>
                     <div class="grid grid-cols-3 gap-4">
@@ -182,7 +182,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="record-diary">
+                <div class="record-diary py-2">
                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your
                         diary</label>
                     <textarea id="message" rows="4" name="text-input"
