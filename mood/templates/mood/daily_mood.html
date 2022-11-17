@@ -1,9 +1,51 @@
-{% extends 'mood/base.html' %}
-{% load static %}
+{% extends 'mood/base.html' %} {% load static %} {% block content%}
 
+<div class="shadow-lg rounded-lg overflow-hidden">
+    <div class="py-3 px-5 bg-gray-50">Bar chart</div>
+    <canvas class="p-10" id="chartBar"></canvas>
+</div>
 
-{% block content%}
+<!-- Required chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-{% include 'mood/graph_daily.html' %}
+<!-- Chart bar -->
+<script>
+    const labelsBarChart = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+    ];
+    const dataBarChart = {
+        labels: labelsBarChart,
+        datasets: [
+        {
+            label: "Average mood in week",
+            backgroundColor: [
+                "#fbb1a6",
+                "#feea9e",
+                "#fedee1",
+                "#b6dcb5",
+                "#ffb895",
+                "#c2e3e9",
+                "#ddb8df",
+            ],
+            borderColor: "hsl(252, 82.9%, 67.8%)",
+            data: [112, 62, 192, 163, 94, 63, 144],
+            borderRadius: 100,
+        },
+    ],
+};
+
+    const configBarChart = {
+        type: "bar",
+        data: dataBarChart,
+        options: {},
+    };
+    new Chart(document.getElementById("chartBar"), configBarChart);
+</script>
 
 {% endblock %}
