@@ -264,23 +264,22 @@ def discover(request):
         # place
         top_place = count_place(sort_diary_mood)
         dict_return['top_place'] = top_place
-        
+
         # people
         top_people = count_people(sort_diary_mood)
         dict_return['top_people'] = top_people
-        
+
         # weather
         count_weather = weather_prep(sort_diary_mood)
         dict_return['weather'] = list(count_weather.values())
-        
+
         # sleep_time
-        count_sleep_hour, avg_sleep = sleep_time_prep(user_diary_get, sort_diary_mood)
+        count_sleep_hour, avg_sleep = sleep_time_prep(
+            user_diary_get, sort_diary_mood)
         dict_return['sleep_hour'] = list(count_sleep_hour.values())
-        
+
         # average sleep time
         dict_return['avg_sleep'] = avg_sleep
-        
-
 
         return render(request, 'mood/discover.html', dict_return)
     return render(request, 'mood/discover.html', dict_return)
@@ -326,7 +325,7 @@ def count_people(sort_diary_mood):
 
 
 def weather_prep(sort_diary_mood):
-    count_weather = {"sunny":0, "cloudy":0, "rainny":0, "thunderstorm":0, "foggy":0, "snow":0}
+    count_weather = {"sunny": 0, "cloudy": 0, "rainny": 0, "thunderstorm": 0, "foggy": 0, "snow": 0}
     for i in sort_diary_mood:
         count_weather[i.weather] += 1
     return count_weather
@@ -335,7 +334,7 @@ def weather_prep(sort_diary_mood):
 def sleep_time_prep(user_diary, sort_diary_mood):
     sleep_time = []
     mood_date_list = [mood.time.date() for mood in sort_diary_mood]
-    result_sleep_time = {"0":0, "1":0, "2":0, "3":0, "4":0, "5":0,"6":0, "7":0, "8":0, "9":0, "10":0, "11":0,"12":0, "13":0, "14":0, "15":0}
+    result_sleep_time = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0}
     sleep_time_get = user_diary.sleep_time.all()
     for date in mood_date_list:
         try:
@@ -349,7 +348,61 @@ def sleep_time_prep(user_diary, sort_diary_mood):
     else:
         avg_sleep_time = sum(sleep_time) / len(sleep_time)
     return result_sleep_time, avg_sleep_time
-            
+
 
 def profile(request):
     return render(request, 'dashboard/home.html')
+
+
+def choose_category_remove(request):
+    if request.POST:
+        category = request.POST.get('choose-c')
+        return render(request, 'mood/remove_choice/remove_factor.html', {'category': category})
+    return render(request, 'mood/remove_choice/choose_category_remove.html')
+
+
+def get_choice_list(request, category):
+    user_diary = UserDiary.objects.get(user=request.user)
+    mood_factor = MoodFactors.objects.get(factor=category)
+    factor = user_diary.factor.filter(factor=mood_factor)
+    return factor
+
+
+def remove_factor(request, remove_list):
+    user_diary = UserDiary.objects.get(user=request.user)
+    for remove in remove_list:
+        remove_item = FactorDetail.objects.get(name=remove)
+        user_diary.factor.remove(remove_item)
+
+
+def remove_mood(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
+    if request.POST:
+        remove_list = request.POST.getlist('remove-mood[]')
+        remove_factor(request, remove_list)
+        return redirect('record')
+    factor = get_choice_list(request, 'mood')
+    return render(request, 'mood/remove_choice/remove_mood.html', {'category': 'mood', 'factor': factor})
+
+
+def remove_place(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
+    if request.POST:
+        remove_list = request.POST.getlist('remove-place[]')
+        remove_factor(request, remove_list)
+        return redirect('record')
+    factor = get_choice_list(request, 'place')
+    return render(request, 'mood/remove_choice/remove_place.html', {'category': 'mood', 'factor': factor})
+
+
+def remove_people(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
+    if request.POST:
+        remove_list = request.POST.getlist('remove-people[]')
+        remove_factor(request, remove_list)
+        return redirect('record')
+    factor = get_choice_list(request, 'people')
+    return render(request, 'mood/remove_choice/remove_people.html', {'category': 'mood', 'factor': factor})
