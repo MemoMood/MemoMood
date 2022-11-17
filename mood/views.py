@@ -59,6 +59,19 @@ def mood(request):
     return render(request, 'mood/index.html', dict_return)
 
 
+def old_mood(request):
+    if request.POST:
+        user_diary = UserDiary.objects.get(user=request.user)
+        diary_user = user_diary.diary.all()
+        date = request.POST.get('show-time')
+        datetime_min = datetime.strptime(date, '%Y-%m-%d')
+        datetime_max = datetime_min + timedelta(hours=23, minutes=59, seconds=59)
+        sorted_user_diary = diary_user.filter(time__range=[datetime_min, datetime_max])
+        return render(request, 'mood/mood_sort.html', {'diary': sorted_user_diary})
+    diary = {}
+    return render(request, 'mood/mood_sort.html', diary)
+
+
 def view_mood(request, id):
     diary = get_object_or_404(Diary, pk=id)
     dict_return = {'diary': diary}
@@ -264,23 +277,22 @@ def discover(request):
         # place
         top_place = count_place(sort_diary_mood)
         dict_return['top_place'] = top_place
-        
+
         # people
         top_people = count_people(sort_diary_mood)
         dict_return['top_people'] = top_people
-        
+
         # weather
         count_weather = weather_prep(sort_diary_mood)
         dict_return['weather'] = list(count_weather.values())
-        
+
         # sleep_time
-        count_sleep_hour, avg_sleep = sleep_time_prep(user_diary_get, sort_diary_mood)
+        count_sleep_hour, avg_sleep = sleep_time_prep(
+            user_diary_get, sort_diary_mood)
         dict_return['sleep_hour'] = list(count_sleep_hour.values())
-        
+
         # average sleep time
         dict_return['avg_sleep'] = avg_sleep
-        
-
 
         return render(request, 'mood/discover.html', dict_return)
     return render(request, 'mood/discover.html', dict_return)
@@ -326,7 +338,8 @@ def count_people(sort_diary_mood):
 
 
 def weather_prep(sort_diary_mood):
-    count_weather = {"sunny":0, "cloudy":0, "rainny":0, "thunderstorm":0, "foggy":0, "snow":0}
+    count_weather = {"sunny": 0, "cloudy": 0, "rainny": 0,
+                     "thunderstorm": 0, "foggy": 0, "snow": 0}
     for i in sort_diary_mood:
         count_weather[i.weather] += 1
     return count_weather
@@ -335,21 +348,22 @@ def weather_prep(sort_diary_mood):
 def sleep_time_prep(user_diary, sort_diary_mood):
     sleep_time = []
     mood_date_list = [mood.time.date() for mood in sort_diary_mood]
-    result_sleep_time = {"0":0, "1":0, "2":0, "3":0, "4":0, "5":0,"6":0, "7":0, "8":0, "9":0, "10":0, "11":0,"12":0, "13":0, "14":0, "15":0}
+    result_sleep_time = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0,
+                         "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0}
     sleep_time_get = user_diary.sleep_time.all()
     for date in mood_date_list:
         try:
             date_with_hour = sleep_time_get.get(day=date)
             sleep_time.append(date_with_hour.hour)
             result_sleep_time[str(int(date_with_hour.hour))] += 1
-        except:
+        except SleepTimeField.DoesNotExist:
             pass
     if len(sleep_time) == 0:
         avg_sleep_time = 0
     else:
         avg_sleep_time = sum(sleep_time) / len(sleep_time)
     return result_sleep_time, avg_sleep_time
-            
+
 
 def profile(request):
     return render(request, 'dashboard/home.html')
