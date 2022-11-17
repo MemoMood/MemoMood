@@ -342,7 +342,7 @@ def sleep_time_prep(user_diary, sort_diary_mood):
             date_with_hour = sleep_time_get.get(day=date)
             sleep_time.append(date_with_hour.hour)
             result_sleep_time[str(int(date_with_hour.hour))] += 1
-        except:
+        except SleepTimeField.DoesNotExist:
             pass
     if len(sleep_time) == 0:
         avg_sleep_time = 0
