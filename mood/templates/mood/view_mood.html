@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+{% if user_diary %}
 <div class="view-mood-container">
     <p>{{diary.time}}</p>
     <p>You at {{diary.place}}</p>
@@ -12,4 +13,8 @@
     </p>
     <p>{{diary.text}}</p>
 </div>
+{% else %}
+<p class="text-center">Sorry, you can't see this diary.</p>
+<p class="text-center">Please login other account.</p>
+{% endif %}
 {% endblock %}
