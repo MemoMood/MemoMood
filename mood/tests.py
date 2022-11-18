@@ -56,7 +56,13 @@ class MeMoodViewsTest(TestCase):
         self.user = User.objects.create_user(username='testuser')
         self.user.set_password('12345')
         self.user.save()
-
+        
+    def test_check_null(self):
+        self.assertQuerysetEqual([], MoodFactors.objects.all())
+        check_null()
+        with self.assertRaises(AssertionError):
+            self.assertQuerysetEqual([], MoodFactors.objects.all())
+        
     def test_mood_deny_anonymous(self):
         response = self.client.get(reverse('mood'), follow=True)
         self.assertRedirects(response, '/mood/profile')
