@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -16,4 +16,7 @@ urlpatterns = [
     path('mood/dailymood/show', views.daily_mood_show, name='daily_mood_show'),
     path('mood/discover', views.discover, name='discover'),
     path('mood/profile', views.profile, name='profile'),
+    path('mood/remove/mood', views.remove_mood, name='remove_mood'),
+    path('mood/remove/place', views.remove_place, name='remove_place'),
+    path('mood/remove/people', views.remove_people, name='remove_people'),
 ]
