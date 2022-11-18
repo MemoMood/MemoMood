@@ -33,11 +33,24 @@ class MeMoodModelTest(TestCase):
 
 class MeMoodViewsTest(TestCase):
 
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser')
+        self.user.set_password('12345')
+        self.user.save()
+
     def test_mood_deny_anonymous(self):
         response = self.client.get(reverse('mood'), follow=True)
         self.assertRedirects(response, '/mood/profile')
         response = self.client.post(reverse('mood'), follow=True)
         self.assertRedirects(response, '/mood/profile')
+
+    def test_mood_load(self):
+        response = self.client.get(reverse('mood'), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'dashboard/home.html')
+
+    def test_mood(self):
+        pass
 
     def test_set_sleep_time_deny_anonymous(self):
         response = self.client.get('/mood/sleep_time', follow=True)
@@ -46,16 +59,35 @@ class MeMoodViewsTest(TestCase):
         self.assertRedirects(response, '/mood/profile')
 
     def test_set_sleep_time_load(self):
-        self.client.login(username="user", password="test")
         response = self.client.get('/mood/sleep_time', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'dashboard/home.html')
 
     def test_record_deny_anonymous(self):
-        response = self.client.get(reverse('record'), follow=True)
+        response = self.client.get('/mood/record', follow=True)
         self.assertRedirects(response, '/accounts/login/?next=/mood/record')
-        response = self.client.post(reverse('record'), follow=True)
+        response = self.client.post('/mood/record', follow=True)
         self.assertRedirects(response, '/accounts/login/?next=/mood/record')
+
+    def test_record_load(self):
+        response = self.client.get('/mood/record', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/login.html')
+
+    def test_profile_load(self):
+        response = self.client.get('/mood/profile', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'dashboard/home.html')
+        self.assertTemplateUsed(response, 'account/base.html')
+
+    def test_record_can_login(self):
+        logged_in = self.client.login(username='testuser', password='12345')
+        self.assertTrue(logged_in)
+        response = self.client.get('/accounts/login/?next=/mood/record', follow=True)
+        self.assertRedirects(response, '/mood/record')
+        response = self.client.post('/accounts/login/?next=/mood/record', follow=True)
+        self.assertRedirects(response, '/mood/record')
+        self.assertTemplateUsed(response, 'mood/record.html')
 
     def test_add_place(self):
         pass
@@ -70,7 +102,4 @@ class MeMoodViewsTest(TestCase):
         pass
 
     def test_accept_adding(self):
-        pass
-
-    def test_profile(self):
         pass
