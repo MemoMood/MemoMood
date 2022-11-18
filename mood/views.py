@@ -224,21 +224,18 @@ def accept_sleep_time(request):
 def accept_adding(request):
     return render(request, 'mood/accept_components/back_home_record.html')
 
-def get_percent_in_week():
+
+def get_percent_in_week(week_start):
     week_date = {}
     count_mood_pos = {}
     count_mood_neg = {}
-    for i in range(6, -1, -1):
-        some_day = timezone.now().date() - timedelta(days=i)
-        if some_day.weekday() == 6:
-            week_date[0] = some_day
-        else:
-            week_date[some_day.weekday()+1] = some_day
-    for key,j in week_date.items():
+    for i in range(0, 7, 1):
+        some_day = week_start + timedelta(days=i)
+        week_date[some_day.weekday()] = some_day
+    for key, j in week_date.items():
         count_pos = Diary.objects.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Positive").count()
         count_neg = Diary.objects.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Negative").count()
         count_mood_pos[key], count_mood_neg[key] = count_pos, count_neg
-    count_mood_pos, count_mood_neg = dict(sorted(count_mood_pos.items())), dict(sorted(count_mood_neg.items()))
     value_for_graph = []
     for k in range(0, 7, 1):
         positive_count = count_mood_pos[k]
@@ -248,13 +245,20 @@ def get_percent_in_week():
         else:
             percent_positive = positive_count/all_count*100
         value_for_graph.append(percent_positive)
-    week_date = dict(sorted(week_date.items()))
-    week_date_list = week_date.values()
-    return value_for_graph, week_date_list
+    return value_for_graph
+
 
 def daily_mood(request):
-    percent, week_date = get_percent_in_week()
-    return render(request, 'mood/daily_mood.html', {'percent': percent})
+    time_now = timezone.now().strftime(f"%Y-W%V")
+    if request.POST:
+        week = request.POST.get('choose-week')
+        datetime_object = datetime.strptime(week + '-1', '%G-W%V-%u')
+        datetime_object_7 = datetime_object + timedelta(days=6, hours=23, minutes=59, seconds=59)
+        percent = get_percent_in_week(datetime_object)
+        str_week = str(datetime_object.date())+ " to " + str(datetime_object_7.date())
+        dict_return = {'percent': percent, 'time_max': time_now, 'week': week, 'week_str': str_week}
+        return render(request, 'mood/daily_mood.html', dict_return)
+    return render(request, 'mood/daily_mood.html', {'percent': [], 'time_max': time_now})
 
 
 def daily_mood_show(request):
