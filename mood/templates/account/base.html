@@ -28,7 +28,7 @@
           {% if user.is_authenticated %}
           <div><a class="text-light" href="{% url 'welcome' %}">Back to Mood</a></div>
           <div><a class="text-light" href="{% url 'profile' %}">Profile</a></div>
-          <div><a class="text-light" href="{% url 'account_email' %}">Change E-mail</a></div>
+          {% comment %} <div><a class="text-light" href="{% url 'account_email' %}">Change E-mail</a></div> {% endcomment %}
           <div><a class="text-light" href="{% url 'account_logout' %}">Sign Out</a></div>
           {% else %}
           <div><a class="text-light" href="{% url 'welcome' %}">Back to Mood</a></div>
