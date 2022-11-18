@@ -262,6 +262,8 @@ def get_percent_in_week(request,week_start):
 
 
 def daily_mood(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
     time_now = timezone.now().strftime(f"%Y-W%V")
     if request.POST:
         week = request.POST.get('choose-week')
