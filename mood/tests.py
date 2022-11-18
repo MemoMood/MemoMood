@@ -123,6 +123,10 @@ class MeMoodViewsUserTest(TestCase):
         self.user.save()
         self.client.login(username='test_user', password='12345')
         
+    def test_welcome_load(self):
+        response = self.client.get(reverse('welcome'), follow=True)
+        self.assertEqual(response.status_code, 200)
+        
     def test_add_place(self):
         pass
 
