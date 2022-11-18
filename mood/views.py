@@ -275,6 +275,8 @@ def daily_mood(request):
 
 
 def discover(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
     check_null()
     check_mood_null()
     moods = MoodFactors.objects.get(factor='mood')
