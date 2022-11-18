@@ -173,3 +173,8 @@ class MeMoodViewsUserTest(TestCase):
         response = self.client.post('/mood/dailymood')
         self.assertEqual(response.status_code, 200)
 
+    def test_accept_sleep_time(self):
+        response = self.client.get('/mood/accept/sleep_time')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/mood/accept/sleep_time')
+        self.assertEqual(response.status_code, 200)
