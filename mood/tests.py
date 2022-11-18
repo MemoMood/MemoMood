@@ -6,6 +6,8 @@ from mood.views import *
 
 
 class MeMoodModelTest(TestCase):
+    def setUp(self) -> None:
+        self.factor_detail = FactorDetail(name="Alpha", category="Positive", detail="Main", factor=MoodFactors(factor="happy"), favorite="True")
 
     def test_mood_factors(self):
         mood_factor = MoodFactors(factor="happy")
@@ -13,13 +15,12 @@ class MeMoodModelTest(TestCase):
         self.assertEqual("happy", str(mood_factor))
 
     def test_factor_detail(self):
-        factor_detail = FactorDetail(name="Alpha", category="Positive", detail="Main", factor=MoodFactors(factor="happy"), favorite="True")
-        self.assertEqual("Alpha", factor_detail.name)
-        self.assertEqual("Alpha", str(factor_detail))
-        self.assertEqual("Positive", factor_detail.category)
-        self.assertEqual("Main", factor_detail.detail)
-        self.assertEqual(MoodFactors, type(factor_detail.factor))
-        self.assertEqual("True", factor_detail.favorite)
+        self.assertEqual("Alpha", self.factor_detail.name)
+        self.assertEqual("Alpha", str(self.factor_detail))
+        self.assertEqual("Positive", self.factor_detail.category)
+        self.assertEqual("Main", self.factor_detail.detail)
+        self.assertEqual(MoodFactors, type(self.factor_detail.factor))
+        self.assertEqual("True", self.factor_detail.favorite)
 
     def test_diary(self):
         diary = Diary(time="2022-11-14")
