@@ -7,6 +7,7 @@ from mood.views import *
 
 class MeMoodModelTest(TestCase):
     def setUp(self) -> None:
+        self.time_test = "2022-11-14"
         self.mood_factor = MoodFactors(factor="happy")
         self.factor_detail = FactorDetail(name="Alpha", category="Positive", detail="Main", factor=self.mood_factor, favorite="True")
 
@@ -23,8 +24,13 @@ class MeMoodModelTest(TestCase):
         self.assertEqual("True", self.factor_detail.favorite)
 
     def test_diary(self):
-        diary = Diary(time="2022-11-14")
+        diary = Diary(time=self.time_test, place="KU", weather="Sunny", text="Hello")
+        with self.assertRaises(ValueError):
+            diary.mood.add(self.factor_detail.pk)
         self.assertEqual("2022-11-14", diary.time)
+        self.assertEqual("KU", diary.place)
+        self.assertEqual("Sunny", diary.weather)
+        self.assertEqual("Hello", diary.text)
         self.assertEqual("Diary at 2022-11-14", str(diary))
 
     def test_sleep_time_field(self):
