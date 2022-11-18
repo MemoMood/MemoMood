@@ -26,10 +26,12 @@
     <div class="p-3 mb-3 bg-dark">
       <div class="container d-flex justify-content-between">
           {% if user.is_authenticated %}
-          <div><a class="text-light" href="{% url 'account_email' %}">Change E-mail</a></div>
+          <div><a class="text-light" href="{% url 'welcome' %}">Back to Mood</a></div>
           <div><a class="text-light" href="{% url 'profile' %}">Profile</a></div>
+          <div><a class="text-light" href="{% url 'account_email' %}">Change E-mail</a></div>
           <div><a class="text-light" href="{% url 'account_logout' %}">Sign Out</a></div>
           {% else %}
+          <div><a class="text-light" href="{% url 'welcome' %}">Back to Mood</a></div>
           <div><a class="text-light" href="{% url 'account_login' %}">Sign In</a></div>
           <div><a class="text-light" href="{% url 'account_signup' %}">Sign Up</a></div>
           {% endif %}
