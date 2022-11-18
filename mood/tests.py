@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from mood.models import FactorDetail, MoodFactors, SleepTimeField, UserDiary, Diary
+from mood.models import FactorDetail, MoodFactors
+from mood.models import SleepTimeField, UserDiary, Diary
 from django.urls import reverse
 from mood.views import *
 
@@ -9,9 +10,14 @@ class MeMoodModelTest(TestCase):
     def setUp(self) -> None:
         self.time_test = "2022-11-14"
         self.mood_factor = MoodFactors(factor="happy")
-        self.factor_detail = FactorDetail(name="Alpha", category="Positive", detail="Main", factor=self.mood_factor, favorite="True")
-        self.diary = Diary(time=self.time_test, place="KU", weather="Sunny", text="Hello")
-        self.sleep_time = SleepTimeField(user=User(username="Harry"), day="2022-11-14", hour="8")
+        self.factor_detail = FactorDetail(name="Alpha",
+                                          category="Positive", detail="Main",
+                                          factor=self.mood_factor,
+                                          favorite="True")
+        self.diary = Diary(time=self.time_test,
+                           place="KU", weather="Sunny", text="Hello")
+        self.sleep_time = SleepTimeField(user=User(username="Harry"),
+                                         day="2022-11-14", hour="8")
 
     def test_mood_factors(self):
         self.assertEqual("happy", self.mood_factor.factor)
@@ -56,17 +62,17 @@ class MeMoodViewsAnonymousTest(TestCase):
         self.user = User.objects.create_user(username='test_user')
         self.user.set_password('12345')
         self.user.save()
-        
+
     def test_check_null(self):
         self.assertQuerysetEqual([], MoodFactors.objects.all())
         check_null()
         with self.assertRaises(AssertionError):
-            self.assertQuerysetEqual([], MoodFactors.objects.all())     
-    
+            self.assertQuerysetEqual([], MoodFactors.objects.all())
+
     def test_welcome_load(self):
         response = self.client.get(reverse('welcome'), follow=True)
         self.assertEqual(response.status_code, 200)
-        
+
     def test_mood_deny_anonymous(self):
         response = self.client.get(reverse('mood'), follow=True)
         self.assertRedirects(response, '/mood/profile')
@@ -109,25 +115,27 @@ class MeMoodViewsAnonymousTest(TestCase):
     def test_record_can_login(self):
         logged_in = self.client.login(username='test_user', password='12345')
         self.assertTrue(logged_in)
-        response = self.client.get('/accounts/login/?next=/mood/record', follow=True)
+        response = self.client.get('/accounts/login/?next=/mood/record',
+                                   follow=True)
         self.assertRedirects(response, '/mood/record')
-        response = self.client.post('/accounts/login/?next=/mood/record', follow=True)
+        response = self.client.post('/accounts/login/?next=/mood/record',
+                                    follow=True)
         self.assertRedirects(response, '/mood/record')
         self.assertTemplateUsed(response, 'mood/record.html')
 
 
 class MeMoodViewsUserTest(TestCase):
-    
+
     def setUp(self):
         self.user = User.objects.create_user(username='test_user')
         self.user.set_password('12345')
         self.user.save()
         self.client.login(username='test_user', password='12345')
-           
+
     def test_welcome_load(self):
         response = self.client.get(reverse('welcome'), follow=True)
         self.assertEqual(response.status_code, 200)
-        
+
     def test_mood_load(self):
         response = self.client.get(reverse('mood'), follow=True)
         self.assertEqual(response.status_code, 200)
@@ -148,7 +156,7 @@ class MeMoodViewsUserTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'dashboard/home.html')
         self.assertTemplateUsed(response, 'account/base.html')
-        
+
     def test_add_place(self):
         response = self.client.get('/mood/add_place')
         self.assertEqual(response.status_code, 200)
@@ -166,7 +174,7 @@ class MeMoodViewsUserTest(TestCase):
         self.assertEqual(response.status_code, 302)
         response = self.client.post('/mood/discover')
         self.assertEqual(response.status_code, 302)
-        
+
     def test_daily_mood(self):
         response = self.client.get('/mood/dailymood')
         self.assertEqual(response.status_code, 200)
@@ -178,7 +186,7 @@ class MeMoodViewsUserTest(TestCase):
         self.assertEqual(response.status_code, 200)
         response = self.client.post('/mood/accept/sleep_time')
         self.assertEqual(response.status_code, 200)
-        
+
     def test_accept_adding(self):
         response = self.client.get('/mood/accept/adding')
         self.assertEqual(response.status_code, 200)
