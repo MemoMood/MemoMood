@@ -115,17 +115,10 @@ class MeMoodViewsAnonymousTest(TestCase):
         self.assertRedirects(response, '/mood/record')
         self.assertTemplateUsed(response, 'mood/record.html')
 
-    def test_add_place(self):
-        pass
 
-    def test_add_people(self):
-        pass
-
-    def test_add_mood_list(self):
-        pass
-
-    def test_discover(self):
-        pass
-
-    def test_accept_adding(self):
-        pass
+class MeMoodViewsUserTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='test_user')
+        self.user.set_password('12345')
+        self.user.save()
+        self.client.login(username='test_user', password='12345')
