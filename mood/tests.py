@@ -13,11 +13,12 @@ class MeMoodModelTest(TestCase):
         self.assertEqual("happy", str(mood_factor))
 
     def test_factor_detail(self):
-        factor_detail = FactorDetail(name="Alpha", category="Positive", detail="Main", favorite="True")
+        factor_detail = FactorDetail(name="Alpha", category="Positive", detail="Main", factor=MoodFactors(factor="happy"), favorite="True")
         self.assertEqual("Alpha", factor_detail.name)
         self.assertEqual("Alpha", str(factor_detail))
         self.assertEqual("Positive", factor_detail.category)
         self.assertEqual("Main", factor_detail.detail)
+        self.assertEqual(MoodFactors, type(factor_detail.factor))
         self.assertEqual("True", factor_detail.favorite)
 
     def test_diary(self):
