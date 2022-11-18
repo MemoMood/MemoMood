@@ -156,7 +156,10 @@ class MeMoodViewsUserTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_add_people(self):
-        pass
+        response = self.client.get('/mood/add_people')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/mood/add_people')
+        self.assertEqual(response.status_code, 200)
 
     def test_add_mood_list(self):
         pass
