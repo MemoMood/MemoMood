@@ -50,7 +50,7 @@ class MeMoodModelTest(TestCase):
         self.assertEqual("User diary name: Hermione", str(user_diary))
 
 
-class MeMoodViewsTest(TestCase):
+class MeMoodViewsAnonymousTest(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(username='test_user')
