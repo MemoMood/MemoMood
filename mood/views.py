@@ -45,8 +45,10 @@ def mood(request):
 
 
 def view_mood(request, id):
+    user = UserDiary.objects.get(user=request.user)
     diary = get_object_or_404(Diary, pk=id)
-    dict_return = {'diary': diary}
+    find_diary = user.diary.all().filter(id=diary.id)
+    dict_return = {'diary': diary, 'user_diary':find_diary}
     return render(request, 'mood/view_mood.html', dict_return)
 
 
