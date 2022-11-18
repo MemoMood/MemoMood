@@ -7,12 +7,12 @@ from mood.views import *
 
 class MeMoodModelTest(TestCase):
     def setUp(self) -> None:
-        self.factor_detail = FactorDetail(name="Alpha", category="Positive", detail="Main", factor=MoodFactors(factor="happy"), favorite="True")
+        self.mood_factor = MoodFactors(factor="happy")
+        self.factor_detail = FactorDetail(name="Alpha", category="Positive", detail="Main", factor=self.mood_factor, favorite="True")
 
     def test_mood_factors(self):
-        mood_factor = MoodFactors(factor="happy")
-        self.assertEqual("happy", mood_factor.factor)
-        self.assertEqual("happy", str(mood_factor))
+        self.assertEqual("happy", self.mood_factor.factor)
+        self.assertEqual("happy", str(self.mood_factor))
 
     def test_factor_detail(self):
         self.assertEqual("Alpha", self.factor_detail.name)
