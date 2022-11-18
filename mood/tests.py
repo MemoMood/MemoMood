@@ -78,12 +78,6 @@ class MeMoodViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'dashboard/home.html')
 
-    def test_mood(self):
-        response = self.client.get(reverse('mood'), follow=True)
-        self.assertRedirects(response, '/mood/profile')
-        response = self.client.post(reverse('mood'), follow=True)
-        self.assertRedirects(response, '/mood/profile')
-
     def test_set_sleep_time_deny_anonymous(self):
         response = self.client.get('/mood/sleep_time', follow=True)
         self.assertRedirects(response, '/mood/profile')
