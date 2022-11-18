@@ -62,6 +62,10 @@ class MeMoodViewsTest(TestCase):
         check_null()
         with self.assertRaises(AssertionError):
             self.assertQuerysetEqual([], MoodFactors.objects.all())
+            
+    def test_welcome(self):
+        response = self.client.get(reverse('welcome'), follow=True)
+        self.assertRedirects(response, '/mood/welcome')
         
     def test_mood_deny_anonymous(self):
         response = self.client.get(reverse('mood'), follow=True)
