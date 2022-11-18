@@ -53,7 +53,7 @@ class MeMoodModelTest(TestCase):
 class MeMoodViewsTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='test_uesr')
+        self.user = User.objects.create_user(username='test_user')
         self.user.set_password('12345')
         self.user.save()
         
@@ -61,11 +61,11 @@ class MeMoodViewsTest(TestCase):
         self.assertQuerysetEqual([], MoodFactors.objects.all())
         check_null()
         with self.assertRaises(AssertionError):
-            self.assertQuerysetEqual([], MoodFactors.objects.all())
-            
-    def test_welcome(self):
+            self.assertQuerysetEqual([], MoodFactors.objects.all())     
+    
+    def test_welcome_load(self):
         response = self.client.get(reverse('welcome'), follow=True)
-        self.assertRedirects(response, '/mood/welcome')
+        self.assertEqual(response.status_code, 200)
         
     def test_mood_deny_anonymous(self):
         response = self.client.get(reverse('mood'), follow=True)
@@ -107,7 +107,7 @@ class MeMoodViewsTest(TestCase):
         self.assertTemplateUsed(response, 'account/base.html')
 
     def test_record_can_login(self):
-        logged_in = self.client.login(username='test_uesr', password='12345')
+        logged_in = self.client.login(username='test_user', password='12345')
         self.assertTrue(logged_in)
         response = self.client.get('/accounts/login/?next=/mood/record', follow=True)
         self.assertRedirects(response, '/mood/record')
