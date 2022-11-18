@@ -150,7 +150,10 @@ class MeMoodViewsUserTest(TestCase):
         self.assertTemplateUsed(response, 'account/base.html')
         
     def test_add_place(self):
-        pass
+        response = self.client.get('/mood/add_place')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/mood/add_place')
+        self.assertEqual(response.status_code, 200)
 
     def test_add_people(self):
         pass
