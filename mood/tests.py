@@ -50,7 +50,7 @@ class MeMoodModelTest(TestCase):
         self.assertEqual("User diary name: Hermione", str(user_diary))
 
 
-class MeMoodViewsAnonymousTest(TestCase):
+class MeMoodViewsTest(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(username='test_user')
@@ -115,18 +115,6 @@ class MeMoodViewsAnonymousTest(TestCase):
         self.assertRedirects(response, '/mood/record')
         self.assertTemplateUsed(response, 'mood/record.html')
 
-
-class MeMoodViewsUserTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(username='test_user')
-        self.user.set_password('12345')
-        self.user.save()
-        self.client.login(username='test_user', password='12345')
-        
-    def test_welcome_load(self):
-        response = self.client.get(reverse('welcome'), follow=True)
-        self.assertEqual(response.status_code, 200)
-        
     def test_add_place(self):
         pass
 
