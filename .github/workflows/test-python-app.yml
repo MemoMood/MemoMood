@@ -37,7 +37,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with Unittest
       run: |
-        coverage run manage.py test polls
+        coverage run manage.py test mood
         coverage xml
     - name: Upload coverage report using Github Action
       uses: codecov/codecov-action@v3
