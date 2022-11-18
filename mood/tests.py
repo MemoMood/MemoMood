@@ -161,11 +161,8 @@ class MeMoodViewsUserTest(TestCase):
         response = self.client.post('/mood/add_people')
         self.assertEqual(response.status_code, 200)
 
-    def test_add_mood_list(self):
-        pass
-
     def test_discover(self):
-        pass
-
-    def test_accept_adding(self):
-        pass
+        response = self.client.get('/mood/discover')
+        self.assertEqual(response.status_code, 302)
+        response = self.client.post('/mood/discover')
+        self.assertEqual(response.status_code, 302)
