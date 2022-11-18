@@ -53,7 +53,7 @@ class MeMoodModelTest(TestCase):
 class MeMoodViewsTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser')
+        self.user = User.objects.create_user(username='test_uesr')
         self.user.set_password('12345')
         self.user.save()
         
@@ -79,7 +79,10 @@ class MeMoodViewsTest(TestCase):
         self.assertTemplateUsed(response, 'dashboard/home.html')
 
     def test_mood(self):
-        pass
+        response = self.client.get(reverse('mood'), follow=True)
+        self.assertRedirects(response, '/mood/profile')
+        response = self.client.post(reverse('mood'), follow=True)
+        self.assertRedirects(response, '/mood/profile')
 
     def test_set_sleep_time_deny_anonymous(self):
         response = self.client.get('/mood/sleep_time', follow=True)
@@ -110,7 +113,7 @@ class MeMoodViewsTest(TestCase):
         self.assertTemplateUsed(response, 'account/base.html')
 
     def test_record_can_login(self):
-        logged_in = self.client.login(username='testuser', password='12345')
+        logged_in = self.client.login(username='test_uesr', password='12345')
         self.assertTrue(logged_in)
         response = self.client.get('/accounts/login/?next=/mood/record', follow=True)
         self.assertRedirects(response, '/mood/record')
