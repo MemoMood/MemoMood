@@ -122,3 +122,18 @@ class MeMoodViewsUserTest(TestCase):
         self.user.set_password('12345')
         self.user.save()
         self.client.login(username='test_user', password='12345')
+        
+    def test_add_place(self):
+        pass
+
+    def test_add_people(self):
+        pass
+
+    def test_add_mood_list(self):
+        pass
+
+    def test_discover(self):
+        pass
+
+    def test_accept_adding(self):
+        pass
