@@ -141,7 +141,7 @@ class MeMoodViewsUserTest(TestCase):
     def test_record_load(self):
         response = self.client.get('/mood/record', follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'account/login.html')
+        self.assertTemplateNotUsed(response, 'account/login.html')
 
     def test_profile_load(self):
         response = self.client.get('/mood/profile', follow=True)
