@@ -71,8 +71,8 @@ class DownloadPDF(View):
         pdf = render_to_pdf('export_mood/pdf_form.html', data)
 
         response = HttpResponse(pdf, content_type=content_type)
-        filename = "Invoice_%s.pdf" % ("12341231")
-        content = "attachment; filename='%s'" % (filename)
+        filename = "Diary_%s.pdf" % (request.user)
+        content = "attachment; filename=%s" % (filename)
         response['Content-Disposition'] = content
         return response
 
