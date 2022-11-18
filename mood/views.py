@@ -158,6 +158,8 @@ def record(request):
 def add_place(request):
     check_null()
     check_mood_null()
+    if not request.user.is_authenticated:
+        return redirect('profile')
     if request.POST:
         place = request.POST.get('new-place')
         place = place.lower()
@@ -182,6 +184,8 @@ def add_place(request):
 def add_people(request):
     check_null()
     check_mood_null()
+    if not request.user.is_authenticated:
+        return redirect('profile')
     if request.POST:
         people = request.POST.getlist('new-friend')
         user_diary_get = UserDiary.objects.get(user=request.user)
@@ -205,6 +209,8 @@ def add_people(request):
 
 def add_mood_list(request):
     check_mood_null()
+    if not request.user.is_authenticated:
+        return redirect('profile')
     if request.POST:
         user_diary_get = UserDiary.objects.get(user=request.user)
         user_factor = user_diary_get.factor.all()
