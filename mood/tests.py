@@ -166,3 +166,10 @@ class MeMoodViewsUserTest(TestCase):
         self.assertEqual(response.status_code, 302)
         response = self.client.post('/mood/discover')
         self.assertEqual(response.status_code, 302)
+        
+    def test_daily_mood(self):
+        response = self.client.get('/mood/dailymood')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/mood/dailymood')
+        self.assertEqual(response.status_code, 200)
+
