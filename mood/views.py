@@ -247,8 +247,42 @@ def accept_adding(request):
     return render(request, 'mood/accept_components/back_home_record.html')
 
 
+def get_percent_in_week(request,week_start):
+    user_obj = UserDiary.objects.get(user=request.user)
+    user_diary = user_obj.diary.all()
+    week_date = {}
+    count_mood_pos = {}
+    count_mood_neg = {}
+    for i in range(0, 7, 1):
+        some_day = week_start + timedelta(days=i)
+        week_date[some_day.weekday()] = some_day
+    for key, j in week_date.items():
+        count_pos = user_diary.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Positive").count()
+        count_neg = user_diary.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Negative").count()
+        count_mood_pos[key], count_mood_neg[key] = count_pos, count_neg
+    value_for_graph = []
+    for k in range(0, 7, 1):
+        positive_count = count_mood_pos[k]
+        all_count = count_mood_pos[k] + count_mood_neg[k]
+        if all_count == 0:
+            percent_positive = 0
+        else:
+            percent_positive = positive_count/all_count*100
+        value_for_graph.append(percent_positive)
+    return value_for_graph
+
+
 def daily_mood(request):
-    return render(request, 'mood/daily_mood.html')
+    time_now = timezone.now().strftime(f"%Y-W%V")
+    if request.POST:
+        week = request.POST.get('choose-week')
+        datetime_object = datetime.strptime(week + '-1', '%G-W%V-%u')
+        datetime_object_7 = datetime_object + timedelta(days=6, hours=23, minutes=59, seconds=59)
+        percent = get_percent_in_week(request, datetime_object)
+        str_week = str(datetime_object.date())+ " to " + str(datetime_object_7.date())
+        dict_return = {'percent': percent, 'time_max': time_now, 'week': week, 'week_str': str_week}
+        return render(request, 'mood/daily_mood.html', dict_return)
+    return render(request, 'mood/daily_mood.html', {'percent': [], 'time_max': time_now,'week_str': 'choose a week'})
 
 
 def daily_mood_show(request):
@@ -367,3 +401,57 @@ def sleep_time_prep(user_diary, sort_diary_mood):
 
 def profile(request):
     return render(request, 'dashboard/home.html')
+
+
+def choose_category_remove(request):
+    if request.POST:
+        category = request.POST.get('choose-c')
+        return render(request, 'mood/remove_choice/remove_factor.html', {'category': category})
+    return render(request, 'mood/remove_choice/choose_category_remove.html')
+
+
+def get_choice_list(request, category):
+    user_diary = UserDiary.objects.get(user=request.user)
+    mood_factor = MoodFactors.objects.get(factor=category)
+    factor = user_diary.factor.filter(factor=mood_factor)
+    return factor
+
+
+def remove_factor(request, remove_list):
+    user_diary = UserDiary.objects.get(user=request.user)
+    for remove in remove_list:
+        remove_item = FactorDetail.objects.get(name=remove)
+        user_diary.factor.remove(remove_item)
+
+
+def remove_mood(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
+    if request.POST:
+        remove_list = request.POST.getlist('remove-mood[]')
+        remove_factor(request, remove_list)
+        return redirect('record')
+    factor = get_choice_list(request, 'mood')
+    return render(request, 'mood/remove_choice/remove_mood.html', {'category': 'mood', 'factor': factor})
+
+
+def remove_place(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
+    if request.POST:
+        remove_list = request.POST.getlist('remove-place[]')
+        remove_factor(request, remove_list)
+        return redirect('record')
+    factor = get_choice_list(request, 'place')
+    return render(request, 'mood/remove_choice/remove_place.html', {'category': 'place', 'factor': factor})
+
+
+def remove_people(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
+    if request.POST:
+        remove_list = request.POST.getlist('remove-people[]')
+        remove_factor(request, remove_list)
+        return redirect('record')
+    factor = get_choice_list(request, 'people')
+    return render(request, 'mood/remove_choice/remove_people.html', {'category': 'people', 'factor': factor})
