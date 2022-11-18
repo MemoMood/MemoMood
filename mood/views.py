@@ -274,14 +274,9 @@ def daily_mood(request):
     return render(request, 'mood/daily_mood.html', {'percent': [], 'time_max': time_now,'week_str': 'choose a week'})
 
 
-def daily_mood_show(request):
-    return render(request, 'mood/daily_mood_show.html')
-
-
 def discover(request):
     check_null()
     check_mood_null()
-    user = request.user
     moods = MoodFactors.objects.get(factor='mood')
     places = MoodFactors.objects.get(factor='place')
     places_list_all = [str(p) for p in places.factordetail_set.all()]
