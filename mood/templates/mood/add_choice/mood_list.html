@@ -6,7 +6,7 @@
 <form action="{% url 'add_mood_list' %}" method="post" class="px-6">
     {% csrf_token %}
     <div class="pb-20">
-        <h5 class="text-lg text-amber-400 font-bold">Joyful Mood</h5>
+        <h5 class="text-lg text-amber-500 font-bold">Joyful Mood</h5>
         <ul class="h-56 grid grid-cols-5 gap-6 content-start">
             {% for m in Joyful %}
             <li>
@@ -89,7 +89,7 @@
         </ul>
     </div>
     <div class="pb-20">
-        <h5 class="text-lg text-orange-400 font-bold">Scared Mood</h5>
+        <h5 class="text-lg text-orange-500 font-bold">Scared Mood</h5>
         <ul class="h-56 grid grid-cols-5 gap-6 content-start">
             {% for m in Scared %}
             <li>
