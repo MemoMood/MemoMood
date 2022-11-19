@@ -4,13 +4,13 @@
 
 {% block content%}
 
-<p class="font-serif text-2xl">{{username|title}}'s diary</p>
+<p class="font-serif text-2xl"><a class="font-medium text-amber-600">{{username|title}}'s</a> diary <i class="fa-solid fa-book"></i></p>
 <div>Now, you login with {{username|title}}.</div>
 <div>
     {% if not diary %}
     <p>No diary in last 24 hours.</p>
     {% else %} 
-    <div class="h-56 grid grid-cols-3 gap-4 place-items-center py-4">
+    <div class="h-56 grid grid-cols-3 gap-4 place-items-center py-8">
         {% for d in diary %}
         <a href="{% url 'view_mood' d.id%}"
             class="self-center block p-6 w-96 bg-gray-200 rounded-lg shadow-xl">
