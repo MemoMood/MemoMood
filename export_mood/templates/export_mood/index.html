@@ -1,0 +1,20 @@
+{% extends 'mood/base.html' %}
+{% load static %}
+
+
+{% block content%}
+
+<div class="flex-col space-y-4 mt-6 font-semibold">
+    <h3 class="">View your mood or download directly to PDF</h3>
+    <div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            <a href="{% url 'pdf_view' %}" target="_blank" style="color: #fff;"> <i class="fa-solid fa-file"></i>  View PDF</a>
+        </button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            <a href="{% url 'pdf_download' %}" style="color: #fff;"> <i class="fa-solid fa-download"></i> Download PDF</a>
+        </button>
+    </div>
+</div>
+
+
+{% endblock %}

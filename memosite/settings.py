@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     
     'mood',
+    'export_mood',
     
     'allauth',
     'allauth.account',

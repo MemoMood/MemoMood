@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @page {
+            size: a4 landscape;
+            margin: 5mm;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+        <h3>Your Diary</h3>
+        <h4>Username: {{username}}</h4>
+    </div>
+
+    <hr>
+
+    <table>
+        <th>
+            <tr>
+                <th>Time</th>
+                <th>Mood</th>
+                <th>Place</th>
+                <th>Weather</th>
+                <th>People</th>
+                <th>Text</th>
+            </tr>
+        </th>
+        {% for m in mood_data%}
+        <tr>
+            <td>{{m.time}}</td>
+            <td>{{m.mood}}</td>
+            <td>{{m.place}}</td>
+            <td>{{m.weather}}</td>
+            <td>{{m.people}}</td>
+            <td>{{m.text}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <hr>
+    <p><strong>This is your diary, wish every day is your day:)</strong></p>
+</body>
+
+</html>
