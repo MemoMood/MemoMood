@@ -6,7 +6,7 @@
 <form action="{% url 'add_mood_list' %}" method="post" class="px-6">
     {% csrf_token %}
     <div class="pb-20">
-        <h5 class="text-lg font-bold">Joyful Mood</h5>
+        <h5 class="text-lg text-amber-400 font-bold">Joyful Mood</h5>
         <ul class="h-56 grid grid-cols-5 gap-6 content-start">
             {% for m in Joyful %}
             <li>
@@ -22,7 +22,7 @@
         </ul>
     </div>
     <div class="pb-20">
-        <h5 class="text-lg font-bold">Powerful Mood</h5>
+        <h5 class="text-lg text-teal-500 font-bold">Powerful Mood</h5>
         <ul class="h-56 grid grid-cols-5 gap-6 content-start">
             {% for m in Powerful %}
             <li>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="pb-20">
-        <h5 class="text-lg font-bold">Peaceful Mood</h5>
+        <h5 class="text-lg text-blue-600 font-bold">Peaceful Mood</h5>
         <ul class="h-56 grid grid-cols-5 gap-6 content-start">
             {% for m in Peaceful %}
             <li>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="pb-20">
-        <h5 class="text-lg font-bold">Sad Mood</h5>
+        <h5 class="text-lg text-purple-600 font-bold">Sad Mood</h5>
         <ul class="h-56 grid grid-cols-5 gap-6 content-start">
             {% for m in Sad %}
             <li>
@@ -73,7 +73,7 @@
     </div>
 
     <div class="pb-20">
-        <h5 class="text-lg font-bold">Mad Mood</h5>
+        <h5 class="text-lg text-red-600 font-bold">Mad Mood</h5>
         <ul class="h-56 grid grid-cols-5 gap-6 content-start">
             {% for m in Mad %}
             <li>
@@ -89,7 +89,7 @@
         </ul>
     </div>
     <div class="pb-20">
-        <h5 class="text-lg font-bold">Scared Mood</h5>
+        <h5 class="text-lg text-orange-400 font-bold">Scared Mood</h5>
         <ul class="h-56 grid grid-cols-5 gap-6 content-start">
             {% for m in Scared %}
             <li>
