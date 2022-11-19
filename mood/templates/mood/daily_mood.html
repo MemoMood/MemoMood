@@ -4,13 +4,15 @@
 <div>
     <form action="{% url 'daily_mood' %}" method="post">
         {% csrf_token %}
-        <label for="week">Choose a week:</label><br>
-        <input type="week" name="choose-week" id="choose-week" max="2022-W46" required>
-        <br>
-        <button type="submit"
-        class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Save
-        </button>
+        <div class="flex-col space-y-2">
+            <label for="week">Choose a week</label><br>
+            <input type="week" name="choose-week" id="choose-week" max="2022-W46" required>
+            <br>
+            <button type="submit"
+            class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Save
+            </button>
+        </div>
     </form>
 </div>
 <div>

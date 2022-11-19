@@ -59,6 +59,19 @@ def mood(request):
     return render(request, 'mood/index.html', dict_return)
 
 
+def old_mood(request):
+    if request.POST:
+        user_diary = UserDiary.objects.get(user=request.user)
+        diary_user = user_diary.diary.all()
+        date = request.POST.get('show-time')
+        datetime_min = datetime.strptime(date, '%Y-%m-%d')
+        datetime_max = datetime_min + timedelta(hours=23, minutes=59, seconds=59)
+        sorted_user_diary = diary_user.filter(time__range=[datetime_min, datetime_max])
+        return render(request, 'mood/mood_sort.html', {'diary': sorted_user_diary})
+    diary = {}
+    return render(request, 'mood/mood_sort.html', diary)
+
+
 def view_mood(request, id):
     diary = get_object_or_404(Diary, pk=id)
     dict_return = {'diary': diary}
@@ -359,7 +372,8 @@ def count_people(sort_diary_mood):
 
 
 def weather_prep(sort_diary_mood):
-    count_weather = {"sunny": 0, "cloudy": 0, "rainny": 0, "thunderstorm": 0, "foggy": 0, "snow": 0}
+    count_weather = {"sunny": 0, "cloudy": 0, "rainny": 0,
+                     "thunderstorm": 0, "foggy": 0, "snow": 0}
     for i in sort_diary_mood:
         count_weather[i.weather] += 1
     return count_weather
@@ -368,7 +382,8 @@ def weather_prep(sort_diary_mood):
 def sleep_time_prep(user_diary, sort_diary_mood):
     sleep_time = []
     mood_date_list = [mood.time.date() for mood in sort_diary_mood]
-    result_sleep_time = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0}
+    result_sleep_time = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0,
+                         "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0}
     sleep_time_get = user_diary.sleep_time.all()
     for date in mood_date_list:
         try:
