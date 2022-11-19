@@ -4,7 +4,8 @@
 
 {% block content%}
 
-<div style="padding:2%;">Now, you login with {{username|title}}.</div>
+<p class="font-serif text-2xl">{{username|title}}'s diary</p>
+<div>Now, you login with {{username|title}}.</div>
 <div>
     {% if not diary %}
     <p>No diary in last 24 hours.</p>
