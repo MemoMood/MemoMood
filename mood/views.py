@@ -67,7 +67,7 @@ def old_mood(request):
         datetime_min = datetime.strptime(date, '%Y-%m-%d')
         datetime_max = datetime_min + timedelta(hours=23, minutes=59, seconds=59)
         sorted_user_diary = diary_user.filter(time__range=[datetime_min, datetime_max])
-        return render(request, 'mood/mood_sort.html', {'diary': sorted_user_diary})
+        return render(request, 'mood/mood_sort.html', {'diary': sorted_user_diary, 'select_time': date})
     diary = {}
     return render(request, 'mood/mood_sort.html', diary)
 
