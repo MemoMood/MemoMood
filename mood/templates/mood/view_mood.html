@@ -3,13 +3,13 @@
 
 {% block content %}
 <div class="view-mood-container">
-    <p>{{diary.time}}</p>
-    <p>You at {{diary.place}}</p>
-    <p>with
+    <p class="text-xl py-2">{{diary.time}}</p>
+    <p class="text-lg">You were at {{diary.place}} with
         {% for p in diary.people.all %}
-        {{ p.name }}
+        {{ p.name|title }}
         {% endfor %}
     </p>
-    <p>{{diary.text}}</p>
+    <p class="font-medium text-amber-500">Weather: {{diary.weather|title}}</p>
+    <p class="font-serif text-lg py-12">{{diary.text}}</p>
 </div>
 {% endblock %}
