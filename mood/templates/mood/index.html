@@ -4,26 +4,26 @@
 
 {% block content%}
 
-<div style="padding:2%;">Now, you login with {{username}}.</div>
+<p class="font-serif text-2xl"><a class="font-medium text-amber-600">{{username|title}}'s</a> diary <i class="fa-solid fa-book"></i></p>
 <div>
     {% if not diary %}
     <p>No diary in last 24 hours.</p>
-    {% else %}
-    <div class="h-56 grid grid-cols-3 gap-4 place-content-stretch">
-    {% for d in diary %}
-    <a href="{% url 'view_mood' d.id%}"
-        class="self-center block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ d.time }}</h5>
-        <p class="font-normal text-gray-700 dark:text-gray-400">At {{ d.place }}
-            {% if d.people.all %} with
-            {% for p in d.people.all %}
-            {{ p.name }}
-            {% endfor %}
-            {% endif %}
-        </p>
-    </a>
-    {% endfor %}
-    {% endif %}
+    {% else %} 
+    <div class="h-56 grid grid-cols-3 gap-4 place-items-center py-8">
+        {% for d in diary %}
+        <a href="{% url 'view_mood' d.id%}"
+            class="self-center block p-6 w-96 bg-gray-200 rounded-lg shadow-xl">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-500 hover:text-blue-500">{{ d.time }}</h5>
+            <p class="font-normal text-gray-700">At {{ d.place }}
+                {% if d.people.all %} with
+                {% for p in d.people.all %}
+                {{ p.name }}
+                {% endfor %}
+                {% endif %}
+            </p>
+        </a>
+        {% endfor %}
+        {% endif %}
     </div>
     <a href="{% url 'old_mood' %}" class="text-blue-500">Your diary.</a>
 </div>

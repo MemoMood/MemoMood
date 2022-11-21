@@ -6,13 +6,13 @@
 
 <div class="grid grid-cols-2 gap-4 place-content-around h-48 px-6 pt-3">
     <div>
-        <h1 class="text-2xl">Select Discover {{select}} Mood</h1>
+        <h1 class="text-2xl">Discover <a class="font-medium text-blue-500">{{select}}</a> Mood</h1>
         <i class="fa-solid fa-face-smile fa-5x"></i>
     </div>
     <div>
-        <h1 class="text-2xl">Average Sleeping Time</h1>
+        <h1 class="text-2xl">Average Sleep Time</h1>
         <i class="fa-solid fa-bed fa-5x"></i>
-        <div>{{avg_sleep |floatformat:1}} hours/night</div> 
+        <div class="font-medium text-orange-400">{{avg_sleep |floatformat:1}} hours/night</div> 
     </div>
     <div class="col-span-2">
         <form action="{% url 'discover' %}" method="post">
