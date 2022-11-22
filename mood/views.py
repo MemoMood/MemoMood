@@ -73,8 +73,10 @@ def old_mood(request):
 
 
 def view_mood(request, id):
+    user = UserDiary.objects.get(user=request.user)
     diary = get_object_or_404(Diary, pk=id)
-    dict_return = {'diary': diary}
+    find_diary = user.diary.all().filter(id=diary.id)
+    dict_return = {'diary': diary, 'user_diary':find_diary}
     return render(request, 'mood/view_mood.html', dict_return)
 
 
@@ -169,6 +171,8 @@ def record(request):
 def add_place(request):
     check_null()
     check_mood_null()
+    if not request.user.is_authenticated:
+        return redirect('profile')
     if request.POST:
         place = request.POST.get('new-place')
         place = place.lower()
@@ -193,6 +197,8 @@ def add_place(request):
 def add_people(request):
     check_null()
     check_mood_null()
+    if not request.user.is_authenticated:
+        return redirect('profile')
     if request.POST:
         people = request.POST.getlist('new-friend')
         user_diary_get = UserDiary.objects.get(user=request.user)
@@ -216,6 +222,8 @@ def add_people(request):
 
 def add_mood_list(request):
     check_mood_null()
+    if not request.user.is_authenticated:
+        return redirect('profile')
     if request.POST:
         user_diary_get = UserDiary.objects.get(user=request.user)
         user_factor = user_diary_get.factor.all()
@@ -273,6 +281,8 @@ def get_percent_in_week(request,week_start):
 
 
 def daily_mood(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
     time_now = timezone.now().strftime(f"%Y-W%V")
     if request.POST:
         week = request.POST.get('choose-week')
@@ -285,14 +295,11 @@ def daily_mood(request):
     return render(request, 'mood/daily_mood.html', {'percent': [], 'time_max': time_now,'week_str': 'choose a week'})
 
 
-def daily_mood_show(request):
-    return render(request, 'mood/daily_mood_show.html')
-
-
 def discover(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
     check_null()
     check_mood_null()
-    user = request.user
     moods = MoodFactors.objects.get(factor='mood')
     places = MoodFactors.objects.get(factor='place')
     places_list_all = [str(p) for p in places.factordetail_set.all()]

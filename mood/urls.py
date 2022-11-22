@@ -14,7 +14,6 @@ urlpatterns = [
     path('mood/add_people', views.add_people, name='add_people'),
     path('mood/add_mood/list', views.add_mood_list, name='add_mood_list'),
     path('mood/dailymood', views.daily_mood, name='daily_mood'),
-    path('mood/dailymood/show', views.daily_mood_show, name='daily_mood_show'),
     path('mood/discover', views.discover, name='discover'),
     path('mood/profile', views.profile, name='profile'),
     path('mood/export', include('export_mood.urls')),
