@@ -3,8 +3,8 @@
 
 {% block content %}
 <div class="view-mood-container">
-    <p class="text-xl py-2">{{diary.time}}</p>
-    <p class="text-lg">You were at {{diary.place}} with
+    <p class="text-xl py-2 text-blue-500">{{diary.time}}</p>
+    <p class="text-lg text-amber-500">You were at {{diary.place}} with
         {% for p in diary.people.all %}
         {{ p.name|title }}
         {% endfor %}
