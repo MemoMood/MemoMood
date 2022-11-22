@@ -78,5 +78,7 @@ class DownloadPDF(View):
 
 
 def export_index(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
     context = {}
     return render(request, 'export_mood/index.html', context)
