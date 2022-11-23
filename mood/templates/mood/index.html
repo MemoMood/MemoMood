@@ -14,11 +14,17 @@
         <a href="{% url 'view_mood' d.id%}"
             class="self-center block p-6 w-96 bg-gray-200 rounded-lg shadow-xl">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-500 hover:text-blue-500">{{ d.time }}</h5>
-            <p class="font-normal text-gray-700">At {{ d.place }}
-                {% if d.people.all %} with
-                {% for p in d.people.all %}
-                {{ p.name }}
-                {% endfor %}
+            <p class="font-normal text-gray-700">
+                {% if d.place is not none %}
+                    At {{ d.place }}
+                {% else %}
+                    <p>&nbsp;</p>
+                {% endif %}
+                {% if d.people.all %} 
+                    with
+                    {% for p in d.people.all %}
+                        {{ p.name }}
+                    {% endfor %}
                 {% endif %}
             </p>
         </a>
