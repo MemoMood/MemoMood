@@ -6,13 +6,16 @@
 <div>
     <form action="{% url 'old_mood' %}" method="post">
         {% csrf_token %}
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="record-time">Choose a
-            day:</label>
-        <input type="date" id="show-time" name="show-time" max="{{ time }}" required><br>
-        <button type="submit"
-            class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Choose
-        </button>
+        <div class="grid justify-items-center">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="record-time">Choose a
+                day:
+            </label>
+            <input type="date" id="show-time" name="show-time" max="{{ time }}" required><br>
+            <button type="submit"
+                class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Choose
+            </button>
+        </div>
         <p>or back <a href="{% url 'mood' %}" class="text-blue-500">home</a></p>
     </form>
 </div>
@@ -21,9 +24,9 @@
     <div class="grid grid-cols-3 gap-4 place-content-stretch">
         {% for d in diary %}
         <a href="{% url 'view_mood' d.id%}"
-            class="self-center block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ d.time }}</h5>
-            <p class="font-normal text-gray-700 dark:text-gray-400">At {{ d.place }}
+            class="self-center block p-6 w-96 bg-gray-200 rounded-lg shadow-xl">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-500 hover:text-blue-500">{{ d.time }}</h5>
+            <p class="font-normal text-gray-700">At {{ d.place }}
                 {% if d.people.all %} with
                 {% for p in d.people.all %}
                 {{ p.name }}
@@ -35,6 +38,8 @@
         </div>
 </div>
 {% else %}
-<p>No diary in this day.</p>
+    {% if select_time %}
+    <p> No diary in {{select_time}} </p>
+    {% endif %}
 {% endif %}
 {% endblock %}
