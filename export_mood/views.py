@@ -25,7 +25,7 @@ def get_data(request):
             if m == len_mood-1:
                 mood_str += str(mood_all[m])
             else:
-                mood_str += str(mood_all[m]) + ','
+                mood_str += str(mood_all[m]) + ', '
         diary['mood'] = mood_str
         diary['place'] = user.place
         # add people string
@@ -34,9 +34,9 @@ def get_data(request):
         len_people = len(people_all)
         for m in range(len_people):
             if m == len_mood-1:
-                mood_str += str(people_all[m])
+                people_str += str(people_all[m])
             else:
-                mood_str += str(people_all[m]) + ','
+                people_str += str(people_all[m]) + ', '
         diary['people'] = people_str
         diary['weather'] = user.weather
         diary['text'] = user.text
@@ -49,7 +49,7 @@ def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html = template.render(context_dict)
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type=content_type)
     return None

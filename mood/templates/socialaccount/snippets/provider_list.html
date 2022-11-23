@@ -1,5 +1,6 @@
 {% load socialaccount %}
 {% load static %}
+<script src="https://kit.fontawesome.com/3c7104b926.js" crossorigin="anonymous"></script>
 
 {% get_providers as socialaccount_providers %}
 
@@ -7,22 +8,18 @@
 {% if provider.id == "openid" %}
 {% for brand in provider.get_brands %}
 <div>
-  <a title="{{brand.name}}" 
-     class="socialaccount_provider {{provider.id}} {{brand.id}}" 
-     href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
-     >{{brand.name}}</a>
+  <a title="{{brand.name}}" class="socialaccount_provider {{provider.id}} {{brand.id}}"
+    href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">{{brand.name}}</a>
 </div>
 {% endfor %}
 {% endif %}
 <div class="my-2">
-  <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
-     <img 
-      src="
-     {% with 'images/'|add:provider.name|add:'.png' as image %}
-      {% static image %}
-     {% endwith %}
-     " alt="{{ provider.name }}" height="50" width="300"/>
-     </a>
+  <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}"
+    href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+    <button type="submit"
+      class="text-black">
+      <i class="fa-brands fa-google"></i> Google Account
+    </button>
+  </a>
 </div>
 {% endfor %}
