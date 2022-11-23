@@ -13,6 +13,19 @@
     </p>
     <p>{{diary.text}}</p>
 </div>
+<div style="padding: 5%;">
+    <form action="{% url 'view_mood' id %}" method="post">
+        {% csrf_token %}
+        <div class="flex items-center justify-center">
+            <input id="default-checkbox" type="checkbox" value="" required class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Confirm Your Delete</label>
+        </div>
+        <button type="submit"
+            class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Confirm
+        </button>
+    </form>
+</div>
 {% else %}
 <p class="text-center">Sorry, you can't see this diary.</p>
 <p class="text-center">Please login other account.</p>

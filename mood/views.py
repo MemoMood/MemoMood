@@ -76,8 +76,17 @@ def view_mood(request, id):
     user = UserDiary.objects.get(user=request.user)
     diary = get_object_or_404(Diary, pk=id)
     find_diary = user.diary.all().filter(id=diary.id)
-    dict_return = {'diary': diary, 'user_diary':find_diary}
+    dict_return = {'diary': diary, 'user_diary':find_diary,'id' : id}
+    if request.POST:
+        delete_mood(request, id)
+        return render(request, 'mood/accept_components/back_from_delete.html')
     return render(request, 'mood/view_mood.html', dict_return)
+
+
+def delete_mood(request, id):
+    user = UserDiary.objects.get(user=request.user)
+    diary = get_object_or_404(Diary, pk=id)
+    user.diary.remove(diary)
 
 
 def set_sleep_time(request):
