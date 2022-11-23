@@ -1,1 +1,1 @@
-web gunicorn memosite.wsgi:apllication --log-file -
+web: gunicorn memosite.wsgi
