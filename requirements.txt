@@ -3,3 +3,5 @@ django-allauth
 django-crispy_forms
 django-cryptography
 xhtml2pdf
+gunicorn 
+django-heroku

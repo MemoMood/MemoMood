@@ -397,7 +397,7 @@ def count_people(sort_diary_mood):
 
 
 def weather_prep(sort_diary_mood):
-    count_weather = {"sunny": 0, "cloudy": 0, "rainny": 0,
+    count_weather = {"sunny": 0, "cloudy": 0, "rainy": 0,
                      "thunderstorm": 0, "foggy": 0, "snow": 0}
     for i in sort_diary_mood:
         count_weather[i.weather] += 1
