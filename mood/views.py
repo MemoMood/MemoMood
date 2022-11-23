@@ -43,7 +43,7 @@ def mood(request):
     time_now = timezone.now()
     before_24 = time_now - timedelta(hours=23, minutes=59, seconds=59)
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     try:
         user_diary_get = UserDiary.objects.get(user=request.user)
     except UserDiary.DoesNotExist:
@@ -61,7 +61,7 @@ def mood(request):
 
 def old_mood(request):
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     if request.POST:
         user_diary = UserDiary.objects.get(user=request.user)
         diary_user = user_diary.diary.all()
@@ -78,7 +78,7 @@ def old_mood(request):
 
 def view_mood(request, id):
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     user = UserDiary.objects.get(user=request.user)
     diary = get_object_or_404(Diary, pk=id)
     find_diary = user.diary.all().filter(id=diary.id)
@@ -97,7 +97,7 @@ def delete_mood(request, id):
 
 def set_sleep_time(request):
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     if request.POST:
         user_diary = UserDiary.objects.get(user=request.user)
         sleep_time_user = user_diary.sleep_time.all()
@@ -130,7 +130,7 @@ def record(request):
     check_mood_null()
     user = request.user
     if not user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     places = MoodFactors.objects.get(factor='place')
     peoples = MoodFactors.objects.get(factor='people')
     moods = MoodFactors.objects.get(factor='mood')
@@ -187,7 +187,7 @@ def add_place(request):
     check_null()
     check_mood_null()
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     if request.POST:
         place = request.POST.get('new-place')
         place = place.lower()
@@ -213,7 +213,7 @@ def add_people(request):
     check_null()
     check_mood_null()
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     if request.POST:
         people = request.POST.getlist('new-friend')
         user_diary_get = UserDiary.objects.get(user=request.user)
@@ -238,7 +238,7 @@ def add_people(request):
 def add_mood_list(request):
     check_mood_null()
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     if request.POST:
         user_diary_get = UserDiary.objects.get(user=request.user)
         user_factor = user_diary_get.factor.all()
@@ -299,7 +299,7 @@ def get_percent_in_week(request, week_start):
 
 def daily_mood(request):
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     time_now = timezone.now().strftime(f"%Y-W%V")
     if request.POST:
         week = request.POST.get('choose-week')
@@ -315,7 +315,7 @@ def daily_mood(request):
 
 def discover(request):
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     check_null()
     check_mood_null()
     moods = MoodFactors.objects.get(factor='mood')
@@ -326,7 +326,7 @@ def discover(request):
     try:
         user_diary_get = UserDiary.objects.get(user=request.user)
     except UserDiary.DoesNotExist:
-        return redirect('profile')
+        return redirect('account_login')
     if request.POST:
         selected_mood = request.POST.get('select-mood')
         dict_return['select'] = selected_mood
@@ -451,7 +451,7 @@ def remove_factor(request, remove_list):
 
 def remove_mood(request):
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     if request.POST:
         remove_list = request.POST.getlist('remove-mood[]')
         remove_factor(request, remove_list)
@@ -462,7 +462,7 @@ def remove_mood(request):
 
 def remove_place(request):
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     if request.POST:
         remove_list = request.POST.getlist('remove-place[]')
         remove_factor(request, remove_list)
@@ -473,7 +473,7 @@ def remove_place(request):
 
 def remove_people(request):
     if not request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('account_login')
     if request.POST:
         remove_list = request.POST.getlist('remove-people[]')
         remove_factor(request, remove_list)
