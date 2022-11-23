@@ -67,8 +67,10 @@ def old_mood(request):
         diary_user = user_diary.diary.all()
         date = request.POST.get('show-time')
         datetime_min = datetime.strptime(date, '%Y-%m-%d')
-        datetime_max = datetime_min + timedelta(hours=23, minutes=59, seconds=59)
-        sorted_user_diary = diary_user.filter(time__range=[datetime_min, datetime_max])
+        datetime_max = datetime_min + \
+            timedelta(hours=23, minutes=59, seconds=59)
+        sorted_user_diary = diary_user.filter(
+            time__range=[datetime_min, datetime_max])
         return render(request, 'mood/mood_sort.html', {'diary': sorted_user_diary, 'select_time': date})
     diary = {}
     return render(request, 'mood/mood_sort.html', diary)
@@ -80,7 +82,7 @@ def view_mood(request, id):
     user = UserDiary.objects.get(user=request.user)
     diary = get_object_or_404(Diary, pk=id)
     find_diary = user.diary.all().filter(id=diary.id)
-    dict_return = {'diary': diary, 'user_diary':find_diary,'id' : id}
+    dict_return = {'diary': diary, 'user_diary': find_diary, 'id': id}
     if request.POST:
         delete_mood(request, id)
         return render(request, 'mood/accept_components/back_from_delete.html')
@@ -268,7 +270,7 @@ def accept_adding(request):
     return render(request, 'mood/accept_components/back_home_record.html')
 
 
-def get_percent_in_week(request,week_start):
+def get_percent_in_week(request, week_start):
     user_obj = UserDiary.objects.get(user=request.user)
     user_diary = user_obj.diary.all()
     week_date = {}
@@ -278,8 +280,10 @@ def get_percent_in_week(request,week_start):
         some_day = week_start + timedelta(days=i)
         week_date[some_day.weekday()] = some_day
     for key, j in week_date.items():
-        count_pos = user_diary.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Positive").count()
-        count_neg = user_diary.filter(time__gte=j, time__lte=j+timedelta(days=1), mood__category="Negative").count()
+        count_pos = user_diary.filter(
+            time__gte=j, time__lte=j+timedelta(days=1), mood__category="Positive").count()
+        count_neg = user_diary.filter(
+            time__gte=j, time__lte=j+timedelta(days=1), mood__category="Negative").count()
         count_mood_pos[key], count_mood_neg[key] = count_pos, count_neg
     value_for_graph = []
     for k in range(0, 7, 1):
@@ -302,10 +306,11 @@ def daily_mood(request):
         datetime_object = datetime.strptime(week + '-1', '%G-W%V-%u')
         datetime_object_7 = datetime_object + timedelta(days=6, hours=23, minutes=59, seconds=59)
         percent = get_percent_in_week(request, datetime_object)
-        str_week = str(datetime_object.date())+ " to " + str(datetime_object_7.date())
-        dict_return = {'percent': percent, 'time_max': time_now, 'week': week, 'week_str': str_week}
+        str_week = str(datetime_object.date()) + " to " + str(datetime_object_7.date())
+        dict_return = {'percent': percent, 'time_max': time_now,
+                        'week': week, 'week_str': str_week}
         return render(request, 'mood/daily_mood.html', dict_return)
-    return render(request, 'mood/daily_mood.html', {'percent': [], 'time_max': time_now,'week_str': 'choose a week'})
+    return render(request, 'mood/daily_mood.html', {'percent': [], 'time_max': time_now, 'week_str': 'choose a week'})
 
 
 def discover(request):
@@ -403,7 +408,7 @@ def sleep_time_prep(user_diary, sort_diary_mood):
     sleep_time = []
     mood_date_list = [mood.time.date() for mood in sort_diary_mood]
     result_sleep_time = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0,
-                         "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0}
+                    "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0}
     sleep_time_get = user_diary.sleep_time.all()
     for date in mood_date_list:
         try:
