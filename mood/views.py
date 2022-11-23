@@ -60,6 +60,8 @@ def mood(request):
 
 
 def old_mood(request):
+    if not request.user.is_authenticated:
+        return redirect('profile')
     if request.POST:
         user_diary = UserDiary.objects.get(user=request.user)
         diary_user = user_diary.diary.all()
@@ -73,6 +75,8 @@ def old_mood(request):
 
 
 def view_mood(request, id):
+    if not request.user.is_authenticated:
+        return redirect('profile')
     user = UserDiary.objects.get(user=request.user)
     diary = get_object_or_404(Diary, pk=id)
     find_diary = user.diary.all().filter(id=diary.id)
