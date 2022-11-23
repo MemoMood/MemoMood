@@ -34,9 +34,9 @@ def get_data(request):
         len_people = len(people_all)
         for m in range(len_people):
             if m == len_mood-1:
-                mood_str += str(people_all[m])
+                people_str += str(people_all[m])
             else:
-                mood_str += str(people_all[m]) + ', '
+                people_str += str(people_all[m]) + ', '
         diary['people'] = people_str
         diary['weather'] = user.weather
         diary['text'] = user.text
