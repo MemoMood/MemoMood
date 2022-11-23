@@ -101,11 +101,18 @@ WSGI_APPLICATION = 'memosite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dfe2vp327m5dsj',
+        'HOST': 'ec2-52-205-98-159.compute-1.amazonaws.com' ,
+        'PORT': 5432 ,
+        'USER': 'kanpyibnlcmotk' ,
+        'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6' ,
     }
 }
 
+# postgres://kanpyibnlcmotk:b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6@ec2-52-205-98-159.compute-1.amazonaws.com:5432/dfe2vp327m5dsj
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
