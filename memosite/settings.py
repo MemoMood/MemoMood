@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     
     'crispy_forms',
 ]
-SITE_ID = 1
+
+SITE_ID = 2
 
 LOGIN_REDIRECT_URL = 'mood'
 LOGOUT_REDIRECT_URL = 'mood'
