@@ -17,16 +17,18 @@
         {% endif %}
     </p>
     <p class="font-medium text-amber-500">Weather: {{diary.weather|title}}</p> <br>
-    <p>Your mood</p>
-    <p class="font-medium text-amber-600 mx-auto" style="inline-size: 700px;overflow-wrap:break-word;">
-    {% for p in diary.mood.all %}
-        {% if forloop.last %}
-            {{ p.name|title }}
-        {% else %}
-            {{ p.name|title }},
-        {% endif %}
-    {% endfor %}
-    </p>
+    {% if diary.mood.all %}
+    <p>My mood</p>
+        <p class="font-medium text-amber-600 mx-auto" style="inline-size: 700px;overflow-wrap:break-word;">
+        {% for p in diary.mood.all %}
+            {% if forloop.last %}
+                {{ p.name|title }}
+            {% else %}
+                {{ p.name|title }},
+            {% endif %}
+        {% endfor %}
+        </p>
+    {% endif %}
     <p class="font-serif text-lg py-12 mx-auto" style="inline-size: 700px;overflow-wrap:break-word;">{{diary.text}}</p>
 </div>
 <div style="padding: 5%;">
