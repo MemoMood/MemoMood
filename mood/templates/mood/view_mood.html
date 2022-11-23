@@ -4,14 +4,14 @@
 {% block content %}
 {% if user_diary %}
 <div class="view-mood-container">
-    <p>{{diary.time}}</p>
-    <p>You at {{diary.place}}</p>
-    <p>with
+    <p class="text-xl py-2 text-blue-500">{{diary.time}}</p>
+    <p class="text-lg text-amber-500">You were at {{diary.place}} with
         {% for p in diary.people.all %}
-        {{ p.name }}
+        {{ p.name|title }}
         {% endfor %}
     </p>
-    <p>{{diary.text}}</p>
+    <p class="font-medium text-amber-500">Weather: {{diary.weather|title}}</p>
+    <p class="font-serif text-lg py-12 mx-auto" style="inline-size: 700px;overflow-wrap:break-word;">{{diary.text}}</p>
 </div>
 <div style="padding: 5%;">
     <form action="{% url 'view_mood' id %}" method="post">
