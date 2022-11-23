@@ -45,9 +45,9 @@
         <tr>
             <td>{{m.time}}</td>
             <td><p style="inline-size: 24mm;overflow-wrap:break-word;">{{m.mood}}</p></td>
-            <td>{{m.place}}</td>
-            <td>{{m.weather}}</td>
-            <td><p style="inline-size: 24mm;overflow-wrap:break-word;">{{m.people}}</p></td>
+            <td>{{m.place|title}}</td>
+            <td>{{m.weather|title}}</td>
+            <td><p style="inline-size: 24mm;overflow-wrap:break-word;">{{m.people|title}}</p></td>
             <td><p style="inline-size: 32mm;overflow-wrap:break-word;">{{m.text}}</p></td>
         </tr>
         {% endfor %}
