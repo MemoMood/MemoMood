@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-# import django_heroku
-# import dj_database_url
+import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-81c$8@d1j+pue(30pam_)q!es$jwit$z60&urpk0&m%_rl_j^v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'crispy_forms',
 ]
 
-SITE_ID = 1
+SITE_ID = 2
 
 LOGIN_REDIRECT_URL = 'mood'
 LOGOUT_REDIRECT_URL = 'mood'
@@ -102,14 +102,14 @@ WSGI_APPLICATION = 'memosite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'dfe2vp327m5dsj',
-        # 'HOST': 'ec2-52-205-98-159.compute-1.amazonaws.com' ,
-        # 'PORT': 5432 ,
-        # 'USER': 'kanpyibnlcmotk' ,
-        # 'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6' ,
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dfe2vp327m5dsj',
+        'HOST': 'ec2-52-205-98-159.compute-1.amazonaws.com' ,
+        'PORT': 5432 ,
+        'USER': 'kanpyibnlcmotk' ,
+        'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6' ,
     }
 }
 
@@ -150,9 +150,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
