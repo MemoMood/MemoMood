@@ -30,7 +30,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-ACCOUNT_ADAPTER = 'adapter.DefaultOverrideAccountAdapter'
+ACCOUNT_ADAPTER = 'mood.adapter.DefaultOverrideAccountAdapter'
 
 # Application definition
 
