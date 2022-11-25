@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="text-center">
-<h1>{% trans "Sign Out" %}</h1>
+<h1 class="text-3xl font-medium mt-10 mb-3 text-blue-600">{% trans "Sign Out" %}</h1>
 
 <p>{% trans 'Are you sure you want to sign out?' %}</p>
 
@@ -15,7 +15,9 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
   {% endif %}
-  <button class="btn btn-dark" type="submit">{% trans 'Sign Out' %}</button>
+  <div class="d-grid">
+    <button class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-6 my-6" type="submit" href="{% trans 'Sign Out' %}">Sign Out</button><br>
+</div>
 </form>
 
 </div>
