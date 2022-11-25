@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from django.core.mail import send_mail
 import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,6 +31,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+send_mail(fail_silently=True)
 
 # Application definition
 
