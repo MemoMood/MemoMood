@@ -59,6 +59,16 @@ SITE_ID = 2
 LOGIN_REDIRECT_URL = 'mood'
 LOGOUT_REDIRECT_URL = 'mood'
 
+ACCOUNT_FORMS = {
+    'login': 'allauth.account.forms.LoginForm',
+    'signup': 'allauth.account.forms.SignupForm',
+    'change_password': 'allauth.account.forms.ChangePasswordForm',
+    'set_password': 'allauth.account.forms.SetPasswordForm',
+    'reset_password': 'allauth.account.forms.ResetPasswordForm',
+    'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
+    'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
+}
+
 # Google Client ID : 996431643560-a3cc8tnfovc8l3n6alcvh9vck3p3lifv.apps.googleusercontent.com
 # Google Client Secrect : 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
 
