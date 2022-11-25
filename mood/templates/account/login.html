@@ -4,27 +4,12 @@
 {% load crispy_forms_filters %}
 {% load static%}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'mood/output.css' %}">
-    <link rel="stylesheet" href="{% static 'mood/styles.css' %}">
-    <script src="https://kit.fontawesome.com/3c7104b926.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
-    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-    <title></title>
-</head>
-
 
 {% block content %}
 <body class="antialiased bg-slate-200">
   <div class="flex justify-center mx-auto">
-    <div class="text-center bg-white mt-10 w-1/2 rounded-lg">
-        <h1 class="text-4xl font-medium mt-10 text-blue-600">Login</h1>
+    <div class="text-center bg-white mt-10 w-1/2 rounded-2xl">
+        <h1 class="text-4xl font-medium mt-10 mb-3 text-blue-600">Login</h1>
         <p class="text-slate-500">Welcome back😊</p>
 
         {% get_providers as socialaccount_providers %}
