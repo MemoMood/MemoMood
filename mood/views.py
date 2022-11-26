@@ -205,7 +205,7 @@ def add_place(request):
             try:
                 places_object.factordetail_set.create(name=place)
             except IntegrityError:
-                dict_return = {'warning': 'Please use other word that not same with name in people.'}
+                dict_return = {'warning': 'Please use a word that is different from the words in people.'}
                 return render(request, 'mood/add_choice/add_place.html', dict_return)
         find_place = FactorDetail.objects.get(name=place)
         user_diary_get.factor.add(find_place)
@@ -234,7 +234,7 @@ def add_people(request):
                 try:
                     peoples_object.factordetail_set.create(name=i)
                 except IntegrityError:
-                    dict_return = {'warning': 'Please use other word that not same with name in place.'}
+                    dict_return = {'warning': 'Please use a word that is different from the words in place.'}
                     return render(request, 'mood/add_choice/add_people.html', dict_return)
             find_people = FactorDetail.objects.get(name=i)
             user_diary_get.factor.add(find_people)
