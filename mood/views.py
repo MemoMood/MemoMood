@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField, UserDiary
 from django.contrib.auth.decorators import login_required
-
+from django.db import IntegrityError
 # Create your views here.
 
 
@@ -40,6 +40,8 @@ def welcome(request):
 
 
 def mood(request):
+    check_null()
+    check_mood_null()
     time_now = timezone.now()
     before_24 = time_now - timedelta(hours=23, minutes=59, seconds=59)
     if not request.user.is_authenticated:
@@ -198,13 +200,15 @@ def add_place(request):
         places_list_str = [str(p) for p in places_list]
         places_list_all = [str(p)
                            for p in places_object.factordetail_set.all()]
-        if place.lower() not in places_list_str:
-            place = place.lower()
-            if place not in places_list_all:
+        place = place.lower()
+        if (place not in places_list_str) and (place not in places_list_all):
+            try:
                 places_object.factordetail_set.create(name=place)
-            find_place = FactorDetail.objects.get(name=place)
-            user_diary_get.factor.add(find_place)
-            user_diary_get.save()
+            except IntegrityError:
+                return redirect('record')
+        find_place = FactorDetail.objects.get(name=place)
+        user_diary_get.factor.add(find_place)
+        user_diary_get.save()
         return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_place.html')
 
@@ -225,12 +229,14 @@ def add_people(request):
                             for p in peoples_object.factordetail_set.all()]
         for i in people:
             i = i.lower()
-            if i not in peoples_list_str:
-                if i not in peoples_list_all:
+            if (i not in peoples_list_str) and (i not in peoples_list_all):
+                try:
                     peoples_object.factordetail_set.create(name=i)
-                find_people = FactorDetail.objects.get(name=i)
-                user_diary_get.factor.add(find_people)
-                user_diary_get.save()
+                except IntegrityError:
+                    return redirect('record')
+            find_people = FactorDetail.objects.get(name=i)
+            user_diary_get.factor.add(find_people)
+            user_diary_get.save()
         return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_people.html')
 
@@ -321,12 +327,12 @@ def discover(request):
     moods = MoodFactors.objects.get(factor='mood')
     places = MoodFactors.objects.get(factor='place')
     places_list_all = [str(p) for p in places.factordetail_set.all()]
-    mood_list_all = [str(m) for m in moods.factordetail_set.all()]
-    dict_return = {"mood": mood_list_all, "place": places_list_all}
     try:
         user_diary_get = UserDiary.objects.get(user=request.user)
     except UserDiary.DoesNotExist:
         return redirect('account_login')
+    user_fav_mood = user_diary_get.factor.all().filter(factor=moods)
+    dict_return = {"mood": user_fav_mood, "place": places_list_all}
     if request.POST:
         selected_mood = request.POST.get('select-mood')
         dict_return['select'] = selected_mood
