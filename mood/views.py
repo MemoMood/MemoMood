@@ -64,6 +64,7 @@ def mood(request):
 def old_mood(request):
     if not request.user.is_authenticated:
         return redirect('account_login')
+    time_now = timezone.now().strftime(f"%Y-%m-%d")
     if request.POST:
         user_diary = UserDiary.objects.get(user=request.user)
         diary_user = user_diary.diary.all()
@@ -73,9 +74,9 @@ def old_mood(request):
             timedelta(hours=23, minutes=59, seconds=59)
         sorted_user_diary = diary_user.filter(
             time__range=[datetime_min, datetime_max])
-        return render(request, 'mood/mood_sort.html', {'diary': sorted_user_diary, 'select_time': date})
-    diary = {}
-    return render(request, 'mood/mood_sort.html', diary)
+        return render(request, 'mood/mood_sort.html', {'diary': sorted_user_diary, 'select_time': date, 'time': time_now})
+    dict_return = {'time': time_now}
+    return render(request, 'mood/mood_sort.html', dict_return)
 
 
 def view_mood(request, id):
