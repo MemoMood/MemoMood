@@ -2,7 +2,7 @@
 
 Web application for everyone who wants to keep track of their mental health by recording the data regularly and discover relevant behavior, event, and environment factors that can influence a user’s mood.
 
-This web application is the part of the Individual Software Process course at Kasetsart University as a group project.
+This web application is a group project assignment in Individual Software Process course at Kasetsart University.
 
 ## Project Documents
 
