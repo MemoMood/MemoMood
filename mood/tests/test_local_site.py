@@ -1,13 +1,15 @@
 import time
+import datetime
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 
-class MemoMoodSiteTest(StaticLiveServerTestCase):
+class MemoMoodLocalSiteTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = WebDriver()
         self.browser.implicitly_wait(10)
@@ -20,6 +22,20 @@ class MemoMoodSiteTest(StaticLiveServerTestCase):
         self.browser.find_element(By.NAME, "password2").send_keys("TCTC0987")
         self.browser.find_element(
             By.XPATH, "//button[text()='Sign Up']").click()
+
+    def setUpAddPlace(self, place):
+        self.browser.get('%s%s' % (self.live_server_url, '/mood/add_place'))
+        self.browser.find_element(
+            By.XPATH, '//*[@id="default-input"]').send_keys(place)
+        self.browser.find_element(
+            By.XPATH, '/html/body/div/form/button').click()
+
+    def setUpAddPeople(self, people):
+        self.browser.get('%s%s' % (self.live_server_url, '/mood/add_people'))
+        self.browser.find_element(
+            By.XPATH, '//*[@id="default-input"]').send_keys(people)
+        self.browser.find_element(
+            By.XPATH, '/html/body/div/form/button').click()
 
     def test_login(self):
         self.browser.get('%s%s' % (self.live_server_url, '/accounts/login/'))
@@ -67,4 +83,23 @@ class MemoMoodSiteTest(StaticLiveServerTestCase):
 
     def test_record_page(self):
         self.setUpSignup()
+        self.browser.get('%s%s' % (self.live_server_url, '/mood/record'))
+        # add place and people
+        self.setUpAddPlace('university')
+        self.setUpAddPeople('Angle')
+        # start record
+        time_input = self.browser.find_element(By.ID, 'record-time')
+        time_input.send_keys((datetime.datetime.now() - datetime.timedelta(minutes=5)).strftime(f"%d%m%Y%H%M%p"))
+        choose_place = Select(self.browser.find_elements(By.ID, 'place')[0])
+        choose_place.select_by_value('university')
+        # choose_friend = self.browser.find_element(By.XPATH, '//*[@id="checkbox-item-bell"]')
+        choose_friend = self.browser.find_element(
+            By.XPATH, '//*[@id="checkbox-item-4"]')
+        choose_friend.click()
+        choose_weather = self.browser.find_element(By.XPATH, '//*[@id="default-radio-2"]')
+        choose_weather.click()
+        text_input = self.browser.find_element(By.XPATH, '//*[@id="message"]')
+        text_input.send_keys('This is a bad day:(')
+        submit_diary = self.browser.find_element(By.XPATH, '/html/body/div/form/div/div[2]/div[6]/button')
+        submit_diary.click()
         self.browser.get('%s%s' % (self.live_server_url, '/mood'))
