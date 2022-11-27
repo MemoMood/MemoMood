@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from mood.models import FactorDetail, MoodFactors
 from mood.models import SleepTimeField, UserDiary, Diary
 from django.urls import reverse
-from mood.views import *
+from mood.views import MoodFactors, FactorDetail, Diary, SleepTimeField, UserDiary, check_null
 
 
 class MeMoodModelTest(TestCase):
@@ -75,25 +75,25 @@ class MeMoodViewsAnonymousTest(TestCase):
 
     def test_mood_deny_anonymous(self):
         response = self.client.get(reverse('mood'), follow=True)
-        self.assertRedirects(response, '/mood/profile')
+        self.assertRedirects(response, '/accounts/login/')
         response = self.client.post(reverse('mood'), follow=True)
-        self.assertRedirects(response, '/mood/profile')
+        self.assertRedirects(response, '/accounts/login/')
 
     def test_mood_load(self):
         response = self.client.get(reverse('mood'), follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'dashboard/home.html')
+        self.assertTemplateUsed(response, 'account/base.html')
 
     def test_set_sleep_time_deny_anonymous(self):
         response = self.client.get('/mood/sleep_time', follow=True)
-        self.assertRedirects(response, '/mood/profile')
+        self.assertRedirects(response, '/accounts/login/')
         response = self.client.post('/mood/sleep_time', follow=True)
-        self.assertRedirects(response, '/mood/profile')
+        self.assertRedirects(response, '/accounts/login/')
 
     def test_set_sleep_time_load(self):
         response = self.client.get('/mood/sleep_time', follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'dashboard/home.html')
+        self.assertTemplateUsed(response, 'account/base.html')
 
     def test_record_deny_anonymous(self):
         response = self.client.get('/mood/record', follow=True)
