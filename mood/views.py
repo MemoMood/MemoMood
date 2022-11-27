@@ -307,19 +307,27 @@ def get_percent_in_week(request, week_start):
 
 
 def daily_mood(request):
+    site = 'mood/daily_mood.html'
     if not request.user.is_authenticated:
         return redirect('account_login')
     time_now = timezone.now().strftime(f"%Y-W%V")
     if request.POST:
         week = request.POST.get('choose-week')
-        datetime_object = datetime.strptime(week + '-1', '%G-W%V-%u')
+        try:
+            datetime_object = datetime.strptime(week + '-1', '%G-W%V-%u')
+        except ValueError:
+            try:
+                datetime_object = datetime.strptime(f"{week[0:4]}-W{int(week[4:6]):02d}" + '-1', '%G-W%V-%u')
+            except ValueError:
+                warning_msg = True
+                dict_return = {'percent': [], 'time_max': time_now, 'week_str': 'choose a week', 'warn': warning_msg}
+                return render(request, site, dict_return)
         datetime_object_7 = datetime_object + timedelta(days=6, hours=23, minutes=59, seconds=59)
         percent = get_percent_in_week(request, datetime_object)
         str_week = str(datetime_object.date()) + " to " + str(datetime_object_7.date())
-        dict_return = {'percent': percent, 'time_max': time_now,
-                        'week': week, 'week_str': str_week}
-        return render(request, 'mood/daily_mood.html', dict_return)
-    return render(request, 'mood/daily_mood.html', {'percent': [], 'time_max': time_now, 'week_str': 'choose a week'})
+        dict_return = {'percent': percent, 'time_max': time_now, 'week': week, 'week_str': str_week}
+        return render(request, site, dict_return)
+    return render(request, site, {'percent': [], 'time_max': time_now, 'week_str': 'choose a week'})
 
 
 def discover(request):
