@@ -1,5 +1,6 @@
 import time
 import datetime
+import random
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
@@ -36,6 +37,24 @@ class MemoMoodLocalSiteTest(StaticLiveServerTestCase):
             By.XPATH, '//*[@id="default-input"]').send_keys(people)
         self.browser.find_element(
             By.XPATH, '/html/body/div/form/button').click()
+
+    def setUpRecord(self, place, text):
+        self.browser.get('%s%s' % (self.live_server_url, '/mood/record'))
+        # add place and people
+        self.setUpAddPlace(place)
+        # start record
+        self.browser.find_element(By.ID, 'record-time').send_keys(
+            (datetime.datetime.now() - datetime.timedelta(minutes=5)).strftime(f"%d%m%Y%H%M%p"))
+        Select(self.browser.find_element(
+            By.ID, 'place')).select_by_value(place)
+        weather_num = random.randint(1, 6)
+        self.browser.find_element(
+            By.XPATH, f'//*[@id="default-radio-{weather_num}"]').click()
+        self.browser.find_element(
+            By.XPATH, '//*[@id="message"]').send_keys(text)
+        self.browser.find_element(
+            By.XPATH, '/html/body/div/form/div/div[2]/div[6]/button').click()
+        self.browser.get('%s%s' % (self.live_server_url, '/mood'))
 
     def test_login(self):
         self.browser.get('%s%s' % (self.live_server_url, '/accounts/login/'))
@@ -89,17 +108,28 @@ class MemoMoodLocalSiteTest(StaticLiveServerTestCase):
         self.setUpAddPeople('Angle')
         # start record
         time_input = self.browser.find_element(By.ID, 'record-time')
-        time_input.send_keys((datetime.datetime.now() - datetime.timedelta(minutes=5)).strftime(f"%d%m%Y%H%M%p"))
-        choose_place = Select(self.browser.find_elements(By.ID, 'place')[0])
+        time_input.send_keys((datetime.datetime.now(
+        ) - datetime.timedelta(minutes=5)).strftime(f"%d%m%Y%H%M%p"))
+        choose_place = Select(self.browser.find_element(By.ID, 'place'))
         choose_place.select_by_value('university')
         # choose_friend = self.browser.find_element(By.XPATH, '//*[@id="checkbox-item-bell"]')
-        choose_friend = self.browser.find_element(
-            By.XPATH, '//*[@id="checkbox-item-4"]')
-        choose_friend.click()
-        choose_weather = self.browser.find_element(By.XPATH, '//*[@id="default-radio-2"]')
+        # choose_friend = self.browser.find_element(
+        #     By.XPATH, '//*[@id="checkbox-item-4"]')
+        # choose_friend.click()
+        choose_weather = self.browser.find_element(
+            By.XPATH, '//*[@id="default-radio-2"]')
         choose_weather.click()
         text_input = self.browser.find_element(By.XPATH, '//*[@id="message"]')
         text_input.send_keys('This is a bad day:(')
-        submit_diary = self.browser.find_element(By.XPATH, '/html/body/div/form/div/div[2]/div[6]/button')
+        submit_diary = self.browser.find_element(
+            By.XPATH, '/html/body/div/form/div/div[2]/div[6]/button')
         submit_diary.click()
+
+    def test_record_total(self):
+        self.setUpSignup()
+        self.setUpRecord('home', 'Sleepy')
+        self.setUpRecord('university', 'Want to go home,')
+        self.setUpRecord('market', 'so many people there')
         self.browser.get('%s%s' % (self.live_server_url, '/mood'))
+        count_diary = self.browser.find_elements(By.CLASS_NAME, 'shadow-xl')
+        self.assertEqual(len(count_diary), 3)
