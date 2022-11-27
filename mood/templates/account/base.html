@@ -1,48 +1,73 @@
+{% load static %}
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{% block head_title %}{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <style>
-      .form-group {
-        margin-top: 10px;
-      }
-    </style>
-    {% block extra_head %}
-    {% endblock %}
-  </head>
-  <body>
-    {% block body %}
 
-    {% if messages %}
-      <div class="p-2">
-        {% for message in messages %}
-          <div class="text-center border-bottom">{{message}}</div>
-        {% endfor %}
-      </div>
-    {% endif %}
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'mood/output.css' %}">
+  <link rel="stylesheet" href="{% static 'mood/styles.css' %}">
+  <script src="https://kit.fontawesome.com/3c7104b926.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+  <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+  <title></title>
+</head>
 
-    <div class="p-3 mb-3 bg-dark">
-      <div class="container d-flex justify-content-between">
-          {% if user.is_authenticated %}
-          <div><a class="text-light" href="{% url 'welcome' %}">Back to Mood</a></div>
-          <div><a class="text-light" href="{% url 'profile' %}">Profile</a></div>
-          {% comment %} <div><a class="text-light" href="{% url 'account_email' %}">Change E-mail</a></div> {% endcomment %}
-          <div><a class="text-light" href="{% url 'account_logout' %}">Sign Out</a></div>
-          {% else %}
-          <div><a class="text-light" href="{% url 'welcome' %}">Back to Mood</a></div>
-          <div><a class="text-light" href="{% url 'account_login' %}">Sign In</a></div>
-          <div><a class="text-light" href="{% url 'account_signup' %}">Sign Up</a></div>
-          {% endif %}
-      </div>
+{% block body %}
+<body class="bg-stone-100">
+
+  {% if messages %}
+  <div class="p-2">
+    {% for message in messages %}
+    <div class="text-center border-bottom">{{message}}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <nav class="bg-stone-100 border-gray-200 px-2 sm:px-4 py-1 rounded dark:bg-gray-900">
+    <div class="container flex flex-wrap justify-between items-center mx-auto">
+        <a href="{% url 'welcome'%}"class="flex items-center">
+            <img src="{% static 'images/memologo.png' %}" alt="logo" class="h-24">
+        </a>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul
+                class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="{% url 'welcome' %}"
+                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'profile' %}"
+                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Profile</a>
+                </li>
+                <li>
+                    <a href="{% url 'account_logout' %}"
+                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sign Out</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'welcome' %}"
+                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'account_login' %}"
+                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sign In</a>
+                </li>
+                <li>
+                    <a href="{% url 'account_signup' %}"
+                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sign Up</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-    {% block content %}
-    {% endblock %}
-    {% endblock %}
-    {% block extra_body %}
-    {% endblock %}
+</nav>
+  {% block content %}
+  {% endblock %}
+  {% endblock %}
+</body>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-  </body>
 </html>
