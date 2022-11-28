@@ -29,7 +29,7 @@
             <p class="font-normal text-gray-700">At {{ d.place }}
                 {% if d.people.all %} with
                 {% for p in d.people.all %}
-                {{ p.name }}
+                {{ p.name|title }}
                 {% endfor %}
                 {% endif %}
             </p>
