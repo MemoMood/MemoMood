@@ -133,3 +133,15 @@ class MemoMoodLocalSiteTest(StaticLiveServerTestCase):
         self.browser.get('%s%s' % (self.live_server_url, '/mood'))
         count_diary = self.browser.find_elements(By.CLASS_NAME, 'shadow-xl')
         self.assertEqual(len(count_diary), 3)
+
+    def test_daily_mood(self):
+        self.setUpSignup()
+        self.browser.get('%s%s' % (self.live_server_url, '/mood/dailymood'))
+        input_a_week = self.browser.find_element(By.ID, 'choose-week')
+        input_a_week.send_keys((datetime.datetime.now() - datetime.timedelta(days=7)).strftime(f"%V%Y"))
+        submit_week = self.browser.find_element(By.XPATH, '/html/body/div[1]/form/div/button')
+        submit_week.click()
+
+    def test_discover_page(self):
+        self.setUpSignup()
+        self.browser.get('%s%s' % (self.live_server_url, '/mood/discover'))
