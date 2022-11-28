@@ -1,6 +1,7 @@
 import datetime
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 class OtherFeaturesTest(StaticLiveServerTestCase):
@@ -25,6 +26,16 @@ class OtherFeaturesTest(StaticLiveServerTestCase):
         self.browser.find_element(By.NAME, "password1").send_keys(account['password'])
         self.browser.find_element(By.NAME, "password2").send_keys(account['password'])
         self.browser.find_element(By.XPATH, "//button[text()='Sign Up']").click()
+
+    def test_sleep_time(self):
+        self.setUpSignUp(self.account1)
+        self.browser.get('%s%s' % (self.live_server_url, '/mood/sleep_time'))
+        self.browser.find_element(By.XPATH, '//*[@id="record-time"]').send_keys(datetime.datetime.now().strftime(f"%d%m%Y"))
+        sleep_range = self.browser.find_element(By.ID, 'steps-range')
+        sleep_range.send_keys(Keys.LEFT)
+        sleep_range.send_keys(Keys.LEFT)
+        sleep_range.send_keys(Keys.LEFT)
+        self.browser.find_element(By.XPATH, '/html/body/div/form/button').click()
 
     def test_daily_mood(self):
         self.setUpSignUp(self.account1)
