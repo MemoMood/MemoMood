@@ -39,7 +39,6 @@ jobs:
     - name: Test with Unittest
       run: |
         python manage.py migrate
-        python manage.py tailwind build
         python manage.py collectstatic --noinput
         python manage.py test mood
     - name: Upload coverage report using Github Action
