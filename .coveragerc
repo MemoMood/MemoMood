@@ -1,0 +1,11 @@
+[run]
+# measure branch coverage
+branch = True
+# omit uninteresting files
+omit =
+    mysite/*
+    */__init__.py
+    mood/migrations/*
+    mood/templates/*
+    mood/static/*
+    manage.py
