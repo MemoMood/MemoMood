@@ -30,5 +30,6 @@ jobs:
     - name: Run Tests
       run: |
         coverage run manage.py test mood
-    - name: Upload coverage report using Github Action
-      uses: codecov/codecov-action@v3
+    - name: Codecov
+      uses: codecov/codecov-action@v3.1.1
+
