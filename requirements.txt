@@ -5,3 +5,4 @@ django-cryptography
 xhtml2pdf
 gunicorn 
 django-heroku
+python-decouple
