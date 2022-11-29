@@ -166,12 +166,16 @@ class MeMoodViewsUserLoginTest(TestCase):
         response = self.client.get('/mood/sleep_time', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'mood/sleep_time.html')
+        response = self.client.post('/mood/sleep_time', follow=True)
+        self.assertTemplateUsed(response, 'mood/accept_components/back_from_sleep_time.html')
 
     def test_record_load(self):
         self.client.login(username='test_user', password='12345')
         response = self.client.get('/mood/record', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'mood/record.html')
+        response = self.client.post('/mood/record', follow=True)
+        self.assertTemplateUsed(response, 'mood/accept_components/back_home_record.html')
 
     def test_profile_load(self):
         self.client.login(username='test_user', password='12345')
