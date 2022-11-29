@@ -6,7 +6,7 @@ from django.urls import reverse
 from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField, UserDiary
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from function import *
+from mood.function import *
 # Create your views here.
 
 
