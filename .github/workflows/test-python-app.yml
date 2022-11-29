@@ -5,9 +5,9 @@ name: MemoMood Test
 
 on:
   push:
-    branches: [ "ci" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "ci" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -39,3 +39,5 @@ jobs:
       run: |
         coverage run manage.py test
         coverage xml
+    - name: Upload coverage report using Github Action
+      uses: codecov/codecov-action@v3
