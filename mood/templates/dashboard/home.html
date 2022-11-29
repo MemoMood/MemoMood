@@ -1,12 +1,16 @@
 {% extends 'account/base.html' %}
 
 {% block content %}
-    <div class="text-center">
+<div class="text-center">
+    <form action="{% url 'socialaccount_connections' %}">
         <h2 class="text-3xl font-medium mt-10 mb-3 text-blue-600">Profile</h2>
         <p>Hello {{ user.first_name }}</p>
         <p class="text-black">Your Username : {{ user|title }}</p>
         <div class="d-grid">
-            <button class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-6 my-6" type="submit" href="{% url 'socialaccount_connections' %}">Settings</button><br>
+            <button
+                class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-6 my-6"
+                type="submit" href="{% url 'socialaccount_connections' %}">Settings</button><br>
         </div>
-    </div>
+    </form>
+</div>
 {% endblock %}
