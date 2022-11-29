@@ -41,3 +41,5 @@ jobs:
         coverage xml
     - name: Upload coverage report using Github Action
       uses: codecov/codecov-action@v3
+    - codecov:
+        require_ci_to_pass: false
