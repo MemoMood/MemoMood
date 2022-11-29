@@ -7,10 +7,10 @@ on:
   push:
     branches: [ "ci" ]
     paths-ignore:
-      - mood/tests/test_add_site.py
-      - mood/tests/test_allauth_site.py
-      - mood/tests/test_features_site.py
-      - mood/tests/test_record_site.py
+      - 'mood/tests/test_add_site.py'
+      - 'mood/tests/test_allauth_site.py'
+      - 'mood/tests/test_features_site.py'
+      - 'mood/tests/test_record_site.py'
   pull_request:
     branches: [ "ci" ]
 
