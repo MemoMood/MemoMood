@@ -13,7 +13,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 driver = webdriver.Chrome(ChromeDriverManager().install())
 class LogInTest(StaticLiveServerTestCase):
     def setUp(self):
-        self.browser = WebDriver()
+        self.browser = driver
         self.browser.implicitly_wait(10)
 
         self.account1 = {
