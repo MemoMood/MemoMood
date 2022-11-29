@@ -15,6 +15,10 @@
         </div>
     </form>
 </div>
+{% if warn %}
+<p>You can put a number of week in this year and year. ex. 202205 is week 5 in 2022 </p>
+<p>Or you can use Chrome instead.</p>
+{% endif %}
 <div>
     <div class="shadow-lg rounded-lg overflow-hidden">
         <div class="py-3 px-5 bg-gray-50">{{week}} ({{week_str}})</div>

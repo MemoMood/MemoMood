@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField, UserDiary
 from django.contrib.auth.decorators import login_required
-
+from django.db import IntegrityError
 # Create your views here.
 
 
@@ -40,6 +40,8 @@ def welcome(request):
 
 
 def mood(request):
+    check_null()
+    check_mood_null()
     time_now = timezone.now()
     before_24 = time_now - timedelta(hours=23, minutes=59, seconds=59)
     if not request.user.is_authenticated:
@@ -62,6 +64,7 @@ def mood(request):
 def old_mood(request):
     if not request.user.is_authenticated:
         return redirect('account_login')
+    time_now = timezone.now().strftime(f"%Y-%m-%d")
     if request.POST:
         user_diary = UserDiary.objects.get(user=request.user)
         diary_user = user_diary.diary.all()
@@ -71,9 +74,9 @@ def old_mood(request):
             timedelta(hours=23, minutes=59, seconds=59)
         sorted_user_diary = diary_user.filter(
             time__range=[datetime_min, datetime_max])
-        return render(request, 'mood/mood_sort.html', {'diary': sorted_user_diary, 'select_time': date})
-    diary = {}
-    return render(request, 'mood/mood_sort.html', diary)
+        return render(request, 'mood/mood_sort.html', {'diary': sorted_user_diary, 'select_time': date, 'time': time_now})
+    dict_return = {'time': time_now}
+    return render(request, 'mood/mood_sort.html', dict_return)
 
 
 def view_mood(request, id):
@@ -198,13 +201,16 @@ def add_place(request):
         places_list_str = [str(p) for p in places_list]
         places_list_all = [str(p)
                            for p in places_object.factordetail_set.all()]
-        if place.lower() not in places_list_str:
-            place = place.lower()
-            if place not in places_list_all:
+        place = place.lower()
+        if (place not in places_list_str) and (place not in places_list_all):
+            try:
                 places_object.factordetail_set.create(name=place)
-            find_place = FactorDetail.objects.get(name=place)
-            user_diary_get.factor.add(find_place)
-            user_diary_get.save()
+            except IntegrityError:
+                dict_return = {'warning': 'Please use a word that is different from the words in people.'}
+                return render(request, 'mood/add_choice/add_place.html', dict_return)
+        find_place = FactorDetail.objects.get(name=place)
+        user_diary_get.factor.add(find_place)
+        user_diary_get.save()
         return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_place.html')
 
@@ -225,12 +231,15 @@ def add_people(request):
                             for p in peoples_object.factordetail_set.all()]
         for i in people:
             i = i.lower()
-            if i not in peoples_list_str:
-                if i not in peoples_list_all:
+            if (i not in peoples_list_str) and (i not in peoples_list_all):
+                try:
                     peoples_object.factordetail_set.create(name=i)
-                find_people = FactorDetail.objects.get(name=i)
-                user_diary_get.factor.add(find_people)
-                user_diary_get.save()
+                except IntegrityError:
+                    dict_return = {'warning': 'Please use a word that is different from the words in place.'}
+                    return render(request, 'mood/add_choice/add_people.html', dict_return)
+            find_people = FactorDetail.objects.get(name=i)
+            user_diary_get.factor.add(find_people)
+            user_diary_get.save()
         return HttpResponseRedirect(reverse('record'))
     return render(request, 'mood/add_choice/add_people.html')
 
@@ -298,19 +307,27 @@ def get_percent_in_week(request, week_start):
 
 
 def daily_mood(request):
+    site = 'mood/daily_mood.html'
     if not request.user.is_authenticated:
         return redirect('account_login')
     time_now = timezone.now().strftime(f"%Y-W%V")
     if request.POST:
         week = request.POST.get('choose-week')
-        datetime_object = datetime.strptime(week + '-1', '%G-W%V-%u')
+        try:
+            datetime_object = datetime.strptime(week + '-1', '%G-W%V-%u')
+        except ValueError:
+            try:
+                datetime_object = datetime.strptime(f"{week[0:4]}-W{int(week[4:6]):02d}" + '-1', '%G-W%V-%u')
+            except ValueError:
+                warning_msg = True
+                dict_return = {'percent': [], 'time_max': time_now, 'week_str': 'choose a week', 'warn': warning_msg}
+                return render(request, site, dict_return)
         datetime_object_7 = datetime_object + timedelta(days=6, hours=23, minutes=59, seconds=59)
         percent = get_percent_in_week(request, datetime_object)
         str_week = str(datetime_object.date()) + " to " + str(datetime_object_7.date())
-        dict_return = {'percent': percent, 'time_max': time_now,
-                        'week': week, 'week_str': str_week}
-        return render(request, 'mood/daily_mood.html', dict_return)
-    return render(request, 'mood/daily_mood.html', {'percent': [], 'time_max': time_now, 'week_str': 'choose a week'})
+        dict_return = {'percent': percent, 'time_max': time_now, 'week': week, 'week_str': str_week}
+        return render(request, site, dict_return)
+    return render(request, site, {'percent': [], 'time_max': time_now, 'week_str': 'choose a week'})
 
 
 def discover(request):
@@ -321,12 +338,12 @@ def discover(request):
     moods = MoodFactors.objects.get(factor='mood')
     places = MoodFactors.objects.get(factor='place')
     places_list_all = [str(p) for p in places.factordetail_set.all()]
-    mood_list_all = [str(m) for m in moods.factordetail_set.all()]
-    dict_return = {"mood": mood_list_all, "place": places_list_all}
     try:
         user_diary_get = UserDiary.objects.get(user=request.user)
     except UserDiary.DoesNotExist:
         return redirect('account_login')
+    user_fav_mood = user_diary_get.factor.all().filter(factor=moods)
+    dict_return = {"mood": user_fav_mood, "place": places_list_all}
     if request.POST:
         selected_mood = request.POST.get('select-mood')
         dict_return['select'] = selected_mood
