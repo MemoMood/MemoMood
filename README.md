@@ -80,3 +80,4 @@ To generate a secret key you can go to [djecrety.ir](https://djecrety.ir/) or us
     ```sh
     $ deactivate
     ```
+    
