@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY', cast=str, default='missing-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=str, default=False)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=str, default='localhost, 127.0.0.1')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=list, default='[localhost, 127.0.0.1]')
 
 ACCOUNT_ADAPTER = 'mood.adapter.DefaultOverrideAccountAdapter'
 
