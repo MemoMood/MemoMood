@@ -24,12 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-81c$8@d1j+pue(30pam_)q!es$jwit$z60&urpk0&m%_rl_j^v'
+SECRET_KEY = config('SECRET_KEY', cast=str, default='missing-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=str)
+DEBUG = config('DEBUG', cast=str, default=False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=str, default='localhost, 127.0.0.1')
 
 ACCOUNT_ADAPTER = 'mood.adapter.DefaultOverrideAccountAdapter'
 
@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'crispy_forms',
 ]
 
-SITE_ID = config('SITE_ID', cast=int)
+SITE_ID = config('SITE_ID', cast=int, default=1)
 
 LOGIN_REDIRECT_URL = 'mood'
 LOGOUT_REDIRECT_URL = 'mood'
@@ -100,11 +100,11 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', cast=str),
-        'HOST': config('DB_HOST', cast=str),
-        'PORT': config('DB_PORT', cast=int),
-        'USER': config('DB_USER', cast=str),
-        'PASSWORD': config('DB_PASS', cast=str),
+        'NAME': config('DB_NAME', cast=str, default='missing-name'),
+        'HOST': config('DB_HOST', cast=str, default='missing-host'),
+        'PORT': config('DB_PORT', cast=int, default=0),
+        'USER': config('DB_USER', cast=str, default='missing-user'),
+        'PASSWORD': config('DB_PASS', cast=str, default='missing-pass'),
     }
 }
 
@@ -130,13 +130,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = config('LCODE', cast=str)
+LANGUAGE_CODE = config('LCODE', cast=str, default='en-us')
 
-TIME_ZONE = config('TIMEZONE', cast=str)
+TIME_ZONE = config('TIMEZONE', cast=str, default='Asia/Bangkok')
 
-USE_I18N = config('USE_I18N', cast=bool)
+USE_I18N = config('USE_I18N', cast=bool, default=False)
 
-USE_TZ = config('USE_TZ', cast=bool)
+USE_TZ = config('USE_TZ', cast=bool, default=False)
 
 
 # Static files (CSS, JavaScript, Images)
