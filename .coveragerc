@@ -8,5 +8,4 @@ omit =
     mood/migrations/*
     mood/templates/*
     mood/static/*
-    mood/tests/
     manage.py
