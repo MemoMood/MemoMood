@@ -110,6 +110,11 @@ DATABASES = {
         'PORT': 5432 ,
         'USER': 'kanpyibnlcmotk' ,
         'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6' ,
+        'TEST': {
+            'NAME': 'dfe2vp327m5dsj',
+            'USER': 'kanpyibnlcmotk',
+            'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6',
+        }, 
     }
 }
 
