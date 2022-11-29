@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'memosite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-ON_HEROKU = config('LIVE', cast=bool, default=False),
+ON_HEROKU = config('LIVE', cast=bool, default=False)
 
 if ON_HEROKU:
     DATABASES = {
