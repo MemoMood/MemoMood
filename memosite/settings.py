@@ -108,7 +108,7 @@ if ON_HEROKU:
             'PASSWORD': config('DB_PASS', ''),
         }
     }
-    
+
 else:
     DATABASES = {
         'default': {
