@@ -1,4 +1,5 @@
 import os
+from decouple import config
 
 """
 Django settings for memosite project.
@@ -26,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-81c$8@d1j+pue(30pam_)q!es$jwit$z60&urpk0&m%_rl_j^v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=str)
 
 ALLOWED_HOSTS = ['*']
 
@@ -54,16 +55,10 @@ INSTALLED_APPS = [
     'crispy_forms',
 ]
 
-SITE_ID = 3
+SITE_ID = config('SITE_ID', cast=int)
 
 LOGIN_REDIRECT_URL = 'mood'
 LOGOUT_REDIRECT_URL = 'mood'
-
-# Google Client ID : 996431643560-a3cc8tnfovc8l3n6alcvh9vck3p3lifv.apps.googleusercontent.com
-# Google Client Secrect : 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
-
-# Github Client ID : 6596f77a2313721d3c61
-# Github Client Secrect : b3f152b6c6b48a30e25e7555a4f740095f2e0c97
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -105,15 +100,13 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dfe2vp327m5dsj',
-        'HOST': 'ec2-52-205-98-159.compute-1.amazonaws.com' ,
-        'PORT': 5432 ,
-        'USER': 'kanpyibnlcmotk' ,
-        'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6' ,
+        'NAME': config('DB_NAME', cast=str),
+        'HOST': config('DB_HOST', cast=str),
+        'PORT': config('DB_PORT', cast=int),
+        'USER': config('DB_USER', cast=str),
+        'PASSWORD': config('DB_PASS', cast=str),
     }
 }
-
-# postgres://kanpyibnlcmotk:b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6@ec2-52-205-98-159.compute-1.amazonaws.com:5432/dfe2vp327m5dsj
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -137,13 +130,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = config('LCODE', cast=str)
 
-TIME_ZONE = 'Asia/Bangkok'
+TIME_ZONE = config('TIMEZONE', cast=str)
 
-USE_I18N = True
+USE_I18N = config('USE_I18N', cast=bool)
 
-USE_TZ = False
+USE_TZ = config('USE_TZ', cast=bool)
 
 
 # Static files (CSS, JavaScript, Images)
