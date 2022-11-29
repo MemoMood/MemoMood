@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,10 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-81c$8@d1j+pue(30pam_)q!es$jwit$z60&urpk0&m%_rl_j^v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+ACCOUNT_ADAPTER = 'mood.adapter.DefaultOverrideAccountAdapter'
 
 # Application definition
 
@@ -42,16 +44,17 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     
     'mood',
+    'export_mood',
     
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github',
     
     'crispy_forms',
 ]
-SITE_ID = 1
+
+SITE_ID = 2
 
 LOGIN_REDIRECT_URL = 'mood'
 LOGOUT_REDIRECT_URL = 'mood'
@@ -99,11 +102,18 @@ WSGI_APPLICATION = 'memosite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dfe2vp327m5dsj',
+        'HOST': 'ec2-52-205-98-159.compute-1.amazonaws.com' ,
+        'PORT': 5432 ,
+        'USER': 'kanpyibnlcmotk' ,
+        'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6' ,
     }
 }
 
+# postgres://kanpyibnlcmotk:b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6@ec2-52-205-98-159.compute-1.amazonaws.com:5432/dfe2vp327m5dsj
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -140,8 +150,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+django_heroku.settings(locals())
