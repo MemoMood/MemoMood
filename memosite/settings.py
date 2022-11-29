@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import django_heroku
+# import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -102,19 +102,19 @@ WSGI_APPLICATION = 'memosite.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dfe2vp327m5dsj',
-        'HOST': 'ec2-52-205-98-159.compute-1.amazonaws.com' ,
-        'PORT': 5432 ,
-        'USER': 'kanpyibnlcmotk' ,
-        'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6' ,
-        'TEST': {
-            'NAME': 'dfe2vp327m5dsj',
-            'USER': 'kanpyibnlcmotk',
-            'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6',
-        }, 
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'dfe2vp327m5dsj',
+        # 'HOST': 'ec2-52-205-98-159.compute-1.amazonaws.com' ,
+        # 'PORT': 5432 ,
+        # 'USER': 'kanpyibnlcmotk' ,
+        # 'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6' ,
+        # 'TEST': {
+        #     'NAME': 'dfe2vp327m5dsj',
+        #     'USER': 'kanpyibnlcmotk',
+        #     'PASSWORD': 'b207be3d4fee1144832c9f8a9779593376a476bf9558c9273568139bce70f0a6',
+        # }, 
     }
 }
 
@@ -155,10 +155,10 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
