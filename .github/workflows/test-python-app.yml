@@ -5,9 +5,9 @@ name: MemoMood Unittest
 
 on:
   push:
-    branches: [ "ci" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "ci" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
