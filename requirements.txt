@@ -6,3 +6,4 @@ xhtml2pdf
 gunicorn 
 django-heroku
 selenium
+webdriver_manager
