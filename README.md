@@ -69,11 +69,8 @@ To generate a secret key you can go to [djecrety.ir](https://djecrety.ir/) or us
     - Fill ```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``` to ```Secret key```.
     - Select ```example.com``` in ```sites```.
     - And click ```Save```
-11. If you want to stop server:
-    ```sh
-    ctl+d
-    ```
+11. If you want to stop server using ```ctl+d```
 12. To exit the environment:
     ```sh
-    deactivate
+    $ deactivate
     ```
