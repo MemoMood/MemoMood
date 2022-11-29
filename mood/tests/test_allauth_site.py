@@ -8,11 +8,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.webdriver import WebDriver
+from webdriver_manager.chrome import ChromeDriverManager
 
-
+driver = webdriver.Chrome(ChromeDriverManager().install())
 class LogInTest(StaticLiveServerTestCase):
     def setUp(self):
-        self.browser = WebDriver()
+        self.browser = driver
         self.browser.implicitly_wait(10)
 
         self.account1 = {
