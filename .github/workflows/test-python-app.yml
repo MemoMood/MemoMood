@@ -38,5 +38,6 @@ jobs:
     - name: Test with Unittest
       run: |
         coverage manage.py test mood
+        coverage xml
     - name: Upload coverage report using Github Action
       uses: codecov/codecov-action@v3
