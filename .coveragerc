@@ -3,9 +3,14 @@
 branch = True
 # omit uninteresting files
 omit =
-    mysite/*
+    memosite/*
     */__init__.py
     mood/migrations/*
     mood/templates/*
     mood/static/*
+    mood/adapter.py
+    mood/function.py
+    export_mood/migrations/*
+    export_mood/templates/*
+    export_mood/function.py
     manage.py

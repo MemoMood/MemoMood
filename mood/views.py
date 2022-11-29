@@ -6,6 +6,7 @@ from django.urls import reverse
 from mood.models import Diary, FactorDetail, MoodFactors, SleepTimeField, UserDiary
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from mood.function import *
 # Create your views here.
 
 
@@ -90,12 +91,6 @@ def view_mood(request, id):
         delete_mood(request, id)
         return render(request, 'mood/accept_components/back_from_delete.html')
     return render(request, 'mood/view_mood.html', dict_return)
-
-
-def delete_mood(request, id):
-    user = UserDiary.objects.get(user=request.user)
-    diary = get_object_or_404(Diary, pk=id)
-    user.diary.remove(diary)
 
 
 def set_sleep_time(request):
@@ -206,7 +201,8 @@ def add_place(request):
             try:
                 places_object.factordetail_set.create(name=place)
             except IntegrityError:
-                dict_return = {'warning': 'Please use a word that is different from the words in people.'}
+                dict_return = {
+                    'warning': 'Please use a word that is different from the words in people.'}
                 return render(request, 'mood/add_choice/add_place.html', dict_return)
         find_place = FactorDetail.objects.get(name=place)
         user_diary_get.factor.add(find_place)
@@ -235,7 +231,8 @@ def add_people(request):
                 try:
                     peoples_object.factordetail_set.create(name=i)
                 except IntegrityError:
-                    dict_return = {'warning': 'Please use a word that is different from the words in place.'}
+                    dict_return = {
+                        'warning': 'Please use a word that is different from the words in place.'}
                     return render(request, 'mood/add_choice/add_people.html', dict_return)
             find_people = FactorDetail.objects.get(name=i)
             user_diary_get.factor.add(find_people)
@@ -317,15 +314,20 @@ def daily_mood(request):
             datetime_object = datetime.strptime(week + '-1', '%G-W%V-%u')
         except ValueError:
             try:
-                datetime_object = datetime.strptime(f"{week[0:4]}-W{int(week[4:6]):02d}" + '-1', '%G-W%V-%u')
+                datetime_object = datetime.strptime(
+                    f"{week[0:4]}-W{int(week[4:6]):02d}" + '-1', '%G-W%V-%u')
             except ValueError:
                 warning_msg = True
-                dict_return = {'percent': [], 'time_max': time_now, 'week_str': 'choose a week', 'warn': warning_msg}
+                dict_return = {'percent': [], 'time_max': time_now,
+                               'week_str': 'choose a week', 'warn': warning_msg}
                 return render(request, site, dict_return)
-        datetime_object_7 = datetime_object + timedelta(days=6, hours=23, minutes=59, seconds=59)
+        datetime_object_7 = datetime_object + \
+            timedelta(days=6, hours=23, minutes=59, seconds=59)
         percent = get_percent_in_week(request, datetime_object)
-        str_week = str(datetime_object.date()) + " to " + str(datetime_object_7.date())
-        dict_return = {'percent': percent, 'time_max': time_now, 'week': week, 'week_str': str_week}
+        str_week = str(datetime_object.date()) + " to " + \
+            str(datetime_object_7.date())
+        dict_return = {'percent': percent, 'time_max': time_now,
+                       'week': week, 'week_str': str_week}
         return render(request, site, dict_return)
     return render(request, site, {'percent': [], 'time_max': time_now, 'week_str': 'choose a week'})
 
@@ -349,68 +351,23 @@ def discover(request):
         dict_return['select'] = selected_mood
         user_factor = user_diary_get.diary.all()
         sort_diary_mood = user_factor.filter(mood__name=selected_mood)
-
         # place
         top_place = count_place(sort_diary_mood)
         dict_return['top_place'] = top_place
-
         # people
         top_people = count_people(sort_diary_mood)
         dict_return['top_people'] = top_people
-
         # weather
         count_weather = weather_prep(sort_diary_mood)
         dict_return['weather'] = list(count_weather.values())
-
         # sleep_time
         count_sleep_hour, avg_sleep = sleep_time_prep(
             user_diary_get, sort_diary_mood)
         dict_return['sleep_hour'] = list(count_sleep_hour.values())
-
         # average sleep time
         dict_return['avg_sleep'] = avg_sleep
-
         return render(request, 'mood/discover.html', dict_return)
     return render(request, 'mood/discover.html', dict_return)
-
-
-def count_place(sort_diary_mood):
-    count_place = {}
-    for i in sort_diary_mood:
-        if i.place not in count_place:
-            count_place[i.place] = 1
-        else:
-            count_place[i.place] += 1
-    count_place = dict(
-        sorted(count_place.items(), key=lambda item: item[1], reverse=True))
-    key_place = list(count_place.keys())
-    len_key_place = len(key_place)
-    if len_key_place < 3:
-        for i in range(3-len_key_place):
-            key_place.append('')
-    else:
-        key_place = key_place[:3]
-    return key_place
-
-
-def count_people(sort_diary_mood):
-    count_people = {}
-    for i in sort_diary_mood:
-        for j in i.people.all():
-            if j.name not in count_people:
-                count_people[j.name] = 1
-            else:
-                count_people[j.name] += 1
-    count_people = dict(sorted(count_people.items(),
-                        key=lambda item: item[1], reverse=True))
-    key_people = list(count_people.keys())
-    len_key_people = len(key_people)
-    if len_key_people < 3:
-        for i in range(3-len_key_people):
-            key_people.append('')
-    else:
-        key_people = key_people[:3]
-    return key_people
 
 
 def weather_prep(sort_diary_mood):
@@ -425,7 +382,7 @@ def sleep_time_prep(user_diary, sort_diary_mood):
     sleep_time = []
     mood_date_list = [mood.time.date() for mood in sort_diary_mood]
     result_sleep_time = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0,
-                    "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0}
+                         "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0}
     sleep_time_get = user_diary.sleep_time.all()
     for date in mood_date_list:
         try:
@@ -457,13 +414,6 @@ def get_choice_list(request, category):
     mood_factor = MoodFactors.objects.get(factor=category)
     factor = user_diary.factor.filter(factor=mood_factor)
     return factor
-
-
-def remove_factor(request, remove_list):
-    user_diary = UserDiary.objects.get(user=request.user)
-    for remove in remove_list:
-        remove_item = FactorDetail.objects.get(name=remove)
-        user_diary.factor.remove(remove_item)
 
 
 def remove_mood(request):
