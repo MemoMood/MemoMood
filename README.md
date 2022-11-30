@@ -67,14 +67,7 @@ To generate a secret key you can go to [djecrety.ir](https://djecrety.ir/) or us
     ```
 10. If you want to use Google authentication please follow:
     - Go to ```http://127.0.0.1:8000/admin``` and login with superuser.
-    - Select ```Social application``` in the lower left corner.
-    - Click ```ADD SOCIAL APPLICATION``` in the upper right corner.
-    - Select ```Provider``` as ```Google```.
-    - Name your application.
-    - Fill ```179422705401-2bbl1tck01hgp78j1vr1r6idd4f3hdn4.apps.googleusercontent.com``` to ```Client id```.
-    - Fill ```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``` to ```Secret key```.
-    - Select ```example.com``` in ```sites```.
-    - And click ```Save```
+    - Follow this [guide](https://www.section.io/engineering-education/django-google-oauth/) to add google to your app.
 11. If you want to stop server using ```ctl+d```
 12. To exit the environment:
     ```sh
