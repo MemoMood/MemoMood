@@ -68,7 +68,7 @@ To generate a secret key you can go to [djecrety.ir](https://djecrety.ir/) or us
 10. If you want to use Google authentication please follow:
     - Go to ```http://127.0.0.1:8000/admin``` and login with superuser.
     - Follow this [guide](https://www.section.io/engineering-education/django-google-oauth/) to add google to your app.
-11. If you want to stop server using ```ctl+d```
+11. If you want to stop server using ```ctl+c``` in your terminal.
 12. To exit the environment:
     ```sh
     $ deactivate
